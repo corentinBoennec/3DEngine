@@ -1,6 +1,7 @@
 #include "Vector.hpp"
 
 
+// Constructeurs
 Vector::Vector(void)
 {
 
@@ -18,6 +19,39 @@ Vector::~Vector(void)
 
 }
 
+// Définition des accesseurs
+float Vector::getX()
+{
+	return x;
+}
+
+float Vector::getY()
+{
+	return y;
+}
+
+float Vector::getZ()
+{
+	return z;
+}
+
+void Vector::setX(float x)
+{
+	this->x = x;
+}
+
+void Vector::setY(float y)
+{
+	this->y = y;
+}
+
+void Vector::setZ(float z)
+{
+	this->z = z;
+}
+
+
+// Surcharge des opérateurs pour des calculs vectoriels
 Vector Vector::operator+(Vector &vector)
 {
 	Vector result;
@@ -84,15 +118,15 @@ float Vector::norme()
 
 Vector Vector::project(Vector &vector1)
 {
-	Vector result = vector1 * (*this*(vector1))/vector1.norme();
+	Vector result = vector1 * (*this*(vector1)) / vector1.norme();
 	return result;
 }
 
 float Vector::distance(Vector &vector1)
 {
 	float result = sqrt((this->x - vector1.x) * (this->x - vector1.x) +
-						(this->y - vector1.y) * (this->y - vector1.y) +
-						(this->z - vector1.z) * (this->z - vector1.z));
+		(this->y - vector1.y) * (this->y - vector1.y) +
+		(this->z - vector1.z) * (this->z - vector1.z));
 	return result;
 }
 
@@ -113,7 +147,7 @@ float Vector::produitMixte(Vector &vector1, Vector &vector2)
 
 	return result;
 }
-	
+
 
 
 

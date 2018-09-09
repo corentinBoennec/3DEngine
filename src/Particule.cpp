@@ -1,5 +1,16 @@
 #include <Particule.hpp>
 
+// Constructeurs
+Particule::Particule()
+{
+
+}
+
+Particule::~Particule()
+{
+
+}
+
 // Définition des accesseurs
 float Particule::getMass()
 {
@@ -11,12 +22,12 @@ void Particule::setMass(float mass)
 	this->mass = mass;
 }
 
-float Particule::getGravity()
+Vector Particule::getGravity()
 {
 	return gravity;
 }
 
-void Particule::setGravity(float gravity)
+void Particule::setGravity(Vector gravity)
 {
 	this->gravity = gravity;
 }
@@ -31,22 +42,22 @@ void Particule::setDamping(float damping)
 	this->damping = damping;
 }
 
-float Particule::getVelocity()
+Vector Particule::getVelocity()
 {
 	return velocity;
 }
 
-void Particule::setVelocity(float velocity)
+void Particule::setVelocity(Vector velocity)
 {
 	this->velocity = velocity;
 }
 
-float Particule::getAcceleration()
+Vector Particule::getAcceleration()
 {
 	return acceleration;
 }
 
-void Particule::setAcceleration(float acceleration)
+void Particule::setAcceleration(Vector acceleration)
 {
 	this->acceleration = acceleration;
 }
@@ -59,4 +70,17 @@ float Particule::getInverseMass()
 void Particule::setInverseMass(float inverseMass)
 {
 	this->inverseMass = inverseMass;
+}
+
+
+// Update
+
+void Particule::updatePosition()
+{
+	position = position + velocity * timeFrame;
+}
+
+void Particule::updateVelocity()
+{
+	velocity = (velocity * (float)pow(damping, timeFrame) ) + (acceleration * timeFrame);
 }
