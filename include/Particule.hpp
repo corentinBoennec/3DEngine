@@ -1,23 +1,23 @@
 #pragma once
 #include <math.h>
 #include "Vector.hpp"
+#include "Functions.hpp"
 
 class Particule 
 {
 private:
-	float timeFrame;
-	Vector gravity;
-
 	float mass;
 	float damping;
 	Vector position;
 	Vector velocity;
 	Vector acceleration;
+	Vector gravity;
 	float inverseMass;
 
 public:
 	Particule();
 	~Particule();
+	Particule(float mass, float damping, Vector position, Vector velocity, Vector acceleration, Vector gravity);
 
 	// Accesseurs
 	float getMass();
@@ -32,8 +32,11 @@ public:
 	void setAcceleration(Vector acceleration);
 	float getInverseMass();
 	void setInverseMass(float inverseMass);
+	Vector getPosition();
+	void setPosition(Vector position);
 
-	void updatePosition();
-	void updateVelocity();
+	// Intégrateur
+	void updatePosition(float timeFrame);
+	void updateVelocity(float timeFrame);
 
 };

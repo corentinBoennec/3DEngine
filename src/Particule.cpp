@@ -11,6 +11,17 @@ Particule::~Particule()
 
 }
 
+Particule::Particule(float mass, float damping, Vector position, Vector velocity, Vector acceleration, Vector gravity)
+{
+	this->damping = damping;
+	this->mass = mass;
+	this->inverseMass = utils::inverseMass(mass);
+	this->position = position;
+	this->velocity = velocity;
+	this->acceleration = acceleration + gravity;
+	this->gravity = gravity;
+}
+
 // Définition des accesseurs
 float Particule::getMass()
 {
@@ -72,15 +83,29 @@ void Particule::setInverseMass(float inverseMass)
 	this->inverseMass = inverseMass;
 }
 
+Vector Particule::getPosition()
+{
+	return position;
+}
+
+void Particule::setPosition(Vector position)
+{
+	this->position = position;
+}
+
 
 // Update
 
-void Particule::updatePosition()
+void Particule::updatePosition(float timeFrame)
 {
-	position = position + velocity * timeFrame;
+	this->position = this->position + this->velocity * (timeFrame/1000);
+	if (this->position.getZ() <= 0)
+	{
+		this->position.setZ(0);
+	}
 }
 
-void Particule::updateVelocity()
+void Particule::updateVelocity(float timeFrame)
 {
-	velocity = (velocity * (float)pow(damping, timeFrame) ) + (acceleration * timeFrame);
+	this->velocity = (this->velocity * (float)pow(this->damping, (timeFrame/1000) ) + (this->acceleration * (timeFrame/1000)));
 }

@@ -148,6 +148,11 @@ float Vector::produitMixte(Vector &vector1, Vector &vector2)
 	return result;
 }
 
+void Vector::PrintPosition(std::ofstream file)
+{
+	
+}
+
 
 
 
