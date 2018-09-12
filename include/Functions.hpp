@@ -7,6 +7,13 @@
 
 namespace utils
 {
-	float inverseMass(float mass);
-	void timeGestion(int timeFrame); // Permet de controller la vitesse d'affichage
+	void timeGestion(float timeFrame); // permet de controller les FPS
+	void integrator(Particule& particule, float timeFrame); // appelle les fonctions de MAJ de la vélocité et de la position
 }
+
+// test OpenGL 
+/*namespace callgluts
+{
+	void windowResize(int w, int h);
+	void renderScene(void);
+}*/

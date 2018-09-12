@@ -30,8 +30,6 @@ public:
 	Vector operator ^(Vector &vector); //produit vectoriel
 	float produitMixte(Vector &vector1, Vector &vector2); //produit mixte
 
-	void PrintPosition(std::ofstream file); // Écrit la position dans un fichier
-
 private:
 	float x;
 	float y;

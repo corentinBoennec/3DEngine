@@ -1,7 +1,8 @@
 #pragma once
+#include "GL/glut.h"
 #include <math.h>
+
 #include "Vector.hpp"
-#include "Functions.hpp"
 
 class Particule 
 {
@@ -13,11 +14,12 @@ private:
 	Vector acceleration;
 	Vector gravity;
 	float inverseMass;
+	int id;
 
 public:
 	Particule();
 	~Particule();
-	Particule(float mass, float damping, Vector position, Vector velocity, Vector acceleration, Vector gravity);
+	Particule(float mass, float damping, Vector position, Vector velocity, Vector acceleration, Vector gravity, int id);
 
 	// Accesseurs
 	float getMass();
@@ -35,8 +37,14 @@ public:
 	Vector getPosition();
 	void setPosition(Vector position);
 
+	int getId();
+
 	// Intégrateur
 	void updatePosition(float timeFrame);
 	void updateVelocity(float timeFrame);
+
+	void PrintPosition(std::ofstream& file); // Écrit la position dans un fichier
+	float invertingMass(float mass); 
+
 
 };
