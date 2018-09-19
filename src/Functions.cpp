@@ -1,4 +1,5 @@
 #include "Functions.hpp"
+#include <algorithm>
 
 namespace utils
 {
@@ -25,55 +26,12 @@ namespace utils
 
 	}
 
-	void integrator(Particule& particule, float timeFrame)
+	void integrator(std::vector<Particule*> tableParticule, float timeFrame)
 	{
-		particule.updatePosition(timeFrame);
-		particule.updateVelocity(timeFrame);
+		std::for_each(tableParticule.begin(), tableParticule.end(), [timeFrame](Particule *p_particule)
+		{
+			p_particule->updatePosition(timeFrame);
+			p_particule->updateVelocity(timeFrame);
+		});
 	}
-
 }
-
-/*namespace callgluts
-{
-	void windowResize(int w, int h) {
-
-		// Prevent a divide by zero, when window is too short
-		// (you cant make a window of zero width).
-		if (h == 0)
-			h = 1;
-
-		float ratio = w * 1.0 / h;
-
-		// Use the Projection Matrix
-		glMatrixMode(GL_PROJECTION);
-
-		// Reset Matrix
-		glLoadIdentity();
-
-		// Set the viewport to be the entire window
-		glViewport(0, 0, w, h);
-
-		// Set the correct perspective.
-		gluPerspective(45, ratio, 1, 100);
-
-		// Get Back to the Modelview
-		glMatrixMode(GL_MODELVIEW);
-	}
-
-	void renderScene(void) {
-
-		// Clear Color and Depth Buffers
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// Reset transformations
-		glLoadIdentity();
-		glColor3d(1, 1, 1);
-
-		glPushMatrix();
-		glTranslated(0.0, 0.0, -10);
-		glutSolidSphere(0.2, 50, 50);
-		glPopMatrix();
-
-		glutSwapBuffers();
-	}
-}*/

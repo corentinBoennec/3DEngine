@@ -1,53 +1,51 @@
 #pragma once
-#include "GL/glut.h"
 #include <math.h>
 
-#include "Vector.hpp"
+#include "Vector3D.hpp"
 
 class Particule 
 {
 private:
 	float mass;
 	float damping;
-	Vector position;
-	Vector velocity;
-	Vector acceleration;
-	Vector gravity;
+	Vector3D position;
+	Vector3D velocity;
+	Vector3D acceleration;
+	Vector3D gravity;
 	float inverseMass;
-	int id;
-	//acummulateur des forces
-	Vector accumForce;
+	
+	Vector3D accumForce; //acummulateur des forces
 
 public:
 	Particule();
 	~Particule();
-	Particule(float mass, float damping, Vector position, Vector velocity, Vector acceleration, Vector gravity, int id);
+	Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity);
 
 	// Accesseurs
 	float getMass();
 	void setMass(float mass);
-	Vector getGravity();
-	void setGravity(Vector gravity);
+	Vector3D getGravity();
+	void setGravity(Vector3D gravity);
 	float getDamping();
 	void setDamping(float damping);
-	Vector getVelocity();
-	void setVelocity(Vector velocity);
-	Vector getAcceleration();
-	void setAcceleration(Vector acceleration);
+	Vector3D getVelocity();
+	void setVelocity(Vector3D velocity);
+	Vector3D getAcceleration();
+	void setAcceleration(Vector3D acceleration);
 	float getInverseMass();
 	void setInverseMass(float inverseMass);
-	Vector getPosition();
-	void setPosition(Vector position);
+	Vector3D getPosition();
+	void setPosition(Vector3D position);
 
-	int getId();
-
-	// Intégrateur
+	// IntÃ©grateur
 	void updatePosition(float timeFrame);
 	void updateVelocity(float timeFrame);
 
-	void PrintPosition(std::ofstream& file); // Écrit la position dans un fichier
-	float invertingMass(float mass); 
-	void addFroce(const Vector &force);
+	void PrintPosition(std::ofstream& file); // Ã©crit la position dans un fichier
+	float invertingMass(float mass);
+
+	// Forces
+	void addForce(const Vector3D &force);
 	void clearAccumulator();
 
 

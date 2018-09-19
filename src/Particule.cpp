@@ -11,8 +11,8 @@ Particule::~Particule()
 
 }
 
-// l'id sera surement distribué autrement dans le futur (fonction de distribution automatique, uuid, ...)
-Particule::Particule(float mass, float damping, Vector position, Vector velocity, Vector acceleration, Vector gravity, int id)
+
+Particule::Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity)
 {
 	this->damping = damping;
 	this->mass = mass;
@@ -21,10 +21,9 @@ Particule::Particule(float mass, float damping, Vector position, Vector velocity
 	this->velocity = velocity;
 	this->acceleration = acceleration + gravity;
 	this->gravity = gravity;
-	this->id = id;
 }
 
-// Définition des accesseurs
+// Dï¿½finition des accesseurs
 float Particule::getMass()
 {
 	return mass;
@@ -35,12 +34,12 @@ void Particule::setMass(float mass)
 	this->mass = mass;
 }
 
-Vector Particule::getGravity()
+Vector3D Particule::getGravity()
 {
 	return gravity;
 }
 
-void Particule::setGravity(Vector gravity)
+void Particule::setGravity(Vector3D gravity)
 {
 	this->gravity = gravity;
 }
@@ -55,22 +54,22 @@ void Particule::setDamping(float damping)
 	this->damping = damping;
 }
 
-Vector Particule::getVelocity()
+Vector3D Particule::getVelocity()
 {
 	return velocity;
 }
 
-void Particule::setVelocity(Vector velocity)
+void Particule::setVelocity(Vector3D velocity)
 {
 	this->velocity = velocity;
 }
 
-Vector Particule::getAcceleration()
+Vector3D Particule::getAcceleration()
 {
 	return acceleration;
 }
 
-void Particule::setAcceleration(Vector acceleration)
+void Particule::setAcceleration(Vector3D acceleration)
 {
 	this->acceleration = acceleration;
 }
@@ -85,23 +84,18 @@ void Particule::setInverseMass(float inverseMass)
 	this->inverseMass = inverseMass;
 }
 
-Vector Particule::getPosition()
+Vector3D Particule::getPosition()
 {
 	return position;
 }
 
-void Particule::setPosition(Vector position)
+void Particule::setPosition(Vector3D position)
 {
 	this->position = position;
 }
 
-int Particule::getId()
-{
-	return this->id;
-}
 
-
-// Fonctions de l'intégrateur
+// Fonctions de l'intÃ©grateur
 void Particule::updatePosition(float timeFrame)
 {
 	this->position = this->position + this->velocity * (timeFrame/1000);
@@ -119,20 +113,21 @@ void Particule::updateVelocity(float timeFrame)
 
 void Particule::PrintPosition(std::ofstream& file)
 {
-	file << "Particule n°" << this->getId() << "= (" << std::to_string(this->getPosition().getX()) << ", " << std::to_string(this->getPosition().getY()) << ", " << std::to_string(this->getPosition().getZ()) << ")" << std::endl;
+	file << "Particule "  << "= (" << std::to_string(this->getPosition().getX()) << ", " << std::to_string(this->getPosition().getY()) << ", " << std::to_string(this->getPosition().getZ()) << ")" << std::endl;
 }
+
 
 float Particule::invertingMass(float mass)
 {
 	return (float)1 / mass;
 }
 
-void Particule::addFroce(const Vector &force)
+// Forces
+void Particule::addForce(const Vector3D &force)
 {
 	this->accumForce += force;
 }
-
 void Particule::clearAccumulator()
 {
-	this->accumForce = Vector(0, 0, 0);
+	this->accumForce = Vector3D(0, 0, 0);
 }
