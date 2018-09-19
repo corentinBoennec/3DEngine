@@ -126,3 +126,13 @@ float Particule::invertingMass(float mass)
 {
 	return (float)1 / mass;
 }
+
+void Particule::addFroce(const Vector &force)
+{
+	this->accumForce += force;
+}
+
+void Particule::clearAccumulator()
+{
+	this->accumForce = Vector(0, 0, 0);
+}

@@ -63,6 +63,13 @@ Vector Vector::operator+(Vector &vector)
 	return result;
 }
 
+void Vector::operator+=(const Vector &vector)
+{
+	this->x += vector.x;
+	this->y += vector.y;
+	this->z += vector.z;
+}
+
 float Vector::operator *(Vector vector)
 {
 	float result = this->x * vector.x + this->y * vector.y + this->z * vector.z;

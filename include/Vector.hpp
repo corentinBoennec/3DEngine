@@ -23,6 +23,7 @@ public:
 	float operator *(Vector v); //surcharge de l'opérateur * pour le produit scalaire entre 2 vecteurs
 	Vector operator /(float a); // surcharge de l'opérateur / pour la division par un scalaire
 	Vector operator +(Vector &vector); // surcharge de l'opérateur + pour la somme de 2 vecteurs
+	void operator +=(const Vector &vector); // surcharge de l'operateur += pour ajouter un vecteur dans un autre
 	Vector compose(Vector &vector1); // pas de surcharge car pas de signe ressemblant
 	float norme(); //norme
 	Vector project(Vector &vector1); // projection

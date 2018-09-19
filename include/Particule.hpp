@@ -15,6 +15,8 @@ private:
 	Vector gravity;
 	float inverseMass;
 	int id;
+	//acummulateur des forces
+	Vector accumForce;
 
 public:
 	Particule();
@@ -45,6 +47,9 @@ public:
 
 	void PrintPosition(std::ofstream& file); // Écrit la position dans un fichier
 	float invertingMass(float mass); 
+	void addFroce(const Vector &force);
+	void clearAccumulator();
+
 
 
 };
