@@ -1,6 +1,6 @@
 #include "GravityGenerator.hpp"
 
-GravityGenerator::GravityGenerator(Vector gravity)
+GravityGenerator::GravityGenerator(Vector3D gravity)
 {
 	this->gravity = gravity;
 }
@@ -9,7 +9,7 @@ void GravityGenerator::updateForce(Particule * particule, float time)
 {
 	if (particule->getMass() != 0)
 	{
-		Vector F = gravity * particule->getMass();
-		particule->addFroce(F);
+		Vector3D F = gravity * particule->getMass();
+		particule->addForce(F);
 	}
 }
