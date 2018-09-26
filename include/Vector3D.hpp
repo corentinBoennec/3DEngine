@@ -23,6 +23,7 @@ public:
 	float operator *(Vector3D v); //surcharge de l'opérateur * pour le produit scalaire entre 2 vecteurs
 	Vector3D operator /(float a); // surcharge de l'opérateur / pour la division par un scalaire
 	Vector3D operator +(Vector3D &vector); // surcharge de l'opérateur + pour la somme de 2 vecteurs
+	Vector3D operator -(Vector3D &vector); // surcharge de l'opérateur - pour la somme de 2 vecteurs
 	void operator +=(const Vector3D &vector); // surcharge de l'operateur += pour ajouter un vecteur dans un autre
 	Vector3D compose(Vector3D &vector1); // pas de surcharge car pas de signe ressemblant
 	float norme(); //norme
@@ -30,6 +31,7 @@ public:
 	float distance(Vector3D &vector1); //distance
 	Vector3D operator ^(Vector3D &vector); //produit vectoriel
 	float produitMixte(Vector3D &vector1, Vector3D &vector2); //produit mixte
+	Vector3D unit();
 
 private:
 	float x;
