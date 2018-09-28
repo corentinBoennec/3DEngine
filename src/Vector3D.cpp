@@ -63,6 +63,17 @@ Vector3D Vector3D::operator+(Vector3D &vector)
 	return result;
 }
 
+Vector3D Vector3D::operator-(Vector3D &vector)
+{
+	Vector3D result;
+
+	result.x = this->x - vector.x;
+	result.y = this->y - vector.y;
+	result.z = this->z - vector.z;
+
+	return result;
+}
+
 void Vector3D::operator+=(const Vector3D &vector)
 {
 	this->x += vector.x;
@@ -155,6 +166,12 @@ float Vector3D::produitMixte(Vector3D &vector1, Vector3D &vector2)
 	return result;
 }
 
+Vector3D Vector3D::unit()
+{
+	Vector3D result = *this / this->norme();
+
+	return result;
+}
 
 
 

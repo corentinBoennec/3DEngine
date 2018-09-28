@@ -1,7 +1,10 @@
 #include "GravityGenerator.hpp"
 
+<<<<<<< HEAD
 GravityGenerator::~GravityGenerator(){}
 
+=======
+>>>>>>> 7d1e2ad34ecc19a9b2d26c89fdbb521659dcd761
 GravityGenerator::GravityGenerator(Vector3D gravity)
 {
 	this->gravity = gravity;
