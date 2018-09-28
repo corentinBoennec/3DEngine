@@ -6,5 +6,4 @@ class ParticuleForceGenerator
 {
 public:
 	virtual void updateForce(Particule * particule, float time) = 0;
-
 };

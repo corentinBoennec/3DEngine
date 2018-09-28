@@ -1,14 +1,12 @@
 #pragma once
 #include "ParticuleForceGenerator.hpp"
 
-class GravityGenerator : ParticuleForceGenerator
+class GravityGenerator : public ParticuleForceGenerator
 {
 private:
-	Vector gravity;
+	Vector3D gravity;
 public:
-	GravityGenerator();
 	~GravityGenerator();
-	GravityGenerator(Vector gravity);
-	void updateForce(Particule * particule, float time);
-
+	GravityGenerator(Vector3D gravity);
+	void updateForce(Particule* particule);
 };
