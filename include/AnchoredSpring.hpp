@@ -5,7 +5,7 @@ class AnchoredSpring : public ParticuleForceGenerator
 private: 
 	Particule * particule;
 	Vector3D anchorPoint;
-	float K; // constante d'élasticité
+	float K; // constante d'Ã©lasticitÃ©
 	float length0;
 
 public:

@@ -1,5 +1,6 @@
 #include "Functions.hpp"
 #include <algorithm>
+#include <thread>
 
 namespace utils
 {
@@ -14,14 +15,15 @@ namespace utils
 			std::chrono::system_clock::now().time_since_epoch()
 			);
 
-		// calcul du temps entre la dernière frame et "maintenant"
+		// calcul du temps entre la derniÃ¨re frame et "maintenant"
 		std::chrono::milliseconds delta = now - lastFrame;
 		lastFrame = now;
 
-		// si le temps de calcul est inférieur à 1/30ème de seconde (timeFrame), alors on attend
+		// si le temps de calcul est infÃ©rieur Ã  1/30Ã¨me de seconde (timeFrame), alors on attend
 		if (delta.count() < timeFrame)
 		{
-			Sleep(timeFrame - delta.count());
+			unsigned int sleepingDuration = static_cast<unsigned int>(timeFrame - delta.count());
+			std::this_thread::sleep_for(std::chrono::milliseconds(sleepingDuration));
 		}
 
 	}

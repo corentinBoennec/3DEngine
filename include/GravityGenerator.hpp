@@ -9,3 +9,4 @@ public:
 	~GravityGenerator();
 	GravityGenerator(Vector3D gravity);
 	void updateForce(Particule* particule);
+};

@@ -19,7 +19,7 @@ Vector3D::~Vector3D(void)
 
 }
 
-// Définition des accesseurs
+// DÃ©finition des accesseurs
 float Vector3D::getX()
 {
 	return x;
@@ -51,8 +51,8 @@ void Vector3D::setZ(float z)
 }
 
 
-// Surcharge des opérateurs pour des calculs vectoriels
-Vector3D Vector3D::operator+(Vector3D &vector)
+// Surcharge des opÃ©rateurs pour des calculs vectoriels
+Vector3D Vector3D::operator+(Vector3D vector)
 {
 	Vector3D result;
 
@@ -63,7 +63,7 @@ Vector3D Vector3D::operator+(Vector3D &vector)
 	return result;
 }
 
-Vector3D Vector3D::operator-(Vector3D &vector)
+Vector3D Vector3D::operator-(Vector3D vector)
 {
 	Vector3D result;
 
@@ -74,7 +74,7 @@ Vector3D Vector3D::operator-(Vector3D &vector)
 	return result;
 }
 
-void Vector3D::operator+=(const Vector3D &vector)
+void Vector3D::operator+=(const Vector3D vector)
 {
 	this->x += vector.x;
 	this->y += vector.y;
@@ -112,7 +112,7 @@ Vector3D Vector3D::operator/(float a)
 	return result;
 }
 
-Vector3D Vector3D::compose(Vector3D &vector1)
+Vector3D Vector3D::compose(Vector3D vector1)
 {
 	Vector3D result;
 
@@ -134,13 +134,13 @@ float Vector3D::norme()
 	return norme;
 }
 
-Vector3D Vector3D::project(Vector3D &vector1)
+Vector3D Vector3D::project(Vector3D vector1)
 {
 	Vector3D result = vector1 * (*this*(vector1)) / vector1.norme();
 	return result;
 }
 
-float Vector3D::distance(Vector3D &vector1)
+float Vector3D::distance(Vector3D vector1)
 {
 	float result = sqrt((this->x - vector1.x) * (this->x - vector1.x) +
 		(this->y - vector1.y) * (this->y - vector1.y) +
@@ -148,7 +148,7 @@ float Vector3D::distance(Vector3D &vector1)
 	return result;
 }
 
-Vector3D Vector3D::operator ^(Vector3D &vector)
+Vector3D Vector3D::operator ^(Vector3D vector)
 {
 	Vector3D result;
 
@@ -159,7 +159,7 @@ Vector3D Vector3D::operator ^(Vector3D &vector)
 	return result;
 }
 
-float Vector3D::produitMixte(Vector3D &vector1, Vector3D &vector2)
+float Vector3D::produitMixte(Vector3D vector1, Vector3D vector2)
 {
 	float result = *this*(vector1^vector2);
 

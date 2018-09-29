@@ -23,7 +23,7 @@ Particule::Particule(float mass, float damping, Vector3D position, Vector3D velo
 	this->gravity = gravity;
 }
 
-// D�finition des accesseurs
+// Définition des accesseurs
 float Particule::getMass()
 {
 	return mass;

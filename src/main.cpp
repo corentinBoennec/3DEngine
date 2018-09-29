@@ -10,8 +10,8 @@
 
 int main(int argc, char **argv)
 {
-	// Définition des constantes
-	float constexpr timeFrame = (1000/30); // temps d'une frame en ms pour avoir 30 FPS
+	// DÃ©finition des constantes
+	float constexpr timeFrame = (1000.f/30.f); // temps d'une frame en ms pour avoir 30 FPS
 
 	std::vector<Particule*> tableParticule;
 
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	float damping = 0.8;	
 	Vector3D velocity(15, 15, 15);
 
-	std::ofstream myfile; // fichier d'écriture des positions
+	std::ofstream myfile; // fichier d'Ã©criture des positions
 
 	Particule particule(5, damping, position, velocity, acceleration, gravity);
 	tableParticule.insert(tableParticule.begin(), &particule);
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	while (true)
 	{
 		utils::timeGestion(timeFrame); // gestion des FPS
-		utils::integrator(tableParticule, timeFrame); // MAJ des positions et vélocité
+		utils::integrator(tableParticule, timeFrame); // MAJ des positions et vÃ©locitÃ©
 		particule.PrintPosition(myfile);
 	}
 	myfile.close();
