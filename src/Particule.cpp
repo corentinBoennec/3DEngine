@@ -12,7 +12,7 @@ Particule::~Particule()
 }
 
 
-Particule::Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity)
+Particule::Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity, float radius)
 {
 	this->damping = damping;
 	this->mass = mass;
@@ -21,6 +21,7 @@ Particule::Particule(float mass, float damping, Vector3D position, Vector3D velo
 	this->velocity = velocity;
 	this->acceleration = acceleration + gravity;
 	this->gravity = gravity;
+	this->radius = radius;
 }
 
 // Définition des accesseurs
@@ -77,6 +78,11 @@ void Particule::setAcceleration(Vector3D acceleration)
 float Particule::getInverseMass()
 {
 	return inverseMass;
+}
+
+float Particule::getRadius()
+{
+	return radius;
 }
 
 void Particule::setInverseMass(float inverseMass)

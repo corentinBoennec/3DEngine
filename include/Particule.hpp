@@ -13,13 +13,14 @@ private:
 	Vector3D acceleration;
 	Vector3D gravity;
 	float inverseMass;
+	float radius;
 	
 	Vector3D accumForce; //acummulateur des forces
 
 public:
 	Particule();
 	~Particule();
-	Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity);
+	Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity, float radius);
 
 	// Accesseurs
 	float getMass();
@@ -36,6 +37,7 @@ public:
 	void setInverseMass(float inverseMass);
 	Vector3D getPosition();
 	void setPosition(Vector3D position);
+	float getRadius();
 
 	// Intégrateur
 	void updatePosition(float timeFrame);
