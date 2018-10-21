@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 
 	std::ofstream myfile; // fichier d'écriture des positions
 
-	Particule particule(5, damping, position, velocity, acceleration, gravity);
+	Particule particule(5, damping, position, velocity, acceleration, gravity, 0);
 	tableParticule.insert(tableParticule.begin(), &particule);
 
 
