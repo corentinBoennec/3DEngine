@@ -27,8 +27,9 @@ void ParticleContact::resolve(float duration)
 
 void ParticleContact::resolveImpulsion()
 {
-		particule[0]->setVelocity(normal * restitution * computeVs());
-		particule[1]->setVelocity(normal * restitution * computeVs() * -1);
+	float Vs = computeVs();
+		particule[0]->setVelocity(normal * restitution * Vs);
+		particule[1]->setVelocity(normal * restitution * Vs * -1);
 }
 
 void ParticleContact::resolveInterPenetration()
@@ -45,6 +46,7 @@ void ParticleContact::resolveInterPenetration()
 
 float ParticleContact::computeVs()
 {
+	// cette valeur doit être positive, elle designe une vitesse
 	float velocity = (this->particule[0]->getVelocity() - this->particule[1]->getVelocity()) * normal;
 	if (velocity >= 0)
 		return velocity;
