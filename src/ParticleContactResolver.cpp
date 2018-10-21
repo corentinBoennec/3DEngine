@@ -11,7 +11,7 @@ void ParticleContactResolver::setIterations(ParticleContact * contact)
 	// On insert le nouveau contact dans la liste pour que celle ci soit triée par ordre croissant
 	// Selon les vitesse d'eloignements.
 	int i = 0;
-	while (contacts[i].computeVs() > contact->computeVs())
+	while (i < contacts.size() && contacts[i].computeVs() > contact->computeVs())
 	{
 		i++;
 	}

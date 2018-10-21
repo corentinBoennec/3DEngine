@@ -2,8 +2,6 @@
 #include "Vector3D.hpp"
 class ParticleContact
 {
-	friend class ParticleContactResolver;
-
 private:
 	Particule * particule[2];
 	float restitution;
