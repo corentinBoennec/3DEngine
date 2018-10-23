@@ -16,21 +16,29 @@ int main(int argc, char **argv)
 	std::vector<Particule*> tableParticule;
 	worldParticles world;
 
+	/* cas 1 */
 	// Attributs des particules
-	Vector3D gravity(0, 0, -10);
+	/*Vector3D gravity(0, 0, -10);
 	Vector3D position1(0, -15, 5);
 	Vector3D acceleration(0, 0, 0);
 	float damping = 0.8f;	
 	Vector3D velocity1(0, 7, 0);
 
-	// Attributs des particules
-	// gravity(0, 0, -10);
+	
 	Vector3D position2(0, 15, 5);
-	//Vector3D acceleration(0, 0, 0);
-	//float damping = 0.8;
-	Vector3D velocity2(0, -7, 0);
+	Vector3D velocity2(0, -7, 0);*/
 
-	std::ofstream myfile; // fichier d'écriture des positions
+	/* cas 2 */
+	Vector3D gravity(0, 0, -10);
+	Vector3D position1(0, 0.1, 50);
+	Vector3D acceleration(0, 0, 0);
+	float damping = 0.8f;	
+	Vector3D velocity1(0, 0, 0);
+
+	
+	Vector3D position2(0, 0, 5);
+	Vector3D velocity2(0, 0, 0);
+	
 
 	Particule particule1(5, damping, position1, velocity1, acceleration, gravity, 5);
 	Particule particule2(5, damping, position2, velocity2, acceleration, gravity, 5);
@@ -40,7 +48,7 @@ int main(int argc, char **argv)
 	world.addParticle(&particule2);
 
 
-
+	std::ofstream myfile; // fichier d'écriture des positions
 
 	myfile.open("updateParticule.txt");
 
@@ -48,11 +56,10 @@ int main(int argc, char **argv)
 	{
 		utils::timeGestion(timeFrame); // gestion des FPS
 		utils::integrator(world.getParticles(), timeFrame); // MAJ des positions et vélocité
+		// Detection des contacts
 		std::vector<ParticleContact> contacts = world.getAllContact();
-		if (contacts.size() > 0)
-		{
-			std::cout << "contact" << std::endl;
-		}
+	
+		// résolutions des contacts
 		ParticleContactResolver resolver = ParticleContactResolver();
 		for (auto &contact : contacts)
 		{

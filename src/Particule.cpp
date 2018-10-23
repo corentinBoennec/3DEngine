@@ -105,9 +105,9 @@ void Particule::setPosition(Vector3D position)
 void Particule::updatePosition(float timeFrame)
 {
 	this->position = this->position + this->velocity * (timeFrame/1000);
-	if (this->position.getZ() <= 0)
+	if (this->position.getZ() <= this->radius)
 	{
-		this->position.setZ(0);
+		this->position.setZ(this->radius);
 	}
 }
 

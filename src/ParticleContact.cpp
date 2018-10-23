@@ -34,7 +34,7 @@ void ParticleContact::resolveImpulsion()
 
 void ParticleContact::resolveInterPenetration()
 {
-	//test de direction mauvais
+
 	float coeff0 = particule[0]->getMass() / (particule[0]->getMass() + particule[1]->getMass());  // coefficient pour pondérer le déplacement en fonction de la masse des objets
 	float coeff1 = 1 - coeff0;
 	
