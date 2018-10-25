@@ -81,9 +81,9 @@ void Vector3D::operator+=(const Vector3D& vector)
 	this->z += vector.z;
 }
 
-float Vector3D::operator *(const Vector3D& vector) const
+float Vector3D::operator*(const Vector3D & v) const
 {
-	float result = this->x * vector.x + this->y * vector.y + this->z * vector.z;
+	float result = this->x * v.x + this->y * v.y + this->z * v.z;
 
 	return result;
 }
@@ -125,13 +125,9 @@ Vector3D Vector3D::compose(const Vector3D& vector1) const
 
 float Vector3D::norme() const
 {
-	float x = this->x;
-	float y = this->y;
-	float z = this->z;
-
 	float norme = sqrt(x * x + y * y + z * z);
-
-	return norme;
+	float rounded_down = floorf(norme * 1000) / 1000;
+	return rounded_down;
 }
 
 Vector3D Vector3D::project(const Vector3D& vector1) const

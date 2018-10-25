@@ -1,8 +1,7 @@
 #include "ParticuleFlotation.hpp"
 
-ParticuleFlotation::ParticuleFlotation(Particule * particule, float maxDepth, float ObjectVolume, float liquidLevel, float liquidDensity, float totalImmertion)
+ParticuleFlotation::ParticuleFlotation(float maxDepth, float ObjectVolume, float liquidLevel, float liquidDensity, float totalImmertion)
 {
-	this->particule = particule;
 	this->maxDepth = maxDepth;
 	this->ObjectVolume = ObjectVolume;
 	this->liquidLevel = liquidLevel;
@@ -10,7 +9,7 @@ ParticuleFlotation::ParticuleFlotation(Particule * particule, float maxDepth, fl
 	this->totalImmertion = totalImmertion;
 }
 
-void ParticuleFlotation::updateForce()
+void ParticuleFlotation::updateForce(Particule* particule, float timeFrame)
 {
 	float immertion = (particule->getPosition().getZ() - this->liquidLevel - this->totalImmertion) / 2 * this->totalImmertion;
 	Vector3D F;
@@ -27,5 +26,5 @@ void ParticuleFlotation::updateForce()
 		F = Vector3D(0, 0, 1) * this->ObjectVolume * this->liquidDensity * immertion;
 	}
 
-	particule->addForce(F);
+	particule->addForce(F * (timeFrame / 1000));
 }

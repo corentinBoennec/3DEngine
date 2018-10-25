@@ -14,13 +14,14 @@ private:
 	Vector3D gravity;
 	float inverseMass;
 	float radius;
+	unsigned int id; // temporaire - sert pour les tests
 	
-	Vector3D accumForce; //acummulateur des forces
+	Vector3D accumForce = Vector3D(0, 0, 0); //acummulateur des forces
 
 public:
 	Particule();
 	~Particule();
-	Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity, float radius);
+	Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity, float radius, unsigned int id);
 
 	// Accesseurs
 	float getMass();
@@ -38,6 +39,9 @@ public:
 	Vector3D getPosition();
 	void setPosition(Vector3D position);
 	float getRadius();
+	Vector3D getAccuForce();
+	unsigned int getId();
+	void setId(unsigned int id);
 
 	// Intégrateur
 	void updatePosition(float timeFrame);

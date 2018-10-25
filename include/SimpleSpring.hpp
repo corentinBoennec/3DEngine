@@ -9,8 +9,8 @@ private:
 	float length0; // longueur initiale du ressort
 
 public:
-	SimpleSpring(Particule otherParticule, float k, float lenght0);
+	SimpleSpring(Particule* otherParticule, float k, float lenght0);
 	~SimpleSpring();
-	void updateForce(Particule particule);
+	void updateForce(Particule* particule, float timeFrame);
 };
 
