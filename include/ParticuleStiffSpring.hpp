@@ -11,5 +11,5 @@ private:
 public:
 	ParticuleStiffString(Vector3D anchor, float k, float damp);
 	~ParticuleStiffString();
-	void updateForce(Particule particule);
+	void updateForce(Particule* particule, float timeFrame);
 };

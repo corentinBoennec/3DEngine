@@ -11,5 +11,6 @@ Step by step guide :
 - Clone this reposatory
 - Launch CMake, set the project and the build path (create a folder outside the project for the build)
 - Click on configure, then generate
+- Copy the freeglut folder from 3DEngine/extlibs to Build/extlibs
 - Open the visual studio solution available in build
 - Here you go !

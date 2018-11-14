@@ -10,7 +10,6 @@ private:
 public:
 	DragGenerator(float K1, float K2);
 	~DragGenerator();
-	DragGenerator(Vector3D gravity);
-	void updateForce(Particule * particule, float time);
+	void updateForce(Particule* particule, float timeFrame);
 
 };
