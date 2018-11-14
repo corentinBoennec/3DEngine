@@ -114,6 +114,7 @@ void Particule::updatePosition(float timeFrame)
 void Particule::updateVelocity(float timeFrame)
 {
 	this->velocity = (this->velocity * (float)pow(this->damping, (timeFrame/1000) ) + (this->acceleration * (timeFrame/1000)));
+	this->velocity = this->velocity + ((this->accumForce / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
 }
 
 
