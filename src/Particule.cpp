@@ -132,10 +132,13 @@ void Particule::updateVelocity(float timeFrame)
 {
 	this->velocity = (this->velocity * (float)pow(this->damping, (timeFrame/1000) ) + (this->acceleration * (timeFrame/1000)));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	this->velocity = this->velocity + ((this->accumForce / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
 =======
 	this->velocity = this->velocity + ((this->accumForce / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s
 >>>>>>> b9f49475ffd86dd87e8cdf6abf2f88a622fe8c30
+=======
+>>>>>>> parent of e85d681... Update src/Particule.cpp
 }
 
 
