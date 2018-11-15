@@ -1,5 +1,6 @@
 #include <vector>
 #include "ParticleContact.hpp"
+
 class ParticleContactResolver {
 
 	friend class ParticleContact;

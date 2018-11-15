@@ -1,4 +1,4 @@
-﻿#include "SimpleSpring.hpp"
+﻿#include "Spring/SimpleSpring.hpp"
 
 SimpleSpring::SimpleSpring(Particule* otherParticule, float k, float length0)
 {

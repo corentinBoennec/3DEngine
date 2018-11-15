@@ -1,5 +1,5 @@
 #include "Particule.hpp"
-#include "ParticleContactResolver.hpp"
+#include "Contact/ParticleContactResolver.hpp"
 #include <vector>
 class WorldParticules
 {

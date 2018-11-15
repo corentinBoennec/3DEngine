@@ -1,4 +1,4 @@
-#include "ParticleContact.hpp"
+#include "Contact/ParticleContact.hpp"
 
 ParticleContact::ParticleContact(Particule * particule[2], float restitution)
 {

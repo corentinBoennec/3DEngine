@@ -12,7 +12,7 @@ Particule::~Particule()
 }
 
 
-Particule::Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity, float radius, unsigned int id)
+Particule::Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity, float radius)
 {
 	this->damping = damping;
 	this->mass = mass;
@@ -22,7 +22,6 @@ Particule::Particule(float mass, float damping, Vector3D position, Vector3D velo
 	this->acceleration = acceleration;
 	this->gravity = gravity;
 	this->radius = radius;
-	this->id = id;
 }
 
 // Définition des accesseurs
@@ -91,16 +90,6 @@ Vector3D Particule::getAccuForce()
 	return this->accumForce;
 }
 
-unsigned int Particule::getId()
-{
-	return this->id;
-}
-
-void Particule::setId(unsigned int id)
-{
-	this->id = id;
-}
-
 
 void Particule::setInverseMass(float inverseMass)
 {
@@ -137,7 +126,7 @@ void Particule::updateVelocity(float timeFrame)
 
 void Particule::PrintPosition(std::ofstream& file)
 {
-	file << "Particule " << std::to_string(id)  << " = (" << std::to_string(this->getPosition().getX()) << ", " << std::to_string(this->getPosition().getY()) << ", " << std::to_string(this->getPosition().getZ()) << ")" << std::endl;
+	file << "Particule = (" << std::to_string(this->getPosition().getX()) << ", " << std::to_string(this->getPosition().getY()) << ", " << std::to_string(this->getPosition().getZ()) << ")" << std::endl;
 }
 
 

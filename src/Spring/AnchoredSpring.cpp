@@ -1,4 +1,4 @@
-#include "AnchoredSpring.hpp"
+#include "Spring/AnchoredSpring.hpp"
 
 AnchoredSpring::AnchoredSpring(Vector3D anchorPoint, float K, float length0)
 {
