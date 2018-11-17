@@ -1,6 +1,5 @@
 #include "Matrix/Matrix3x3.hpp"
 
-
 Matrix3x3::Matrix3x3()
 {
 	for (int i = 1; i <= 9; i++)
@@ -89,4 +88,35 @@ Matrix3x3 Matrix3x3::transpose()
 
 	return transpose;
 	
+}
+ 
+Matrix3x3 Matrix3x3::operator*(const Matrix3x3& m) const
+{
+	float tab[9];
+	tab[0] = this->cells[0] * m.cells[0] + this->cells[1] * m.cells[3] + this->cells[2] * m.cells[6];
+	tab[0] = this->cells[0] * m.cells[1] + this->cells[1] * m.cells[4] + this->cells[2] * m.cells[7];
+	tab[0] = this->cells[0] * m.cells[2] + this->cells[1] * m.cells[5] + this->cells[2] * m.cells[8];
+	tab[0] = this->cells[3] * m.cells[0] + this->cells[4] * m.cells[3] + this->cells[5] * m.cells[6];
+	tab[0] = this->cells[3] * m.cells[1] + this->cells[4] * m.cells[4] + this->cells[5] * m.cells[7];
+	tab[0] = this->cells[3] * m.cells[2] + this->cells[4] * m.cells[5] + this->cells[5] * m.cells[8];
+	tab[0] = this->cells[6] * m.cells[0] + this->cells[7] * m.cells[3] + this->cells[8] * m.cells[6];
+	tab[0] = this->cells[6] * m.cells[1] + this->cells[7] * m.cells[4] + this->cells[8] * m.cells[7];
+	tab[0] = this->cells[6] * m.cells[2] + this->cells[7] * m.cells[5] + this->cells[8] * m.cells[8];
+
+	Matrix3x3 result(tab);
+
+	return result;
+	
+}
+
+Vector3D Matrix3x3::operator*(Vector3D& v) const
+{
+	float x, y, z;
+	x = this->cells[0] * v.getX() + this->cells[1] * v.getY() + this->cells[2] * v.getZ();
+	y = this->cells[3] * v.getX() + this->cells[4] * v.getY() + this->cells[5] * v.getZ();
+	z = this->cells[6] * v.getX() + this->cells[7] * v.getY() + this->cells[8] * v.getZ();
+
+	Vector3D result(x, y, z);
+
+	return result;
 }

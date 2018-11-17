@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Vector3D.hpp"
 class Matrix3x3
 {
 private :
@@ -13,4 +14,6 @@ public :
 	Matrix3x3 inverse();
 	Matrix3x3 operator *(float a) const;
 	Matrix3x3 transpose();
+	Matrix3x3 operator* (const Matrix3x3& m) const;
+	Vector3D operator* (Vector3D& v) const;
 };
