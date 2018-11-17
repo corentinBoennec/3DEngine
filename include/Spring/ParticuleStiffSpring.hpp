@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "ParticuleForceGenerator.hpp"
+#include "Forces/ParticuleForceGenerator.hpp"
 
 class ParticuleStiffString
 {

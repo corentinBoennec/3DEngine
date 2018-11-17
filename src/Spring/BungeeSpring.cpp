@@ -1,4 +1,4 @@
-﻿#include "BungeeSpring.hpp"
+﻿#include "Spring/BungeeSpring.hpp"
 
 BungeeSpring::BungeeSpring(Particule* otherParticule, float k, float length0)
 {

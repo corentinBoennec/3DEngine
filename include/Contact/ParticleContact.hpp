@@ -1,5 +1,6 @@
 #include "Particule.hpp"
 #include "Vector3D.hpp"
+
 class ParticleContact
 {
 private:

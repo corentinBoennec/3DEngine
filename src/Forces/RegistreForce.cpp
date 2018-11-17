@@ -1,4 +1,4 @@
-#include "RegistreForce.hpp"
+#include "Forces/RegistreForce.hpp"
 
 RegistreForce::RegistreForce(){}
 

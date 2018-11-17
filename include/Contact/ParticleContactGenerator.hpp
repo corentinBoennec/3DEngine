@@ -1,5 +1,6 @@
 #include "Particule.hpp"
-class ParticleContactGenrator
+
+class ParticleContactGenerator
 {
 public:
 	virtual void addContact();

@@ -1,4 +1,4 @@
-#include "ParticuleForceGenerator.hpp"
+#include "Forces/ParticuleForceGenerator.hpp"
 
 class ParticuleFlotation : public ParticuleForceGenerator
 {

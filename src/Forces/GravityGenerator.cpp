@@ -1,4 +1,4 @@
-#include "GravityGenerator.hpp"
+#include "Forces/GravityGenerator.hpp"
 
 GravityGenerator::GravityGenerator(Vector3D gravity)
 {

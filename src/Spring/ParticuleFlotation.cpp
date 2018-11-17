@@ -1,4 +1,4 @@
-#include "ParticuleFlotation.hpp"
+#include "Spring/ParticuleFlotation.hpp"
 
 ParticuleFlotation::ParticuleFlotation(float maxDepth, float ObjectVolume, float liquidLevel, float liquidDensity, float totalImmertion)
 {

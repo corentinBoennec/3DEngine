@@ -1,4 +1,4 @@
-﻿#include "ParticuleStiffSpring.hpp"
+﻿#include "Spring/ParticuleStiffSpring.hpp"
 
 ParticuleStiffString::ParticuleStiffString(Vector3D anchor, float k, float damp)
 {
