@@ -2,6 +2,10 @@
 
 
 
+Matrix4x4::Matrix4x4()
+{
+}
+
 Matrix4x4::Matrix4x4(float tab[12])
 {
 	for (int i = 0; i < 12; i++)
@@ -87,7 +91,7 @@ Matrix4x4 Matrix4x4::operator* (const Matrix4x4& m) const
 
 }
 
-Quaternion Matrix4x4::operator* (Quaternion& q) const 
+Quaternion Matrix4x4::operator* (const Quaternion& q) const 
 {
 
 }

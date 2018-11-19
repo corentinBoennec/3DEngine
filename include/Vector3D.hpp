@@ -33,6 +33,7 @@ public:
 	float produitMixte(Vector3D& vector1, const Vector3D& vector2) const; //produit mixte
 	Vector3D unit() const;
 
+
 private:
 	float x;
 	float y;
