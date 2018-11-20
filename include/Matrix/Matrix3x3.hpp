@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Vector3D.hpp"
+#include "Matrix4x4.hpp"
 class Matrix3x3
 {
 private :
@@ -9,6 +10,7 @@ private :
 public :
 	Matrix3x3();
 	Matrix3x3(float tab[9]);
+	Matrix3x3(Matrix4x4 m);
 	float get(int i);
 	float getDet();
 	Matrix3x3 inverse();

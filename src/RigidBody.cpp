@@ -92,6 +92,8 @@ Vector3D RigidBody::getAccuForce()
 
 void RigidBody::calculDerivedData()
 {
+	Matrix4x4 rotationMatrix = orientation.quaternToMatrix();
+	transformMatrix = rotationMatrix.inverse();
 }
 
 void RigidBody::updateAngularVelocity(Vector3D angularVelocity, float timeframe)
@@ -102,14 +104,15 @@ void RigidBody::updateAngularVelocity(Vector3D angularVelocity, float timeframe)
 
 void RigidBody::addForceAtPoint(Vector3D force, Vector3D point)
 {
+	
 	// convertir point en coord relatives au centre de masse
-	this->forceAccum += force;
-	this->torqueAccum += point * force; 
+	this->forceAccum += force.orthonormalChange(transformMatrix.inverse());
+	this->torqueAccum += point.orthonormalChange(transformMatrix.inverse()) ^ force.orthonormalChange(transformMatrix.inverse());
 }
 
 void RigidBody::addForceAtBodyPoint(Vector3D force, Vector3D point)
 {
 	// convertir point vers le repère du monde
-	addForceAtPoint(force, point);
+	addForceAtPoint(force, point.orthonormalChange(transformMatrix));
 }
 

@@ -15,7 +15,7 @@ public:
 	Matrix4x4 inverse();
 	Matrix4x4 operator *(float a) const;
 	Matrix4x4 operator* (const Matrix4x4& m) const;
-	Vector3D operator *(const Quaternion& q) const;
+	Quaternion operator *(const Quaternion& q) const;
 
 
 };
