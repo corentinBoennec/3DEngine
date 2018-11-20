@@ -5,7 +5,7 @@
 #include "RigidBody.hpp"
 #include "RigidBodyForceGenerator.hpp"
 
-class RegistreForce
+class RegistreForceRigidBody
 {
 private:
 	struct EnregistrementForce {
@@ -17,8 +17,8 @@ private:
 	Registre registre;
 
 public:
-	RegistreForce();
-	~RegistreForce();
+	RegistreForceRigidBody();
+	~RegistreForceRigidBody();
 
 	void update(float timeFrame);
 	void add(RigidBody* rigidbody, RigidBodyForceGenerator* forceGenerator);

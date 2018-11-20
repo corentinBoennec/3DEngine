@@ -1,6 +1,7 @@
 #include "Particule.hpp"
 #include "Contact/ParticleContactResolver.hpp"
 #include <vector>
+
 class WorldParticules
 {
 private:
@@ -11,7 +12,4 @@ public:
 	std::vector<Particule*> getParticles();
 	void addParticle(Particule * particule);
 	std::vector<ParticleContact> getAllContact();
-
-
-	
 };

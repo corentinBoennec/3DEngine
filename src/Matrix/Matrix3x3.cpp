@@ -16,13 +16,13 @@ Matrix3x3::Matrix3x3(float tab[9])
 	}
 }
 
-Matrix3x3::Matrix3x3(Matrix4x4 m)
+Matrix3x3::Matrix3x3(float tab[16], int k)
 {
-	for (i = 1; i <= 12; i++)
+	for (int i = 1; i <= 12; i++)
 	{
 		if (i % 4 != 0)
 		{
-			cells[i - 1] = m.get(i);
+			cells[i - 1] = tab[i];
 		}
 	}
 }

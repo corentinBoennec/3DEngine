@@ -22,5 +22,12 @@ class Quaternion
         Quaternion operator *(const Quaternion& quaternion) const;
 		Quaternion operator +(const Quaternion& quaternion) const;
 		Quaternion operator *(const float& scalaire) const;
+		Quaternion operator/(const float& scalaire) const;
 		Matrix4x4 quaternToMatrix();
+
+		//Getter
+		float getAngle();
+		float getX();
+		float getY();
+		float getZ();
 };

@@ -12,15 +12,22 @@
 #include "Forces/DragGenerator.hpp"
 #include "Forces/GravityGenerator.hpp"
 
+#include "Matrix/Matrix3x3.hpp"
+#include "Matrix/Matrix4x4.hpp"
+#include "RigidBody.hpp"
+#include "Forces/GravityGeneratorRigidBody.hpp"
+#include "Forces/RegistreForceRigidBody.hpp"
+#include "WorldRigidBody.hpp"
+
 // TODO: Mettre les fichiers dans des dossiers
 
 // Définition des constantes
 float constexpr timeFrame = (1000.f / 30.f); // temps d'une frame en ms pour avoir 30 FPS
 
-std::vector<Particule*> tableParticule;
+/*std::vector<Particule*> tableParticule;
 WorldParticules world;
 
-/*Cas 2 - Ressort*/
+Cas 2 - Ressort
 Vector3D gravity(0, 0, -10);
 Vector3D acceleration(0, 0, 0);
 float damping = 0.8f;
@@ -40,6 +47,27 @@ SimpleSpring spring(&particule2, 1, 2);
 RegistreForce registre;
 DragGenerator drag(1, 1);
 GravityGenerator grav(gravity);
+*/
+
+std::vector<RigidBody*> tableRigidBody;
+WorldRigidBody worldR;
+
+Vector3D gravity(0, 0, -10);
+Vector3D acceleration(0, 0, 0);
+float linearDamping = 0.8f;
+
+Vector3D position(2.0, 0.0, 0.0);
+Vector3D velocity(-0.2, 0.0, 0.0);
+Quaternion angularVelocity(0, 0.4, 0.0, 0.0);
+Quaternion angularAcceleration(0, 0.2, 0.0, 0.0);
+Quaternion orientation(1, 2, 2, 2);
+
+RigidBody sphere(5, linearDamping, position, velocity, acceleration, angularVelocity, angularAcceleration, gravity, orientation, 0.5);
+
+// Forces
+RegistreForceRigidBody registre;
+GravityGeneratorRigidBody grav(gravity);
+
 
 // OpenGL functions
 
@@ -62,39 +90,31 @@ void Draw_Spheres(void)
 
 	glColor3f(0.8, 0.2, 0.1);
 	glPushMatrix();
-	glTranslatef(1.0 * particule1.getPosition().getX(), 1.0 * particule1.getPosition().getY(), 1.0 * particule1.getPosition().getZ());
-	glutSolidSphere(particule1.getRadius(), 20, 50);
+	glTranslatef(1.0 * sphere.getPosition().getX(), 1.0 * sphere.getPosition().getY(), 1.0 * sphere.getPosition().getZ());
+	glRotatef(1.0 * sphere.getOrientation().getAngle(), 1.0 * sphere.getOrientation().getX(), 1.0 * sphere.getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
+	glutSolidSphere(sphere.getRadius(), 20, 50);
 	glPopMatrix();
-
-	glColor3f(0.1, 0.2, 0.8);
-	glPushMatrix();
-	glTranslatef(1.0 * particule2.getPosition().getX(), 1.0 * particule2.getPosition().getY(), 1.0 * particule2.getPosition().getZ());
-	glutSolidSphere(particule2.getRadius(), 20, 50);
-	glPopMatrix();
-
 
 	glutSwapBuffers();
 }
 
 void idleFunc(void)
 {
-	registre.add(&particule1, &grav);
-	registre.add(&particule2, &grav);
+	registre.add(&sphere, &grav);
 	
 	// Detection des contacts
-	std::vector<ParticleContact> contacts = world.getAllContact();
+	// std::vector<ParticleContact> contacts = worldR.getAllContact();
 
 	// résolutions des contacts
-	ParticleContactResolver resolver = ParticleContactResolver();
+	/*ParticleContactResolver resolver = ParticleContactResolver();
 	for (auto &contact : contacts)
 	{
 		resolver.setIterations(&contact);
 	}
-	resolver.resolveContact(timeFrame);
+	resolver.resolveContact(timeFrame);*/
 
 	registre.update(timeFrame); // MAJ des forces
-	spring.updateForce(&particule1, timeFrame); // MAJ des forces du ressort
-	utils::integrator(world.getParticles(), timeFrame); // MAJ des positions et vélocité
+	utils::integratorRigidBody(worldR.getRigidBody(), timeFrame); // MAJ des positions et vélocité
 	registre.cleanRegistre();
 
 	glutPostRedisplay();
@@ -102,12 +122,19 @@ void idleFunc(void)
 
 int main(int argc, char **argv)
 {
-	
+	float tab[9];
+	for (int i = 0; i < 9; i++)
+	{
+		if (i % 4 == 0)
+			tab[i] = (2 / 5) * sphere.getMass() * sphere.getRadius() * sphere.getRadius();
+		else
+			tab[i] = 0;
+	}
+	Matrix3x3 inertiaTensor(tab);
+	sphere.setInertiaTensor(inertiaTensor);
 
-	tableParticule.insert(tableParticule.begin(), &particule1);
-	world.addParticle(&particule1);
-	tableParticule.insert(tableParticule.begin(), &particule2);
-	world.addParticle(&particule2);
+	tableRigidBody.insert(tableRigidBody.begin(), &sphere);
+	worldR.addRigidBody(&sphere);
 
 	/*std::ofstream myfile; // fichier d'écriture des positions
 

@@ -9,10 +9,12 @@ private:
 	float mass;
 	float inverseMass;
 	float linearDamping;
+	float radius; // Uniquement des sphères pour le moment
 	Vector3D position;
 	Vector3D velocity;
 	Vector3D acceleration;
-	Vector3D angularVelocity;
+	Quaternion angularVelocity;
+	Quaternion angularAcceleration;
 	Vector3D gravity;
 	Quaternion orientation;
 	Matrix4x4 transformMatrix;
@@ -23,7 +25,7 @@ private:
 
 public:
 	RigidBody();
-	RigidBody(float mass, float linearDumping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D gravity, Quaternion orientation, Matrix3x3 inverseInertiaTensor);
+	RigidBody(float mass, float linearDumping, Vector3D position, Vector3D velocity, Vector3D acceleration, Quaternion angularVelocity, Quaternion angularAcceleration, Vector3D gravity, Quaternion orientation, float radius);
 	~RigidBody();
 
 	// Accesseurs
@@ -41,11 +43,19 @@ public:
 	Vector3D getPosition();
 	void setPosition(Vector3D position);
 	Vector3D getAccuForce();
-
+	void setInertiaTensor(Matrix3x3 &inertiatensor);
+	float getRadius();
+	Quaternion getOrientation();
 
 	void calculDerivedData();
-	void updateAngularVelocity(Vector3D angularVelocity, float timeframe);
+	
+
+	// Fonction de l'intégrateur
+	void updatePositionOrientation(float timeFrame);
+	void updateAllVelocity(float timeFrame); 
+
+	// Forces
 	void addForceAtPoint(Vector3D force, Vector3D point); // Applique une force en un point précis de l'objet - repère du monde
 	void addForceAtBodyPoint(Vector3D force, Vector3D point); // Même chose mais dans le repère de l'objet
-
+	void clearAccumulator();
 };

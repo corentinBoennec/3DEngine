@@ -49,10 +49,22 @@ Quaternion Quaternion::operator*(const float& scalaire) const
 	return result;
 }
 
+Quaternion Quaternion::operator/(const float& scalaire) const
+{
+	Quaternion result;
+
+	result.r = this->r / scalaire;
+	result.i = this->i / scalaire;
+	result.j = this->j / scalaire;
+	result.k = this->k / scalaire;
+
+	return result;
+};
+
 
 void Quaternion::normalize()
 {
-    auto d = (this->r * this->r) + (this->i * this->i) + (this->j * this->j) + (this->k * this->k);
+    float d = (this->r * this->r) + (this->i * this->i) + (this->j * this->j) + (this->k * this->k);
     if (d == 0)
     {
         r = 1;
@@ -97,4 +109,24 @@ Matrix4x4 Quaternion::quaternToMatrix()
 	Matrix4x4 result(tab);
 
 	return result;
+}
+
+float Quaternion::getAngle()
+{
+	return this->r;
+}
+
+float Quaternion::getX()
+{
+	return this->i;
+}
+
+float Quaternion::getY()
+{
+	return this->j;
+}
+
+float Quaternion::getZ()
+{
+	return this->k;
 }

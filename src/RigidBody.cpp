@@ -2,7 +2,7 @@
 
 RigidBody::RigidBody(){}
 
-RigidBody::RigidBody(float mass, float linearDumping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D gravity, Quaternion orientation, Matrix3x3 inverseInertiaTensor)
+RigidBody::RigidBody(float mass, float linearDumping, Vector3D position, Vector3D velocity, Vector3D acceleration, Quaternion angularVelocity, Quaternion angularAcceleration, Vector3D gravity, Quaternion orientation, float radius)
 {
 	this->mass = mass;
 	this->linearDamping = linearDamping;
@@ -10,10 +10,11 @@ RigidBody::RigidBody(float mass, float linearDumping, Vector3D position, Vector3
 	this->velocity = velocity;
 	this->acceleration = acceleration;
 	this->angularVelocity = angularVelocity;
+	this->angularAcceleration = angularAcceleration;
 	this->gravity = gravity;
 	this->orientation = orientation;
-	this->inverseInertiaTensor = inverseInertiaTensor.inverse();
 	this->inverseMass = 1 / mass;
+	this->radius = radius;
 }
 
 RigidBody::~RigidBody(){}
@@ -90,29 +91,69 @@ Vector3D RigidBody::getAccuForce()
 	return this->forceAccum;
 }
 
+void RigidBody::setInertiaTensor(Matrix3x3 &inertiaTensor)
+{
+	this->inverseInertiaTensor = inertiaTensor.inverse();
+}
+
+float RigidBody::getRadius()
+{
+	return this->radius;
+}
+
+Quaternion RigidBody::getOrientation()
+{
+	return this->orientation;
+}
+
 void RigidBody::calculDerivedData()
 {
 	Matrix4x4 rotationMatrix = orientation.quaternToMatrix();
-	transformMatrix = rotationMatrix.inverse();
-}
+	this->transformMatrix = rotationMatrix.inverse();
 
-void RigidBody::updateAngularVelocity(Vector3D angularVelocity, float timeframe)
-{
-	Quaternion w(0, angularVelocity.getX(), angularVelocity.getY(), angularVelocity.getZ());
-	this->orientation = this->orientation + w * this->orientation * (timeframe / 2);
+	Matrix3x3 m(transformMatrix.getTab(), 1);
+	this->inverseInertiaTensor = m * this->inverseInertiaTensor * m.inverse();
 }
 
 void RigidBody::addForceAtPoint(Vector3D force, Vector3D point)
 {
-	
-	// convertir point en coord relatives au centre de masse
-	this->forceAccum += force.orthonormalChange(transformMatrix.inverse());
-	this->torqueAccum += point.orthonormalChange(transformMatrix.inverse()) ^ force.orthonormalChange(transformMatrix.inverse());
+	point.orthonormalChange(this->transformMatrix.inverse());
+	this->forceAccum += force;
+	this->torqueAccum += point ^ force;
 }
 
 void RigidBody::addForceAtBodyPoint(Vector3D force, Vector3D point)
 {
-	// convertir point vers le repère du monde
-	addForceAtPoint(force, point.orthonormalChange(transformMatrix));
+	point.orthonormalChange(this->transformMatrix);
+	addForceAtPoint(force, point);
 }
+
+void RigidBody::clearAccumulator()
+{
+	this->forceAccum = Vector3D(0, 0, 0);
+	this->torqueAccum = Vector3D(0, 0, 0);
+}
+
+void RigidBody::updatePositionOrientation(float timeFrame)
+{
+	this->position = this->position + this->velocity * (timeFrame / 1000);
+	if (this->position.getZ() <= this->radius)
+	{
+		this->position.setZ(this->radius);
+	}
+
+	this->orientation.normalize();
+	this->orientation = this->orientation + this->angularVelocity * (timeFrame / 2000);
+}
+
+void RigidBody::updateAllVelocity(float timeFrame)
+{
+	this->velocity = (this->velocity * (float)pow(this->linearDamping, (timeFrame / 1000)) + (this->acceleration * (timeFrame / 1000)));
+	this->velocity = this->velocity + ((this->forceAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
+
+	Quaternion torque(0, torqueAccum.getX(), torqueAccum.getY(), torqueAccum.getZ());
+	this->angularVelocity = (this->angularVelocity * (this->angularAcceleration * (torque / this->mass) * (timeFrame / 1000)));
+}
+
+
 

@@ -36,4 +36,17 @@ namespace utils
 			p_particule->updateVelocity(timeFrame);
 		});
 	}
+
+	void integratorRigidBody(std::vector<RigidBody*> tableRigidBody, float timeFrame)
+	{
+		std::for_each(tableRigidBody.begin(), tableRigidBody.end(), [timeFrame](RigidBody *r_rigidbody)
+		{
+			r_rigidbody->updatePositionOrientation(timeFrame);
+			r_rigidbody->updateAllVelocity(timeFrame);
+			r_rigidbody->calculDerivedData();
+			r_rigidbody->clearAccumulator();
+		});
+	}
+
+	
 }

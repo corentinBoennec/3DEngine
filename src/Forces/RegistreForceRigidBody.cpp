@@ -1,11 +1,11 @@
 ﻿#include "Forces/RegistreForceRigidBody.hpp"
 
-RegistreForce::RegistreForce() {}
+RegistreForceRigidBody::RegistreForceRigidBody() {}
 
-RegistreForce::~RegistreForce() {}
+RegistreForceRigidBody::~RegistreForceRigidBody() {}
 
 
-void RegistreForce::update(float timeFrame)
+void RegistreForceRigidBody::update(float timeFrame)
 {
 	for (auto eF : this->registre)
 	{
@@ -13,7 +13,7 @@ void RegistreForce::update(float timeFrame)
 	}
 }
 
-void RegistreForce::add(RigidBody* particule, RigidBodyForceGenerator* forceGenerator)
+void RegistreForceRigidBody::add(RigidBody* particule, RigidBodyForceGenerator* forceGenerator)
 {
 	EnregistrementForce eF;
 	eF.particule = particule;
@@ -21,17 +21,17 @@ void RegistreForce::add(RigidBody* particule, RigidBodyForceGenerator* forceGene
 	this->registre.push_back(eF);
 }
 
-void RegistreForce::suppr(int index)
+void RegistreForceRigidBody::suppr(int index)
 {
 	this->registre.erase(registre.begin() + index);
 }
 
-void RegistreForce::cleanRegistre()
+void RegistreForceRigidBody::cleanRegistre()
 {
 	this->registre.clear();
 }
 
-int RegistreForce::count()
+int RegistreForceRigidBody::count()
 {
 	return (int)this->registre.size();
 }

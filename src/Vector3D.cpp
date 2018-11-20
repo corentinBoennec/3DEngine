@@ -170,12 +170,13 @@ Vector3D Vector3D::unit() const
 }
 
 
-void Vector3D::orthonormalChange(Matrix3x3 transformationMatrix)
+void Vector3D::orthonormalChange(Matrix4x4 transformationMatrix)
 {
-	Vector3D vectorInOtherBase =  transformationMatrix * *this;
-	x = vectorInOtherBase.getX();
-	y = vectorInOtherBase.getY();
-	z = vectorInOtherBase.getZ();
+	Matrix3x3 m(transformationMatrix.getTab(), 1);
+	Vector3D vectorInOtherBase = m * *this;
+	this->x = vectorInOtherBase.getX();
+	this->y = vectorInOtherBase.getY();
+	this->z = vectorInOtherBase.getZ();
 }
 
 

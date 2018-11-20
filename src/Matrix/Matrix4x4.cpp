@@ -43,6 +43,11 @@ float Matrix4x4::getDet()
 	return result;
 }
 
+float* Matrix4x4::getTab()
+{
+	return this->cells;
+}
+
 Matrix4x4 Matrix4x4::inverse()
 {
 	float det = this->getDet();
