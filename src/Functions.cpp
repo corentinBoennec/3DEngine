@@ -1,9 +1,6 @@
 #include "Functions.hpp"
 #include <algorithm>
 #include <thread>
-#include "Matrix\Matrix4x4.hpp"
-#include "Matrix\Matrix3x3.hpp"
-#include "Vector3D.hpp"
 
 namespace utils
 {
