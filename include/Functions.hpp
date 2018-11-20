@@ -3,7 +3,6 @@
 #include <vector>
 #include <algorithm>
 
-#include "Vector3D.hpp"
 #include "Particule.hpp"
 #include "RigidBody.hpp"
 

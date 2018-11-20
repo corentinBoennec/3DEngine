@@ -18,13 +18,6 @@ Matrix4x4::Matrix4x4(float tab[12])
 	cells[15] = 1;
 }
 
-Matrix4x4::Matrix4x4(float tab[16])
-{
-	for (int i = 0; i < 16; i++)
-	{
-		cells[i] = tab[i];
-	}
-}
 
 float Matrix4x4::get(int i)
 {
@@ -91,7 +84,7 @@ Matrix4x4 Matrix4x4::operator *(float a) const
 	return result;
 }
 
-Matrix4x4 Matrix4x4::operator* (const Matrix4x4& m) const
+/*Matrix4x4 Matrix4x4::operator* (const Matrix4x4& m) const
 {
 
 }
@@ -99,4 +92,4 @@ Matrix4x4 Matrix4x4::operator* (const Matrix4x4& m) const
 Quaternion Matrix4x4::operator *(const Quaternion& q) const 
 {
 
-}
+}*/

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Matrix/Quaternion.hpp"
-#include "Vector3D.hpp"
+#include "Matrix\Matrix3x3.hpp"
 
 class RigidBody
 {

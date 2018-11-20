@@ -1,4 +1,5 @@
 ﻿#include "RigidBody.hpp"
+#include "Functions.cpp"
 
 RigidBody::RigidBody(){}
 
@@ -108,23 +109,23 @@ Quaternion RigidBody::getOrientation()
 
 void RigidBody::calculDerivedData()
 {
-	Matrix4x4 rotationMatrix = orientation.quaternToMatrix();
+	Matrix4x4 rotationMatrix = utils::quaternToMatrix(orientation);
 	this->transformMatrix = rotationMatrix.inverse();
 
-	Matrix3x3 m(transformMatrix.getTab(), 1);
+	Matrix3x3 m(transformMatrix);
 	this->inverseInertiaTensor = m * this->inverseInertiaTensor * m.inverse();
 }
 
 void RigidBody::addForceAtPoint(Vector3D force, Vector3D point)
 {
-	point.orthonormalChange(this->transformMatrix.inverse());
+	point = utils::orthonormalChange(transformMatrix.inverse(), point);
 	this->forceAccum += force;
 	this->torqueAccum += point ^ force;
 }
 
 void RigidBody::addForceAtBodyPoint(Vector3D force, Vector3D point)
 {
-	point.orthonormalChange(this->transformMatrix);
+	point = utils::orthonormalChange(transformMatrix, point);
 	addForceAtPoint(force, point);
 }
 

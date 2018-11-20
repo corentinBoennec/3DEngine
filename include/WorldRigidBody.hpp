@@ -1,4 +1,6 @@
-﻿#include "RigidBody.hpp"
+﻿#pragma once
+
+#include "RigidBody.hpp"
 
 #include <vector>
 

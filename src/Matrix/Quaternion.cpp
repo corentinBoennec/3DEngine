@@ -89,27 +89,7 @@ void Quaternion::doRotation(Vector3D v)
 	
 }
 
-Matrix4x4 Quaternion::quaternToMatrix()
-{
-	float tab[12];
 
-	tab[0] = 1 - (2 * (this->j * this->j) + 2 * (this->k * this->k));
-	tab[1] = 2 * this->i * this->j + 2 * this->k * this->r;
-	tab[2] = 2 * this->i * this->k - 2 * this->j * this->r;
-	tab[3] = i;
-	tab[4] = 2 * this->i * this->j - 2 * this->k * this->r;
-	tab[5] = 1 - (2 * (this->i * this->i) + 2 * (this->k * this->k));
-	tab[6] = 2 * this->j * this->k + 2 * this->i * this->r;
-	tab[7] = j;
-	tab[8] = 2 * this->i * this->k + 2 * this->j * this->r;
-	tab[9] = 2 * this->j * this->k - 2 * this->i * this->r;
-	tab[10] = 1 - (2 * (this->i * this->i) + 2 * (this->j * this->j));
-	tab[11] = k;
-
-	Matrix4x4 result(tab);
-
-	return result;
-}
 
 float Quaternion::getAngle()
 {

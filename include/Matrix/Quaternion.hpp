@@ -2,7 +2,6 @@
 
 #include <math.h>
 #include "Vector3D.hpp"
-#include "Matrix/Matrix4x4.hpp"
 
 
 class Quaternion
@@ -23,7 +22,7 @@ class Quaternion
 		Quaternion operator +(const Quaternion& quaternion) const;
 		Quaternion operator *(const float& scalaire) const;
 		Quaternion operator/(const float& scalaire) const;
-		Matrix4x4 quaternToMatrix();
+		
 
 		//Getter
 		float getAngle();

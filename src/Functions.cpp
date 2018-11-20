@@ -1,6 +1,9 @@
 #include "Functions.hpp"
 #include <algorithm>
 #include <thread>
+#include "Matrix\Matrix4x4.hpp"
+#include "Matrix\Matrix3x3.hpp"
+#include "Vector3D.hpp"
 
 namespace utils
 {
@@ -46,6 +49,35 @@ namespace utils
 			r_rigidbody->calculDerivedData();
 			r_rigidbody->clearAccumulator();
 		});
+	}
+
+	Matrix4x4 quaternToMatrix(Quaternion q)
+	{
+			float tab[12];
+
+			tab[0] = 1 - (2 * (q.getY() * q.getY()) + 2 * (q.getZ() * q.getZ()));
+			tab[1] = 2 * q.getX() * q.getY() + 2 * q.getZ() * q.getAngle();
+			tab[2] = 2 * q.getX() * q.getZ() - 2 * q.getY() *q.getAngle();
+			tab[3] = q.getX();
+			tab[4] = 2 * q.getX() * q.getY() - 2 * q.getZ() * q.getAngle();
+			tab[5] = 1 - (2 * (q.getX() * q.getX()) + 2 * q.getZ() * q.getZ());
+			tab[6] = 2 * q.getY() * q.getZ() + 2 * q.getX() * q.getAngle();
+			tab[7] = q.getY();
+			tab[8] = 2 * q.getX() * q.getZ() + 2 * q.getY() * q.getAngle();
+			tab[9] = 2 * q.getY() * q.getZ() - 2 * q.getX()* q.getAngle();
+			tab[10] = 1 - (2 * (q.getX() * q.getX()) + 2 * (q.getY() * q.getY()));
+			tab[11] = q.getZ();
+
+			Matrix4x4 result(tab);
+
+			return result;
+	}
+	Vector3D orthonormalChange(Matrix4x4 transformationMatrix, Vector3D v)
+	{
+			Matrix3x3 m(transformationMatrix);
+			Vector3D vectorInOtherBase = m * v;
+			
+			return vectorInOtherBase;
 	}
 
 	

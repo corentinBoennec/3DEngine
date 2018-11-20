@@ -4,8 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <Matrix\Matrix3x3.hpp>
-#include "Matrix/Matrix4x4.hpp"
+
 
 class Vector3D
 {
@@ -34,7 +33,7 @@ public:
 	Vector3D operator ^(const Vector3D& vector) const; //produit vectoriel
 	float produitMixte(Vector3D& vector1, const Vector3D& vector2) const; //produit mixte
 	Vector3D unit() const;
-	void orthonormalChange(Matrix4x4 transformationMatrix);
+	
 
 
 private:

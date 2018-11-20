@@ -1,3 +1,4 @@
+#pragma once
 #include "Matrix/Quaternion.hpp"
 
 class Matrix4x4
