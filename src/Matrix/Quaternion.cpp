@@ -67,18 +67,16 @@ Quaternion Quaternion::operator/(const float& scalaire) const
 
 void Quaternion::normalize()
 {
-    float d = (this->r * this->r) + (this->i * this->i) + (this->j * this->j) + (this->k * this->k);
+    float d = (this->i * this->i) + (this->j * this->j) + (this->k * this->k);
     if (d == 0)
     {
-        r = 1;
         i = 0;
         j = 0;
         k = 0;
     }
     else
     {
-        d = 1 / sqrt(d);
-        r *= d;
+		d = 1 / sqrt(d);
         i *= d; 
         j *= d;
         k *= d;

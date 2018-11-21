@@ -110,14 +110,14 @@ Matrix3x3 Matrix3x3::operator*(const Matrix3x3& m) const
 {
 	float tab[9];
 	tab[0] = this->cells[0] * m.cells[0] + this->cells[1] * m.cells[3] + this->cells[2] * m.cells[6];
-	tab[0] = this->cells[0] * m.cells[1] + this->cells[1] * m.cells[4] + this->cells[2] * m.cells[7];
-	tab[0] = this->cells[0] * m.cells[2] + this->cells[1] * m.cells[5] + this->cells[2] * m.cells[8];
-	tab[0] = this->cells[3] * m.cells[0] + this->cells[4] * m.cells[3] + this->cells[5] * m.cells[6];
-	tab[0] = this->cells[3] * m.cells[1] + this->cells[4] * m.cells[4] + this->cells[5] * m.cells[7];
-	tab[0] = this->cells[3] * m.cells[2] + this->cells[4] * m.cells[5] + this->cells[5] * m.cells[8];
-	tab[0] = this->cells[6] * m.cells[0] + this->cells[7] * m.cells[3] + this->cells[8] * m.cells[6];
-	tab[0] = this->cells[6] * m.cells[1] + this->cells[7] * m.cells[4] + this->cells[8] * m.cells[7];
-	tab[0] = this->cells[6] * m.cells[2] + this->cells[7] * m.cells[5] + this->cells[8] * m.cells[8];
+	tab[1] = this->cells[0] * m.cells[1] + this->cells[1] * m.cells[4] + this->cells[2] * m.cells[7];
+	tab[2] = this->cells[0] * m.cells[2] + this->cells[1] * m.cells[5] + this->cells[2] * m.cells[8];
+	tab[3] = this->cells[3] * m.cells[0] + this->cells[4] * m.cells[3] + this->cells[5] * m.cells[6];
+	tab[4] = this->cells[3] * m.cells[1] + this->cells[4] * m.cells[4] + this->cells[5] * m.cells[7];
+	tab[5] = this->cells[3] * m.cells[2] + this->cells[4] * m.cells[5] + this->cells[5] * m.cells[8];
+	tab[6] = this->cells[6] * m.cells[0] + this->cells[7] * m.cells[3] + this->cells[8] * m.cells[6];
+	tab[7] = this->cells[6] * m.cells[1] + this->cells[7] * m.cells[4] + this->cells[8] * m.cells[7];
+	tab[8] = this->cells[6] * m.cells[2] + this->cells[7] * m.cells[5] + this->cells[8] * m.cells[8];
 
 	Matrix3x3 result(tab);
 

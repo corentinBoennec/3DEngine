@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 
+
 #include "Functions.hpp"
 
 #include "WorldParticules.hpp"
@@ -19,6 +20,7 @@
 #include "Forces/GravityGeneratorRigidBody.hpp"
 #include "Forces/RegistreForceRigidBody.hpp"
 #include "WorldRigidBody.hpp"
+
 
 // TODO: Mettre les fichiers dans des dossiers
 
@@ -60,11 +62,11 @@ float angularDamping = 0.8f;
 
 Vector3D position(2.0, 0.0, 0.0);
 Vector3D velocity(-0.2, 0.0, 0.0);
-Vector3D angularVelocity(0.4, 0.0, 0.0);
-Vector3D angularAcceleration(0.2, 0.0, 0.0);
+Vector3D angularVelocity(5, 0.0, 0.0);
+Vector3D angularAcceleration(3.0, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
-RigidBody sphere(5, linearDamping, angularDamping, position, velocity, acceleration, angularVelocity, angularAcceleration, gravity, orientation, 0.5);
+RigidBody sphere(5, linearDamping, angularDamping, position, velocity, acceleration, angularVelocity, angularAcceleration, gravity, orientation, 4.0);
 
 // Forces
 RegistreForceRigidBody registre;
@@ -118,8 +120,9 @@ void idleFunc(void)
 	registre.update(timeFrame); // MAJ des forces
 	utils::integratorRigidBody(worldR.getRigidBody(), timeFrame); // MAJ des positions et vélocité
 	registre.cleanRegistre();
-
+	
 	glutPostRedisplay();
+	
 }
 
 int main(int argc, char **argv)

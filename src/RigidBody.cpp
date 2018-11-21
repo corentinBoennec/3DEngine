@@ -1,5 +1,5 @@
 ﻿#include "RigidBody.hpp"
-#include "Functions.cpp"
+#include "Functions.hpp"
 
 RigidBody::RigidBody(){}
 
@@ -14,9 +14,11 @@ RigidBody::RigidBody(float mass, float linearDumping, float angularDamping ,Vect
 	this->angularVelocity = angularVelocity;
 	this->angularAcceleration = angularAcceleration;
 	this->gravity = gravity;
+	orientation.normalize();
 	this->orientation = orientation;
 	this->inverseMass = 1 / mass;
 	this->radius = radius;
+	calculDerivedData();
 }
 
 RigidBody::~RigidBody(){}
@@ -121,7 +123,7 @@ void RigidBody::calculDerivedData()
 
 	Matrix3x3 inertiaModifier;
 	inertiaModifier.quaternToMatrix3(orientation);
-	this->inverseInertiaTensor = inertiaModifier * this->inverseInertiaTensor * inertiaModifier.inverse();
+	this->inverseInertiaTensor = inertiaModifier * (this->inverseInertiaTensor * inertiaModifier.inverse());
 }
 
 void RigidBody::addForceAtPoint(Vector3D force, Vector3D point)
@@ -161,7 +163,7 @@ void RigidBody::updateAllVelocity(float timeFrame)
 	this->velocity = this->velocity + ((this->forceAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
 
 	this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) + (this->angularAcceleration * (timeFrame / 1000)));
-	this->angularVelocity = this->angularVelocity + ((this->torqueAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
+	//this->angularVelocity = this->angularVelocity + ((this->torqueAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
 }
 
 
