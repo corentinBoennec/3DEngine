@@ -3,10 +3,11 @@
 
 RigidBody::RigidBody(){}
 
-RigidBody::RigidBody(float mass, float linearDumping, Vector3D position, Vector3D velocity, Vector3D acceleration, Quaternion angularVelocity, Quaternion angularAcceleration, Vector3D gravity, Quaternion orientation, float radius)
+RigidBody::RigidBody(float mass, float linearDumping, float angularDamping ,Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D angularAcceleration, Vector3D gravity, Quaternion orientation, float radius)
 {
 	this->mass = mass;
 	this->linearDamping = linearDamping;
+	this->angularDamping = angularDamping;
 	this->position = position;
 	this->velocity = velocity;
 	this->acceleration = acceleration;
@@ -92,6 +93,11 @@ Vector3D RigidBody::getAccuForce()
 	return this->forceAccum;
 }
 
+Vector3D RigidBody::getAccuTorque()
+{
+	return this->torqueAccum;
+}
+
 void RigidBody::setInertiaTensor(Matrix3x3 &inertiaTensor)
 {
 	this->inverseInertiaTensor = inertiaTensor.inverse();
@@ -109,23 +115,25 @@ Quaternion RigidBody::getOrientation()
 
 void RigidBody::calculDerivedData()
 {
-	Matrix4x4 rotationMatrix = utils::quaternToMatrix(orientation);
+	Matrix4x4 rotationMatrix;
+	rotationMatrix.quaternToMatrix4(orientation);
 	this->transformMatrix = rotationMatrix.inverse();
 
-	Matrix3x3 m(transformMatrix);
-	this->inverseInertiaTensor = m * this->inverseInertiaTensor * m.inverse();
+	Matrix3x3 inertiaModifier;
+	inertiaModifier.quaternToMatrix3(orientation);
+	this->inverseInertiaTensor = inertiaModifier * this->inverseInertiaTensor * inertiaModifier.inverse();
 }
 
 void RigidBody::addForceAtPoint(Vector3D force, Vector3D point)
 {
-	point = utils::orthonormalChange(transformMatrix.inverse(), point);
+	point.worldToLocal(transformMatrix);
 	this->forceAccum += force;
 	this->torqueAccum += point ^ force;
 }
 
 void RigidBody::addForceAtBodyPoint(Vector3D force, Vector3D point)
 {
-	point = utils::orthonormalChange(transformMatrix, point);
+	point.localToWorld(transformMatrix);
 	addForceAtPoint(force, point);
 }
 
@@ -144,7 +152,7 @@ void RigidBody::updatePositionOrientation(float timeFrame)
 	}
 
 	this->orientation.normalize();
-	this->orientation = this->orientation + this->angularVelocity * (timeFrame / 2000);
+	this->orientation.doRotation(angularVelocity);
 }
 
 void RigidBody::updateAllVelocity(float timeFrame)
@@ -152,8 +160,8 @@ void RigidBody::updateAllVelocity(float timeFrame)
 	this->velocity = (this->velocity * (float)pow(this->linearDamping, (timeFrame / 1000)) + (this->acceleration * (timeFrame / 1000)));
 	this->velocity = this->velocity + ((this->forceAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
 
-	Quaternion torque(0, torqueAccum.getX(), torqueAccum.getY(), torqueAccum.getZ());
-	this->angularVelocity = (this->angularVelocity * (this->angularAcceleration * (torque / this->mass) * (timeFrame / 1000)));
+	this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) + (this->angularAcceleration * (timeFrame / 1000)));
+	this->angularVelocity = this->angularVelocity + ((this->torqueAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
 }
 
 

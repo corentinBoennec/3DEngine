@@ -9,7 +9,7 @@ class RegistreForceRigidBody
 {
 private:
 	struct EnregistrementForce {
-		RigidBody* particule;
+		RigidBody* rigidbody;
 		RigidBodyForceGenerator* forceGenerator;
 	};
 

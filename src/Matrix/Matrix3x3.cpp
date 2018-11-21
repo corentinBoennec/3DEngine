@@ -1,8 +1,9 @@
 #include "Matrix/Matrix3x3.hpp"
+#include "Matrix/Quaternion.hpp"
 
 Matrix3x3::Matrix3x3()
 {
-	for (int i = 1; i <= 9; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		cells[i] = 0;
 	}
@@ -10,29 +11,18 @@ Matrix3x3::Matrix3x3()
 
 Matrix3x3::Matrix3x3(float tab[9])
 {
-	for (int i = 1; i <= 9; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		cells[i] = tab[i];
 	}
 }
 
-Matrix3x3::Matrix3x3(Matrix4x4 m)
-{
-	for (int i = 1; i <= 12; i++)
-	{
-		if (i % 4 != 0)
-		{
-			cells[i - 1] = m.get(i);
-		}
-	}
-}
-
-float Matrix3x3::get(int i)
+float Matrix3x3::getWithIndice(int i)
 {
 	return cells[i];
 }
 
-float Matrix3x3::getDet()
+float Matrix3x3::getDeterminant()
 {
 	float det = (cells[0] * cells[4] * cells[8]) + (cells[3] * cells[7] * cells[2]) + (cells[6] * cells[1] * cells[5]) - (cells[0] * cells[7] * cells[5]) - (cells[6] * cells[4] * cells[2]) - (cells[3] * cells[1] * cells[8]);
 	return det;
@@ -52,7 +42,7 @@ Matrix3x3 Matrix3x3::inverse()
 	comTab[8] = (cells[0] * cells[4]) - (cells[1] * cells[3]);
 
 	Matrix3x3 coMatrix(comTab);
-	float det = getDet();
+	float det = getDeterminant();
 	if (det != 0)
 	{
 		 Matrix3x3 inverse = coMatrix * (1 / det);
@@ -60,27 +50,10 @@ Matrix3x3 Matrix3x3::inverse()
 	}
 	else
 	{
-		
 		exit(EXIT_FAILURE);
 		// return somthing for non inversible matrix
 	}
-	
-
 }
-
-Matrix3x3 Matrix3x3::operator*(float a) const
-{
-	float m[9];
-	for (int i = 0; i < 9; i++)
-	{
-		m[i] = this->cells[i] * a;
-	}
-
-	Matrix3x3 result = Matrix3x3(m);
-
-	return result;
-}
-
 
 Matrix3x3 Matrix3x3::transpose()
 {
@@ -98,7 +71,39 @@ Matrix3x3 Matrix3x3::transpose()
 	Matrix3x3 transpose(transposeTab);
 
 	return transpose;
-	
+
+}
+
+void Matrix3x3::quaternToMatrix3(Quaternion q)
+{
+	float tab[9];
+
+	tab[0] = 1 - (2 * (q.getY() * q.getY()) + 2 * (q.getZ() * q.getZ()));
+	tab[1] = 2 * q.getX() * q.getY() + 2 * q.getZ() * q.getAngle();
+	tab[2] = 2 * q.getX() * q.getZ() - 2 * q.getY() *q.getAngle();
+	tab[3] = 2 * q.getX() * q.getY() - 2 * q.getZ() * q.getAngle();
+	tab[4] = 1 - (2 * (q.getX() * q.getX()) + 2 * q.getZ() * q.getZ());
+	tab[5] = 2 * q.getY() * q.getZ() + 2 * q.getX() * q.getAngle();
+	tab[6] = 2 * q.getX() * q.getZ() + 2 * q.getY() * q.getAngle();
+	tab[7] = 2 * q.getY() * q.getZ() - 2 * q.getX()* q.getAngle();
+	tab[8] = 1 - (2 * (q.getX() * q.getX()) + 2 * (q.getY() * q.getY()));
+
+	Matrix3x3 result(tab);
+	*this = result;
+}
+
+
+Matrix3x3 Matrix3x3::operator*(float a) const
+{
+	float m[9];
+	for (int i = 0; i < 9; i++)
+	{
+		m[i] = this->cells[i] * a;
+	}
+
+	Matrix3x3 result = Matrix3x3(m);
+
+	return result;
 }
  
 Matrix3x3 Matrix3x3::operator*(const Matrix3x3& m) const

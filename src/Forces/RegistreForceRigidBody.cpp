@@ -9,14 +9,14 @@ void RegistreForceRigidBody::update(float timeFrame)
 {
 	for (auto eF : this->registre)
 	{
-		eF.forceGenerator->updateForce(eF.particule, timeFrame);
+		eF.forceGenerator->updateForce(eF.rigidbody, timeFrame);
 	}
 }
 
-void RegistreForceRigidBody::add(RigidBody* particule, RigidBodyForceGenerator* forceGenerator)
+void RegistreForceRigidBody::add(RigidBody* rigidbody, RigidBodyForceGenerator* forceGenerator)
 {
 	EnregistrementForce eF;
-	eF.particule = particule;
+	eF.rigidbody = rigidbody;
 	eF.forceGenerator = forceGenerator;
 	this->registre.push_back(eF);
 }
