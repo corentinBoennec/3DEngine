@@ -3,7 +3,7 @@
 
 RigidBody::RigidBody(){}
 
-RigidBody::RigidBody(float mass, float linearDumping, float angularDamping ,Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D angularAcceleration, Vector3D gravity, Quaternion orientation, float radius)
+RigidBody::RigidBody(float mass, float linearDamping, float angularDamping ,Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D angularAcceleration, Vector3D gravity, Quaternion orientation, float radius)
 {
 	this->mass = mass;
 	this->linearDamping = linearDamping;
@@ -100,7 +100,7 @@ Vector3D RigidBody::getAccuTorque()
 	return this->torqueAccum;
 }
 
-void RigidBody::setInertiaTensor(Matrix3x3 &inertiaTensor)
+void RigidBody::setInertiaTensor(Matrix3x3 inertiaTensor)
 {
 	this->inverseInertiaTensor = inertiaTensor.inverse();
 }
@@ -114,6 +114,7 @@ Quaternion RigidBody::getOrientation()
 {
 	return this->orientation;
 }
+
 
 void RigidBody::calculDerivedData()
 {
@@ -154,7 +155,18 @@ void RigidBody::updatePositionOrientation(float timeFrame)
 	}
 
 	this->orientation.normalize();
-	this->orientation.doRotation(angularVelocity);
+	this->orientation.modulateToPI();
+	//this->orientation.doRotation(angularVelocity);
+
+	// Ghetto update
+	Vector3D AVbyTime = angularVelocity * timeFrame / 1000;
+	float w = cos(AVbyTime.getX() / 2) * cos(AVbyTime.getY() / 2) * cos(AVbyTime.getZ() / 2) + sin(AVbyTime.getX() / 2) * sin(AVbyTime.getY() / 2) * sin(AVbyTime.getZ() / 2);
+	float x = sin(AVbyTime.getX() / 2) * cos(AVbyTime.getY() / 2) * cos(AVbyTime.getZ() / 2) - cos(AVbyTime.getX() / 2) * sin(AVbyTime.getY() / 2) * sin(AVbyTime.getZ() / 2);
+	float y = cos(AVbyTime.getX() / 2) * sin(AVbyTime.getY() / 2) * cos(AVbyTime.getZ() / 2) + sin(AVbyTime.getX() / 2) * cos(AVbyTime.getY() / 2) * sin(AVbyTime.getZ() / 2);
+	float z = cos(AVbyTime.getX() / 2) * cos(AVbyTime.getY() / 2) * sin(AVbyTime.getZ() / 2) - sin(AVbyTime.getX() / 2) * sin(AVbyTime.getY() / 2) * cos(AVbyTime.getZ() / 2);
+
+	Quaternion quater(w, x, y, z);
+	this->orientation = this->orientation * quater;
 }
 
 void RigidBody::updateAllVelocity(float timeFrame)
@@ -162,8 +174,8 @@ void RigidBody::updateAllVelocity(float timeFrame)
 	this->velocity = (this->velocity * (float)pow(this->linearDamping, (timeFrame / 1000)) + (this->acceleration * (timeFrame / 1000)));
 	this->velocity = this->velocity + ((this->forceAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
 
-	this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) + (this->angularAcceleration * (timeFrame / 1000)));
-	//this->angularVelocity = this->angularVelocity + ((this->torqueAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
+	this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) +(this->angularAcceleration * (timeFrame / 1000)));
+	this->angularVelocity = this->angularVelocity + ((this->torqueAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
 }
 
 

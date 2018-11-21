@@ -30,7 +30,7 @@ private:
 
 public:
 	RigidBody();
-	RigidBody(float mass, float linearDumping, float angularDamping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D angularAcceleration, Vector3D gravity, Quaternion orientation, float radius);
+	RigidBody(float mass, float linearDamping, float angularDamping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D angularAcceleration, Vector3D gravity, Quaternion orientation, float radius);
 	~RigidBody();
 
 	// Accesseurs
@@ -49,7 +49,7 @@ public:
 	void setPosition(Vector3D position);
 	Vector3D getAccuForce();
 	Vector3D getAccuTorque();
-	void setInertiaTensor(Matrix3x3 &inertiatensor);
+	void setInertiaTensor(Matrix3x3 inertiatensor);
 	float getRadius();
 	Quaternion getOrientation();
 

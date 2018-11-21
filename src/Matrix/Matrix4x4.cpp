@@ -61,7 +61,7 @@ Matrix4x4 Matrix4x4::inverse()
 		tab[14] = 0;
 		tab[15] = 1;
 		Matrix4x4 result(tab);
-		return result;
+		return result = result * (1 / det);
 	}
 	else
 	{

@@ -45,7 +45,7 @@ Matrix3x3 Matrix3x3::inverse()
 	float det = getDeterminant();
 	if (det != 0)
 	{
-		 Matrix3x3 inverse = coMatrix * (1 / det);
+		 Matrix3x3 inverse = coMatrix.transpose() * (1 / det);
 		 return inverse;
 	}
 	else

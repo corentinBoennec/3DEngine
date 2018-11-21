@@ -20,6 +20,7 @@ class Quaternion
         void normalize();
         void doRotation(Vector3D v);
 		void updateAngularVelocity(Vector3D v, float timeFrame);
+		void modulateToPI();
 
         Quaternion operator *(const Quaternion& quaternion) const;
 		Quaternion operator *(const float& scalaire) const;

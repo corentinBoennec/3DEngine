@@ -10,6 +10,6 @@ void GravityGeneratorRigidBody::updateForce(RigidBody* rigidbody, float timeFram
 	if (rigidbody->getMass() != 0)
 	{
 		Vector3D F = gravity * rigidbody->getMass() * (timeFrame / 1000);
-		rigidbody->addForceAtBodyPoint(F, rigidbody->getPosition()); // pas certain pour l'application via la position
+		rigidbody->addForceAtPoint(F, rigidbody->getPosition()); // pas certain pour l'application via la position
 	}
 }

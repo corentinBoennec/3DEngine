@@ -57,13 +57,13 @@ WorldRigidBody worldR;
 
 Vector3D gravity(0, 0, -10);
 Vector3D acceleration(0, 0, 0);
-float linearDamping = 0.8f;
-float angularDamping = 0.8f;
+float linearDamping = 0.95f;
+float angularDamping = 1.0f;
 
 Vector3D position(2.0, 0.0, 0.0);
-Vector3D velocity(-0.2, 0.0, 0.0);
-Vector3D angularVelocity(5, 0.0, 0.0);
-Vector3D angularAcceleration(3.0, 0.0, 0.0);
+Vector3D velocity(-0.5, 0.0, 0.0);
+Vector3D angularVelocity(4.0, 0.0, 0.0);
+Vector3D angularAcceleration(1.0, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
 RigidBody sphere(5, linearDamping, angularDamping, position, velocity, acceleration, angularVelocity, angularAcceleration, gravity, orientation, 4.0);
@@ -94,8 +94,8 @@ void Draw_Spheres(void)
 
 	glColor3f(0.8, 0.2, 0.1);
 	glPushMatrix();
-	//glTranslatef(1.0 * sphere.getPosition().getX(), 1.0 * sphere.getPosition().getY(), 1.0 * sphere.getPosition().getZ());
-	//glRotatef(1.0 * sphere.getOrientation().getAngle(), 1.0 * sphere.getOrientation().getX(), 1.0 * sphere.getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
+	glTranslatef(1.0 * sphere.getPosition().getX(), 1.0 * sphere.getPosition().getY(), 1.0 * sphere.getPosition().getZ());
+	glRotatef(1.0 * utils::radToDegree(sphere.getOrientation().getAngle()), 1.0 * sphere.getOrientation().getX(), 1.0 * sphere.getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
 	glutSolidSphere(sphere.getRadius(), 20, 50);
 	glPopMatrix();
 

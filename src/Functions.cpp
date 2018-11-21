@@ -50,6 +50,13 @@ namespace utils
 			r_rigidbody->clearAccumulator();
 		});
 	}
+
+	float radToDegree(float angle)
+	{
+		angle = fmod(angle, 2 * M_PI);
+		float angleDegree = angle * 180.0 / M_PI;
+		return angleDegree;
+	}
 }
 
 
