@@ -1,5 +1,5 @@
 #include "Matrix/Quaternion.hpp"
-
+#include "Vector3D.hpp"
 
 Quaternion::Quaternion(){}
 
@@ -25,18 +25,6 @@ Quaternion Quaternion::operator *(const Quaternion& quaternion) const
     return result;
 }
 
-Quaternion Quaternion::operator+(const Quaternion& quaternion) const
-{
-	Quaternion result;
-
-	result.r = this->r + quaternion.r;
-	result.i = this->i + quaternion.i;
-	result.j = this->j + quaternion.j;
-	result.k = this->k + quaternion.k;
-
-	return result;
-}
-
 Quaternion Quaternion::operator*(const float& scalaire) const
 {
 	Quaternion result;
@@ -49,6 +37,19 @@ Quaternion Quaternion::operator*(const float& scalaire) const
 	return result;
 }
 
+Quaternion Quaternion::operator+(const Quaternion& quaternion) const
+{
+	Quaternion result;
+
+	result.r = this->r + quaternion.r;
+	result.i = this->i + quaternion.i;
+	result.j = this->j + quaternion.j;
+	result.k = this->k + quaternion.k;
+
+	return result;
+}
+
+/*
 Quaternion Quaternion::operator/(const float& scalaire) const
 {
 	Quaternion result;
@@ -59,7 +60,9 @@ Quaternion Quaternion::operator/(const float& scalaire) const
 	result.k = this->k / scalaire;
 
 	return result;
-};
+} */
+
+
 
 
 void Quaternion::normalize()
@@ -87,6 +90,13 @@ void Quaternion::doRotation(Vector3D v)
     Quaternion quatern(0, v.getX(), v.getY(), v.getZ());
 	*this = *this * quatern;
 	
+}
+
+// A quoi elle sert ? - Pris dans le cours -
+void Quaternion::updateAngularVelocity(Vector3D v, float timeFrame)
+{
+	Quaternion w(0, v.getX(), v.getY(), v.getZ());
+	*this = *this + w * *this * (timeFrame / 2000);
 }
 
 

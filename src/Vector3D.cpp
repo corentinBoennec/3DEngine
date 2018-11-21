@@ -2,10 +2,7 @@
 
 
 // Constructeurs
-Vector3D::Vector3D(void)
-{
-
-}
+Vector3D::Vector3D(void){}
 
 Vector3D::Vector3D(float x, float y, float z)
 {
@@ -167,6 +164,21 @@ Vector3D Vector3D::unit() const
 	Vector3D result = *this / this->norme();
 
 	return result;
+}
+
+void Vector3D::localToWorld(Matrix4x4 transformationMatrix)
+{
+	int w = 0;
+
+	// En tirer une fonction
+	this->x = transformationMatrix.getWithIndice(1) * this->x + transformationMatrix.getWithIndice(2) * this->y + transformationMatrix.getWithIndice(3) * this->z + transformationMatrix.getWithIndice(4) * w;
+	this->y = transformationMatrix.getWithIndice(5) * this->x + transformationMatrix.getWithIndice(6) * this->y + transformationMatrix.getWithIndice(7) * this->z + transformationMatrix.getWithIndice(8) * w;
+	this->z = transformationMatrix.getWithIndice(9) * this->x + transformationMatrix.getWithIndice(10) * this->y + transformationMatrix.getWithIndice(11) * this->z + transformationMatrix.getWithIndice(12) * w;
+}
+
+void Vector3D::worldToLocal(Matrix4x4 transformationMatrix)
+{
+	localToWorld(transformationMatrix.inverse());
 }
 
 

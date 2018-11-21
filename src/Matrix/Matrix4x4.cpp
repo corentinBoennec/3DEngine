@@ -1,10 +1,7 @@
 #include "Matrix\Matrix4x4.hpp"
+#include <iostream>
 
-
-
-Matrix4x4::Matrix4x4()
-{
-}
+Matrix4x4::Matrix4x4(){}
 
 Matrix4x4::Matrix4x4(float tab[12])
 {
@@ -19,12 +16,12 @@ Matrix4x4::Matrix4x4(float tab[12])
 }
 
 
-float Matrix4x4::get(int i)
+float Matrix4x4::getWithIndice(int i)
 {
 	return cells[i];
 }
 
-float Matrix4x4::getDet()
+float Matrix4x4::getDeterminant()
 {
 	float result = (cells[8] * cells[5] * cells[2]) 
 		+ (cells[4] * cells[9] * cells[2]) 
@@ -43,7 +40,7 @@ float* Matrix4x4::getTab()
 
 Matrix4x4 Matrix4x4::inverse()
 {
-	float det = this->getDet();
+	float det = this->getDeterminant();
 	float tab[16];
 	if (det != 0)
 	{
@@ -72,6 +69,28 @@ Matrix4x4 Matrix4x4::inverse()
 	}
 }
 
+void Matrix4x4::quaternToMatrix4(Quaternion q)
+{
+	float tab[12];
+
+	tab[0] = 1 - (2 * (q.getY() * q.getY()) + 2 * (q.getZ() * q.getZ()));
+	tab[1] = 2 * q.getX() * q.getY() + 2 * q.getZ() * q.getAngle();
+	tab[2] = 2 * q.getX() * q.getZ() - 2 * q.getY() *q.getAngle();
+	tab[3] = q.getX();
+	tab[4] = 2 * q.getX() * q.getY() - 2 * q.getZ() * q.getAngle();
+	tab[5] = 1 - (2 * (q.getX() * q.getX()) + 2 * q.getZ() * q.getZ());
+	tab[6] = 2 * q.getY() * q.getZ() + 2 * q.getX() * q.getAngle();
+	tab[7] = q.getY();
+	tab[8] = 2 * q.getX() * q.getZ() + 2 * q.getY() * q.getAngle();
+	tab[9] = 2 * q.getY() * q.getZ() - 2 * q.getX()* q.getAngle();
+	tab[10] = 1 - (2 * (q.getX() * q.getX()) + 2 * (q.getY() * q.getY()));
+	tab[11] = q.getZ();
+
+	Matrix4x4 result(tab);
+
+	*this = result;
+}
+
 Matrix4x4 Matrix4x4::operator *(float a) const
 {
 	float tab[16];
@@ -84,12 +103,6 @@ Matrix4x4 Matrix4x4::operator *(float a) const
 	return result;
 }
 
-/*Matrix4x4 Matrix4x4::operator* (const Matrix4x4& m) const
-{
 
-}
-
-Quaternion Matrix4x4::operator *(const Quaternion& q) const 
-{
-
-}*/
+/*Matrix4x4 Matrix4x4::operator* (const Matrix4x4& m) const{}
+Quaternion Matrix4x4::operator *(const Quaternion& q) const{}*/

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <math.h>
-#include "Vector3D.hpp"
 
+class Vector3D;
 
 class Quaternion
 {
@@ -16,13 +16,16 @@ class Quaternion
         Quaternion();
         Quaternion(float r, float i, float j, float k);
         ~Quaternion();
+
         void normalize();
         void doRotation(Vector3D v);
+		void updateAngularVelocity(Vector3D v, float timeFrame);
+
         Quaternion operator *(const Quaternion& quaternion) const;
-		Quaternion operator +(const Quaternion& quaternion) const;
 		Quaternion operator *(const float& scalaire) const;
-		Quaternion operator/(const float& scalaire) const;
-		
+		Quaternion operator +(const Quaternion& quaternion) const;
+
+		//Quaternion operator/(const float& scalaire) const;
 
 		//Getter
 		float getAngle();

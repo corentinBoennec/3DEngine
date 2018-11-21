@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Functions.hpp"
+
 #include "WorldParticules.hpp"
 #include "Spring/SimpleSpring.hpp"
 #include "Forces/RegistreForce.hpp"
@@ -55,14 +56,15 @@ WorldRigidBody worldR;
 Vector3D gravity(0, 0, -10);
 Vector3D acceleration(0, 0, 0);
 float linearDamping = 0.8f;
+float angularDamping = 0.8f;
 
 Vector3D position(2.0, 0.0, 0.0);
 Vector3D velocity(-0.2, 0.0, 0.0);
-Quaternion angularVelocity(0, 0.4, 0.0, 0.0);
-Quaternion angularAcceleration(0, 0.2, 0.0, 0.0);
+Vector3D angularVelocity(0.4, 0.0, 0.0);
+Vector3D angularAcceleration(0.2, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
-RigidBody sphere(5, linearDamping, position, velocity, acceleration, angularVelocity, angularAcceleration, gravity, orientation, 0.5);
+RigidBody sphere(5, linearDamping, angularDamping, position, velocity, acceleration, angularVelocity, angularAcceleration, gravity, orientation, 0.5);
 
 // Forces
 RegistreForceRigidBody registre;
@@ -90,8 +92,8 @@ void Draw_Spheres(void)
 
 	glColor3f(0.8, 0.2, 0.1);
 	glPushMatrix();
-	glTranslatef(1.0 * sphere.getPosition().getX(), 1.0 * sphere.getPosition().getY(), 1.0 * sphere.getPosition().getZ());
-	glRotatef(1.0 * sphere.getOrientation().getAngle(), 1.0 * sphere.getOrientation().getX(), 1.0 * sphere.getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
+	//glTranslatef(1.0 * sphere.getPosition().getX(), 1.0 * sphere.getPosition().getY(), 1.0 * sphere.getPosition().getZ());
+	//glRotatef(1.0 * sphere.getOrientation().getAngle(), 1.0 * sphere.getOrientation().getX(), 1.0 * sphere.getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
 	glutSolidSphere(sphere.getRadius(), 20, 50);
 	glPopMatrix();
 
@@ -126,7 +128,7 @@ int main(int argc, char **argv)
 	for (int i = 0; i < 9; i++)
 	{
 		if (i % 4 == 0)
-			tab[i] = (2 / 5) * sphere.getMass() * sphere.getRadius() * sphere.getRadius();
+			tab[i] = (2.0 / 5.0) * sphere.getMass() * sphere.getRadius() * sphere.getRadius();
 		else
 			tab[i] = 0;
 	}
@@ -165,7 +167,7 @@ int main(int argc, char **argv)
 
 		registre.update(timeFrame); // MAJ des forces
 		//spring.updateForce(&particule1, timeFrame); // MAJ des forces du ressort
-		utils::integrator(world.getParticles(), timeFrame); // MAJ des positions et vélocité
+		integrator(world.getParticles(), timeFrame); // MAJ des positions et vélocité
 		registre.cleanRegistre();
 	}
 	myfile.close();*/
@@ -175,7 +177,7 @@ int main(int argc, char **argv)
 	// Initialisation de GLUT
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE);
-	glutInitWindowSize(1920, 1080);
+	glutInitWindowSize(1720, 980);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("3DEngine");
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
