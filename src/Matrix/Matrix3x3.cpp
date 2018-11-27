@@ -74,23 +74,11 @@ Matrix3x3 Matrix3x3::transpose()
 
 }
 
-void Matrix3x3::quaternToMatrix3(Quaternion q)
+float Matrix3x3::getCells(int i)
 {
-	float tab[9];
-
-	tab[0] = 1 - (2 * (q.getY() * q.getY()) + 2 * (q.getZ() * q.getZ()));
-	tab[1] = 2 * q.getX() * q.getY() + 2 * q.getZ() * q.getAngle();
-	tab[2] = 2 * q.getX() * q.getZ() - 2 * q.getY() *q.getAngle();
-	tab[3] = 2 * q.getX() * q.getY() - 2 * q.getZ() * q.getAngle();
-	tab[4] = 1 - (2 * (q.getX() * q.getX()) + 2 * q.getZ() * q.getZ());
-	tab[5] = 2 * q.getY() * q.getZ() + 2 * q.getX() * q.getAngle();
-	tab[6] = 2 * q.getX() * q.getZ() + 2 * q.getY() * q.getAngle();
-	tab[7] = 2 * q.getY() * q.getZ() - 2 * q.getX()* q.getAngle();
-	tab[8] = 1 - (2 * (q.getX() * q.getX()) + 2 * (q.getY() * q.getY()));
-
-	Matrix3x3 result(tab);
-	*this = result;
+	return this->cells[i];
 }
+
 
 
 Matrix3x3 Matrix3x3::operator*(float a) const

@@ -1,6 +1,5 @@
 #define _USE_MATH_DEFINES
 #include "Matrix/Quaternion.hpp"
-#include "Vector3D.hpp"
 
 Quaternion::Quaternion(){}
 
@@ -18,10 +17,10 @@ Quaternion Quaternion::operator *(const Quaternion& quaternion) const
 {
     Quaternion result;
 
-    result.r = this->r * quaternion.r;
-    result.i = this->i * quaternion.i;
-    result.j = this->j * quaternion.j;
-    result.k = this->k * quaternion.k;
+    result.r = this->r * quaternion.k + this->i * quaternion.j - this->j * quaternion.i + this->k * quaternion.r;
+    result.i = -this->r * quaternion.j + this->i * quaternion.k + this->j * quaternion.r + this->k * quaternion.i;
+    result.j = this->r * quaternion.i - this->i * quaternion.r + this->j * quaternion.k + this->k * quaternion.j;
+    result.k = -this->r * quaternion.r - this->i * quaternion.i - this->j * quaternion.j + this->k * quaternion.k;
 
     return result;
 }
@@ -47,6 +46,46 @@ Quaternion Quaternion::operator+(const Quaternion& quaternion) const
 	result.j = this->j + quaternion.j;
 	result.k = this->k + quaternion.k;
 
+	return result;
+}
+
+
+Matrix3x3 Quaternion::quaternToMatrix3()
+{
+	float tab[9];
+
+	tab[0] = 1 - (2 * (this->getY() * this->getY()) + 2 * (this->getZ() * this->getZ()));
+	tab[1] = 2 * this->getX() * this->getY() + 2 * this->getZ() * this->getAngle();
+	tab[2] = 2 * this->getX() * this->getZ() - 2 * this->getY() * this->getAngle();
+	tab[3] = 2 * this->getX() * this->getY() - 2 * this->getZ() * this->getAngle();
+	tab[4] = 1 - (2 * (this->getX() * this->getX()) + 2 * this->getZ() * this->getZ());
+	tab[5] = 2 * this->getY() * this->getZ() + 2 * this->getX() * this->getAngle();
+	tab[6] = 2 * this->getX() * this->getZ() + 2 * this->getY() * this->getAngle();
+	tab[7] = 2 * this->getY() * this->getZ() - 2 * this->getX()* this->getAngle();
+	tab[8] = 1 - (2 * (this->getX() * this->getX()) + 2 * (this->getY() * this->getY()));
+
+	Matrix3x3 result(tab);
+	return result;
+}
+
+Matrix4x4 Quaternion::quaternToMatrix4()
+{
+	float tab[12];
+
+	tab[0] = 1 - (2 * (this->getY() * this->getY()) + 2 * (this->getZ() * this->getZ()));
+	tab[1] = 2 * this->getX() * this->getY() + 2 * this->getZ() * this->getAngle();
+	tab[2] = 2 * this->getX() * this->getZ() - 2 * this->getY() * this->getAngle();
+	tab[3] = this->getX();
+	tab[4] = 2 * this->getX() * this->getY() - 2 * this->getZ() * this->getAngle();
+	tab[5] = 1 - (2 * (this->getX() * this->getX()) + 2 * this->getZ() * this->getZ());
+	tab[6] = 2 * this->getY() * this->getZ() + 2 * this->getX() * this->getAngle();
+	tab[7] = this->getY();
+	tab[8] = 2 * this->getX() * this->getZ() + 2 * this->getY() * this->getAngle();
+	tab[9] = 2 * this->getY() * this->getZ() - 2 * this->getX()* this->getAngle();
+	tab[10] = 1 - (2 * (this->getX() * this->getX()) + 2 * (this->getY() * this->getY()));
+	tab[11] = this->getZ();
+
+	Matrix4x4 result(tab);
 	return result;
 }
 
@@ -88,7 +127,6 @@ void Quaternion::normalize()
 
 void Quaternion::doRotation(Vector3D v)
 {
-	// Comment ça peut fonctionner ? L'angle vaut toujours 0, du coup pas de rotation :/
 	Quaternion quatern(0, v.getX(), v.getY(), v.getZ());
 	Quaternion quatern2(this->getAngle(), this->getX(), this->getY(), this->getZ());
 	Quaternion newQuatern = quatern * quatern2;
@@ -98,7 +136,7 @@ void Quaternion::doRotation(Vector3D v)
 	this->k = newQuatern.getZ();
 }
 
-// A quoi elle sert ? - Pris dans le cours -
+
 void Quaternion::updateAngularVelocity(Vector3D v, float timeFrame)
 {
 	Quaternion w(0, v.getX(), v.getY(), v.getZ());

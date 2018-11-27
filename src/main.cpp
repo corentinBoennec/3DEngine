@@ -22,7 +22,9 @@
 #include "WorldRigidBody.hpp"
 
 
-// TODO: Mettre les fichiers dans des dossiers
+// TODO: Update les différentes accélération
+// TODO: Update les rotations via DoRotation
+// TODO: Update angularVelocity via la fonction
 
 // Définition des constantes
 float constexpr timeFrame = (1000.f / 30.f); // temps d'une frame en ms pour avoir 30 FPS
@@ -56,17 +58,15 @@ std::vector<RigidBody*> tableRigidBody;
 WorldRigidBody worldR;
 
 Vector3D gravity(0, 0, -10);
-Vector3D acceleration(0, 0, 0);
 float linearDamping = 0.95f;
 float angularDamping = 1.0f;
 
 Vector3D position(2.0, 0.0, 0.0);
 Vector3D velocity(-0.5, 0.0, 0.0);
 Vector3D angularVelocity(4.0, 0.0, 0.0);
-Vector3D angularAcceleration(1.0, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
-RigidBody sphere(5, linearDamping, angularDamping, position, velocity, acceleration, angularVelocity, angularAcceleration, gravity, orientation, 4.0);
+RigidBody sphere(5, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 4.0);
 
 // Forces
 RegistreForceRigidBody registre;
@@ -96,6 +96,8 @@ void Draw_Spheres(void)
 	glPushMatrix();
 	glTranslatef(1.0 * sphere.getPosition().getX(), 1.0 * sphere.getPosition().getY(), 1.0 * sphere.getPosition().getZ());
 	glRotatef(1.0 * utils::radToDegree(sphere.getOrientation().getAngle()), 1.0 * sphere.getOrientation().getX(), 1.0 * sphere.getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
+	//std::cout << sphere.getPosition().getX() << " " << sphere.getPosition().getY() << " " << sphere.getPosition().getZ();
+	//std::cout << sphere.getOrientation().getAngle() << " " << sphere.getOrientation().getX() << " " << sphere.getOrientation().getY() << " " << sphere.getOrientation().getZ() << std::endl;
 	glutSolidSphere(sphere.getRadius(), 20, 50);
 	glPopMatrix();
 

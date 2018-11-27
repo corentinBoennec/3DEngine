@@ -3,16 +3,14 @@
 
 RigidBody::RigidBody(){}
 
-RigidBody::RigidBody(float mass, float linearDamping, float angularDamping ,Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D angularAcceleration, Vector3D gravity, Quaternion orientation, float radius)
+RigidBody::RigidBody(float mass, float linearDamping, float angularDamping ,Vector3D position, Vector3D velocity, Vector3D angularVelocity, Vector3D gravity, Quaternion orientation, float radius)
 {
 	this->mass = mass;
 	this->linearDamping = linearDamping;
 	this->angularDamping = angularDamping;
 	this->position = position;
 	this->velocity = velocity;
-	this->acceleration = acceleration;
 	this->angularVelocity = angularVelocity;
-	this->angularAcceleration = angularAcceleration;
 	this->gravity = gravity;
 	orientation.normalize();
 	this->orientation = orientation;
@@ -64,16 +62,6 @@ void RigidBody::setVelocity(Vector3D velocity)
 	this->velocity = velocity;
 }
 
-Vector3D RigidBody::getAcceleration()
-{
-	return acceleration;
-}
-
-void RigidBody::setAcceleration(Vector3D acceleration)
-{
-	this->acceleration = acceleration;
-}
-
 float RigidBody::getInverseMass()
 {
 	return inverseMass;
@@ -118,20 +106,17 @@ Quaternion RigidBody::getOrientation()
 
 void RigidBody::calculDerivedData()
 {
-	Matrix4x4 rotationMatrix;
-	rotationMatrix.quaternToMatrix4(orientation);
-	this->transformMatrix = rotationMatrix.inverse();
-
-	Matrix3x3 inertiaModifier;
-	inertiaModifier.quaternToMatrix3(orientation);
-	this->inverseInertiaTensor = inertiaModifier * (this->inverseInertiaTensor * inertiaModifier.inverse());
+	transformMatrix = orientation.quaternToMatrix3();
+	this->inverseInertiaTensor = transformMatrix * (this->inverseInertiaTensor * transformMatrix.inverse());
 }
 
 void RigidBody::addForceAtPoint(Vector3D force, Vector3D point)
 {
 	point.worldToLocal(transformMatrix);
+	//std::cout << point.getX() << " " << point.getZ() << " " << point.getZ() << " " << std::endl;
 	this->forceAccum += force;
 	this->torqueAccum += point ^ force;
+
 }
 
 void RigidBody::addForceAtBodyPoint(Vector3D force, Vector3D point)
@@ -156,26 +141,20 @@ void RigidBody::updatePositionOrientation(float timeFrame)
 
 	this->orientation.normalize();
 	this->orientation.modulateToPI();
-	//this->orientation.doRotation(angularVelocity);
-
-	// Ghetto update
-	Vector3D AVbyTime = angularVelocity * timeFrame / 1000;
-	float w = cos(AVbyTime.getX() / 2) * cos(AVbyTime.getY() / 2) * cos(AVbyTime.getZ() / 2) + sin(AVbyTime.getX() / 2) * sin(AVbyTime.getY() / 2) * sin(AVbyTime.getZ() / 2);
-	float x = sin(AVbyTime.getX() / 2) * cos(AVbyTime.getY() / 2) * cos(AVbyTime.getZ() / 2) - cos(AVbyTime.getX() / 2) * sin(AVbyTime.getY() / 2) * sin(AVbyTime.getZ() / 2);
-	float y = cos(AVbyTime.getX() / 2) * sin(AVbyTime.getY() / 2) * cos(AVbyTime.getZ() / 2) + sin(AVbyTime.getX() / 2) * cos(AVbyTime.getY() / 2) * sin(AVbyTime.getZ() / 2);
-	float z = cos(AVbyTime.getX() / 2) * cos(AVbyTime.getY() / 2) * sin(AVbyTime.getZ() / 2) - sin(AVbyTime.getX() / 2) * sin(AVbyTime.getY() / 2) * cos(AVbyTime.getZ() / 2);
-
-	Quaternion quater(w, x, y, z);
-	this->orientation = this->orientation * quater;
+	this->orientation.doRotation(angularVelocity);
 }
 
 void RigidBody::updateAllVelocity(float timeFrame)
 {
-	this->velocity = (this->velocity * (float)pow(this->linearDamping, (timeFrame / 1000)) + (this->acceleration * (timeFrame / 1000)));
-	this->velocity = this->velocity + ((this->forceAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
+	Vector3D accLineaire(inverseMass * this->forceAccum.getX(), inverseMass * this->forceAccum.getY(), inverseMass * this->forceAccum.getY());
+	this->torqueAccum.localToWorld(inverseInertiaTensor);
+	//std::cout << this->torqueAccum.getX() << "," << this->torqueAccum.getY() << "," << this->torqueAccum.getZ() << std::endl;
+	Vector3D accAngulaire(this->torqueAccum.getX(), this->torqueAccum.getY(), this->torqueAccum.getZ());
+	
 
-	this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) +(this->angularAcceleration * (timeFrame / 1000)));
-	this->angularVelocity = this->angularVelocity + ((this->torqueAccum / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
+
+	this->velocity = (this->velocity * (float)pow(this->linearDamping, (timeFrame / 1000)) + (accLineaire * (timeFrame / 1000)));
+	this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) + (accAngulaire * (timeFrame / 1000)));
 }
 
 

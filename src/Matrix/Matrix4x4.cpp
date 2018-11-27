@@ -69,27 +69,6 @@ Matrix4x4 Matrix4x4::inverse()
 	}
 }
 
-void Matrix4x4::quaternToMatrix4(Quaternion q)
-{
-	float tab[12];
-
-	tab[0] = 1 - (2 * (q.getY() * q.getY()) + 2 * (q.getZ() * q.getZ()));
-	tab[1] = 2 * q.getX() * q.getY() + 2 * q.getZ() * q.getAngle();
-	tab[2] = 2 * q.getX() * q.getZ() - 2 * q.getY() *q.getAngle();
-	tab[3] = q.getX();
-	tab[4] = 2 * q.getX() * q.getY() - 2 * q.getZ() * q.getAngle();
-	tab[5] = 1 - (2 * (q.getX() * q.getX()) + 2 * q.getZ() * q.getZ());
-	tab[6] = 2 * q.getY() * q.getZ() + 2 * q.getX() * q.getAngle();
-	tab[7] = q.getY();
-	tab[8] = 2 * q.getX() * q.getZ() + 2 * q.getY() * q.getAngle();
-	tab[9] = 2 * q.getY() * q.getZ() - 2 * q.getX()* q.getAngle();
-	tab[10] = 1 - (2 * (q.getX() * q.getX()) + 2 * (q.getY() * q.getY()));
-	tab[11] = q.getZ();
-
-	Matrix4x4 result(tab);
-
-	*this = result;
-}
 
 Matrix4x4 Matrix4x4::operator *(float a) const
 {

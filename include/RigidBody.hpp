@@ -14,13 +14,11 @@ private:
 
 	Vector3D position;
 	Vector3D velocity;
-	Vector3D acceleration;
 	Vector3D angularVelocity;
-	Vector3D angularAcceleration;
 	Vector3D gravity;
 
 	Quaternion orientation;
-	Matrix4x4 transformMatrix;
+	Matrix3x3 transformMatrix;
 	Matrix3x3 inverseInertiaTensor; // Utilisé par l'intégrateur
 
 	float radius; // Uniquement des sphères pour le moment
@@ -30,7 +28,7 @@ private:
 
 public:
 	RigidBody();
-	RigidBody(float mass, float linearDamping, float angularDamping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D angularVelocity, Vector3D angularAcceleration, Vector3D gravity, Quaternion orientation, float radius);
+	RigidBody(float mass, float linearDamping, float angularDamping, Vector3D position, Vector3D velocity, Vector3D angularVelocity, Vector3D gravity, Quaternion orientation, float radius);
 	~RigidBody();
 
 	// Accesseurs
@@ -42,8 +40,6 @@ public:
 	void setDamping(float damping);
 	Vector3D getVelocity();
 	void setVelocity(Vector3D velocity);
-	Vector3D getAcceleration();
-	void setAcceleration(Vector3D acceleration);
 	float getInverseMass();
 	Vector3D getPosition();
 	void setPosition(Vector3D position);

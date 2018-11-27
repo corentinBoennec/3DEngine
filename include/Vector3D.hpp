@@ -6,8 +6,7 @@
 #include <string>
 
 #include "Matrix/Matrix4x4.hpp"
-
-class Quaternion;
+#include "Matrix/Matrix3x3.hpp"
 
 class Vector3D
 {
@@ -37,9 +36,12 @@ public:
 	float produitMixte(Vector3D& vector1, const Vector3D& vector2) const; //produit mixte
 	Vector3D unit() const;
 
+	Vector3D operator* (Matrix3x3& m);
+
 	void localToWorld(Matrix4x4 transformationMatrix);
 	void worldToLocal(Matrix4x4 transformationMatrix);
-	
+	void localToWorld(Matrix3x3 transformationMatrix);
+	void worldToLocal(Matrix3x3 transformationMatrix);
 
 
 private:

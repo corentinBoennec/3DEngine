@@ -1,8 +1,7 @@
 #pragma once
 #include <iostream>
-#include "Vector3D.hpp"
-#include "Quaternion.hpp"
 
+class Vector3D;
 
 class Matrix3x3
 {
@@ -20,9 +19,9 @@ public :
 	Matrix3x3 inverse();
 	Matrix3x3 transpose();
 
-	void quaternToMatrix3(Quaternion q);
+	float getCells(int i);
 
 	Matrix3x3 operator *(float a) const;
 	Matrix3x3 operator* (const Matrix3x3& m) const;
-	Vector3D operator* (Vector3D& v) const;
+	Vector3D Matrix3x3::operator*(Vector3D& v) const;
 };

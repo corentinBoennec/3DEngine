@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Matrix/Quaternion.hpp"
-
 
 class Matrix4x4
 {
@@ -18,8 +16,6 @@ public:
 	float* getTab();
 
 	Matrix4x4 inverse();
-
-	void quaternToMatrix4(Quaternion q);
 
 	Matrix4x4 operator *(float a) const;
 	

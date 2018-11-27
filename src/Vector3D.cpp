@@ -166,6 +166,18 @@ Vector3D Vector3D::unit() const
 	return result;
 }
 
+Vector3D Vector3D::operator*(Matrix3x3 & m) 
+{
+	float x, y, z;
+	x = m.getCells(0) * this->getX() + m.getCells(1) * this->getY() + m.getCells(2) * this->getZ();
+	y = m.getCells(3) * this->getX() + m.getCells(4) * this->getY() + m.getCells(5) * this->getZ();
+	z = m.getCells(6) * this->getX() + m.getCells(7) * this->getY() + m.getCells(8) * this->getZ();
+
+	Vector3D result(x, y, z);
+
+	return result;
+}
+
 void Vector3D::localToWorld(Matrix4x4 transformationMatrix)
 {
 	int w = 0;
@@ -174,6 +186,19 @@ void Vector3D::localToWorld(Matrix4x4 transformationMatrix)
 	this->x = transformationMatrix.getWithIndice(1) * this->x + transformationMatrix.getWithIndice(2) * this->y + transformationMatrix.getWithIndice(3) * this->z + transformationMatrix.getWithIndice(4) * w;
 	this->y = transformationMatrix.getWithIndice(5) * this->x + transformationMatrix.getWithIndice(6) * this->y + transformationMatrix.getWithIndice(7) * this->z + transformationMatrix.getWithIndice(8) * w;
 	this->z = transformationMatrix.getWithIndice(9) * this->x + transformationMatrix.getWithIndice(10) * this->y + transformationMatrix.getWithIndice(11) * this->z + transformationMatrix.getWithIndice(12) * w;
+}
+
+void Vector3D::localToWorld(Matrix3x3 transformationMatrix)
+{
+	int w = 0;
+
+	// En tirer une fonction
+	*this = transformationMatrix * *this * transformationMatrix.inverse();
+}
+
+void Vector3D::worldToLocal(Matrix3x3 transformationMatrix)
+{
+	localToWorld(transformationMatrix.inverse());
 }
 
 void Vector3D::worldToLocal(Matrix4x4 transformationMatrix)
