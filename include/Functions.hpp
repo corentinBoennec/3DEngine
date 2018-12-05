@@ -7,6 +7,8 @@
 
 #include "Particule.hpp"
 #include "RigidBody.hpp"
+#include "Contact\Sphere.hpp"
+#include "Tree\Plan.hpp"
 
 namespace utils
 {

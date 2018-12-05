@@ -17,10 +17,10 @@ Quaternion Quaternion::operator *(const Quaternion& quaternion) const
 {
     Quaternion result;
 
-    result.r = this->r * quaternion.k + this->i * quaternion.j - this->j * quaternion.i + this->k * quaternion.r;
-    result.i = -this->r * quaternion.j + this->i * quaternion.k + this->j * quaternion.r + this->k * quaternion.i;
-    result.j = this->r * quaternion.i - this->i * quaternion.r + this->j * quaternion.k + this->k * quaternion.j;
-    result.k = -this->r * quaternion.r - this->i * quaternion.i - this->j * quaternion.j + this->k * quaternion.k;
+    result.r = this->r * quaternion.r - this->i * quaternion.i - this->j * quaternion.j - this->k * quaternion.k;
+    result.i = this->r * quaternion.i + this->i * quaternion.r + this->j * quaternion.k - this->k * quaternion.j;
+    result.j = this->r * quaternion.j + this->j * quaternion.r + this->k * quaternion.i - this->i * quaternion.k;
+    result.k = this->r * quaternion.k + this->k * quaternion.r + this->i * quaternion.j - this->j * quaternion.i;
 
     return result;
 }

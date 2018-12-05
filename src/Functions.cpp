@@ -57,6 +57,29 @@ namespace utils
 		float angleDegree = angle * 180.0 / M_PI;
 		return angleDegree;
 	}
+
+	float distFromPlan(Plan plan, Sphere sphere)
+	{
+		float distance;
+		
+
+		distance = (sphere.getCenter() - plan.getPosition()) * plan.getDirection();
+		
+		return distance;
+	}
+
+	bool sameSideAsNormal(Plan plan, Sphere sphere)
+	{
+		if (plan.getDirection() * (plan.getPosition() - sphere.getCenter()) >= 0)
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+	}
+
 }
 
 

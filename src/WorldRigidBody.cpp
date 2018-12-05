@@ -14,3 +14,4 @@ std::vector<RigidBody*> WorldRigidBody::getRigidBody()
 {
 	return rigidbody;
 }
+

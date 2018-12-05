@@ -58,13 +58,11 @@ GravityGenerator grav(gravity);
 std::vector<RigidBody*> tableRigidBody;
 WorldRigidBody worldR;
 
-Plan frontWall(Vector3D(0, 10, 0), Vector3D(0, -1, 0));
-Plan backWall(Vector3D(0, -10, 0), Vector3D(0, 1, 0));
-Plan leftWall(Vector3D(-10, 0, 0), Vector3D(1, 0, 0));
 Plan rightWall(Vector3D(10, 0, 0), Vector3D(1, 0, 0));
-Plan topWall(Vector3D(0, 0, 20), Vector3D(0, 0, -1));
+Plan leftWall(Vector3D(-10, 0, 0), Vector3D(1, 0, 0));
+Plan topWall(Vector3D(0, 0, 20), Vector3D(0, 0, 1));
 Plan bottomWall(Vector3D(0, 0, 0), Vector3D(0, 0, 1));
-// Les normales pointes vers l'interrieur de l'espace défini
+// Les normales pointes vers la droite et le haut
 
 Vector3D gravity(0, 0, -10);
 float linearDamping = 0.95f;

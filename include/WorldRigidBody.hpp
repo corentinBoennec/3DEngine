@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "RigidBody.hpp"
-
+#include "Tree\BSPNode.hpp"
 #include <vector>
 
 class WorldRigidBody
