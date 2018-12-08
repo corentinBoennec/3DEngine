@@ -21,6 +21,7 @@
 #include "Forces/RegistreForceRigidBody.hpp"
 #include "WorldRigidBody.hpp"
 #include "Tree\Plan.hpp"
+#include "Tree\QuadtreeNode.hpp"
 
 
 // TODO: Update les différentes accélération
@@ -62,18 +63,26 @@ Plan rightWall(Vector3D(10, 0, 0), Vector3D(1, 0, 0));
 Plan leftWall(Vector3D(-10, 0, 0), Vector3D(1, 0, 0));
 Plan topWall(Vector3D(0, 0, 20), Vector3D(0, 0, 1));
 Plan bottomWall(Vector3D(0, 0, 0), Vector3D(0, 0, 1));
+
+Plan tabPlan[4] = { rightWall, leftWall, topWall, bottomWall };
 // Les normales pointes vers la droite et le haut
 
 Vector3D gravity(0, 0, -10);
 float linearDamping = 0.95f;
 float angularDamping = 1.0f;
 
-Vector3D position(2.0, 0.0, 0.0);
+Vector3D position(5.0, 0.0, 5.0);
+Vector3D position2(5.0, 0.0, 10.0);
+Vector3D position3(-5.0, 0.0, 5.0);
+
+
 Vector3D velocity(-0.5, 0.0, 0.0);
 Vector3D angularVelocity(4.0, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
-RigidBody sphere(5, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 4.0);
+RigidBody sphere(5, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 40.0);
+RigidBody sphere2(5, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 4.0);
+RigidBody sphere3(5, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 4.0);
 
 // Forces
 RegistreForceRigidBody registre;
@@ -105,7 +114,7 @@ void Draw_Spheres(void)
 	glRotatef(1.0 * utils::radToDegree(sphere.getOrientation().getAngle()), 1.0 * sphere.getOrientation().getX(), 1.0 * sphere.getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
 	//std::cout << sphere.getPosition().getX() << " " << sphere.getPosition().getY() << " " << sphere.getPosition().getZ();
 	//std::cout << sphere.getOrientation().getAngle() << " " << sphere.getOrientation().getX() << " " << sphere.getOrientation().getY() << " " << sphere.getOrientation().getZ() << std::endl;
-	glutSolidSphere(sphere.getRadius(), 20, 50);
+	glutSolidSphere(sphere.getRadiusBoudingSphere(), 20, 50);
 	glPopMatrix();
 
 	glutSwapBuffers();
@@ -136,7 +145,20 @@ void idleFunc(void)
 
 int main(int argc, char **argv)
 {
-	float tab[9];
+
+	
+	tableRigidBody.insert(tableRigidBody.begin(), &sphere);
+	tableRigidBody.push_back(&sphere2);
+	tableRigidBody.push_back(&sphere3);
+	QuadTreeNode firstNode(tabPlan, tableRigidBody);
+	firstNode.divide(0, 4);
+	firstNode.printTree();
+
+	
+	std::cout << "fin ";
+
+	
+	/*float tab[9];
 	for (int i = 0; i < 9; i++)
 	{
 		if (i % 4 == 0)
@@ -183,7 +205,7 @@ int main(int argc, char **argv)
 		registre.cleanRegistre();
 	}
 	myfile.close();*/
-
+	/*
 	utils::timeGestion(timeFrame); // gestion des FPS
 
 	// Initialisation de GLUT
@@ -203,6 +225,6 @@ int main(int argc, char **argv)
 
 	glutMainLoop();
 
-
-	return 1;   
+	*/
+	return 1;  
 }

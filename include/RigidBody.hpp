@@ -26,6 +26,14 @@ private:
 	Vector3D forceAccum = Vector3D(0, 0, 0); //acummulateur des forces
 	Vector3D torqueAccum = Vector3D(0, 0, 0); //acummulateur torque
 
+	struct BoudingSphere
+	{
+		Vector3D center;
+		float radius;
+	};
+
+	BoudingSphere sphere;
+
 public:
 	RigidBody();
 	RigidBody(float mass, float linearDamping, float angularDamping, Vector3D position, Vector3D velocity, Vector3D angularVelocity, Vector3D gravity, Quaternion orientation, float radius);
@@ -46,7 +54,8 @@ public:
 	Vector3D getAccuForce();
 	Vector3D getAccuTorque();
 	void setInertiaTensor(Matrix3x3 inertiatensor);
-	float getRadius();
+	float getRadiusBoudingSphere();
+	Vector3D getCenterBoudingSphere();
 	Quaternion getOrientation();
 
 

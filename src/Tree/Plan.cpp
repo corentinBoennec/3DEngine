@@ -3,7 +3,7 @@
 Plan::Plan(Vector3D pos, Vector3D dir)
 {
 	this->position = pos;
-	this->direction = dir;
+	this->direction = dir.unit();
 }
 Plan::Plan()
 {

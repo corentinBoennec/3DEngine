@@ -16,6 +16,8 @@ RigidBody::RigidBody(float mass, float linearDamping, float angularDamping ,Vect
 	this->orientation = orientation;
 	this->inverseMass = 1 / mass;
 	this->radius = radius;
+	this->sphere.center = position; /*NOTE*/ // à changer 
+	this->sphere.radius = radius;  /*NOTE*/	// à changer
 	calculDerivedData();
 }
 
@@ -93,9 +95,13 @@ void RigidBody::setInertiaTensor(Matrix3x3 inertiaTensor)
 	this->inverseInertiaTensor = inertiaTensor.inverse();
 }
 
-float RigidBody::getRadius()
+float RigidBody::getRadiusBoudingSphere()
 {
-	return this->radius;
+	return this->sphere.radius;
+}
+Vector3D RigidBody::getCenterBoudingSphere()
+{
+	return this->sphere.center;
 }
 
 Quaternion RigidBody::getOrientation()
