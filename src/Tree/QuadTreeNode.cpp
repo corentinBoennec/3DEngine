@@ -23,7 +23,7 @@ QuadTreeNode::QuadTreeNode()
 	
 }
 
-QuadTreeNode::QuadTreeNode(Plan plans[4], std::vector<RigidBody*> containedElements)
+QuadTreeNode::QuadTreeNode(Plan plans[4], std::vector<RigidBody> containedElements)
 {
 	this->plans[0] = plans[0];
 	this->plans[1] = plans[1];
@@ -72,10 +72,10 @@ void QuadTreeNode::divide(int iteration, int maxIteration)
 		Plan midplanX = Plan((this->plans[0].getPosition() + this->plans[1].getPosition()) / 2, Vector3D(1,0,0));
 		Plan midplanY = Plan((this->plans[2].getPosition() + this->plans[3].getPosition()) / 2, Vector3D(0,0,1));
 
-		std::vector<RigidBody*> containedElements1;
-		std::vector<RigidBody*> containedElements2;
-		std::vector<RigidBody*> containedElements3;
-		std::vector<RigidBody*> containedElements4;
+		std::vector<RigidBody> containedElements1;
+		std::vector<RigidBody> containedElements2;
+		std::vector<RigidBody> containedElements3;
+		std::vector<RigidBody> containedElements4;
 
 
 		// On regarde dans quel feuille chaque élément doit allé en fonction de la position de son centre par rapport aux plan qui découpe l'expace
@@ -83,11 +83,11 @@ void QuadTreeNode::divide(int iteration, int maxIteration)
 		{
 			bool up;
 			bool right;
-			if (utils::distFromPlan(midplanX, containedElements.at(i)->getCenterBoudingSphere()) > 0)
+			if (utils::distFromPlan(midplanX, containedElements.at(i).getCenterBoudingSphere()) > 0)
 				right = true;
 			else
 				right = false;
-			if (utils::distFromPlan(midplanY, containedElements.at(i)->getCenterBoudingSphere()) > 0)
+			if (utils::distFromPlan(midplanY, containedElements.at(i).getCenterBoudingSphere()) > 0)
 				up = true;
 			else
 				up = false;
@@ -122,7 +122,7 @@ void QuadTreeNode::divide(int iteration, int maxIteration)
 				//si la distance entre le mur et le centre du volume englobant est plus petite que le rayon du volume englobant
 				
 
-				if (fabs(utils::distFromPlan(tabPlans[j], containedElements.at(i)->getCenterBoudingSphere())) < containedElements.at(i)->getRadiusBoudingSphere())
+				if (fabs(utils::distFromPlan(tabPlans[j], containedElements.at(i).getCenterBoudingSphere())) < containedElements.at(i).getRadiusBoudingSphere())
 				{
 					//On dit que l'élément I traverse le mur J
 					isWallCrossed[i][j] = true;
@@ -249,7 +249,7 @@ int QuadTreeNode::getNbContainedElements()
 	return this->containedElements.size();
 }
 
-std::vector<RigidBody*> QuadTreeNode::getContainedElements()
+std::vector<RigidBody> QuadTreeNode::getContainedElements()
 {
 	return this->containedElements;
 }
@@ -269,3 +269,14 @@ void QuadTreeNode::printTree()
 	
 }
 
+QuadTreeNode * QuadTreeNode::getAllFinalLeaves()
+{
+	/*QuadTreeNode * finalLeaves = new QuadTreeNode;
+	for (int i = 0; i < 4; i++)
+	{
+		if (this->leaves[i]->gotChildren())
+		{
+
+		}
+	}*/
+}
