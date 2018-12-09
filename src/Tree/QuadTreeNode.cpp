@@ -236,7 +236,6 @@ void QuadTreeNode::divide(int iteration, int maxIteration)
 
 void QuadTreeNode::addLeaves(QuadTreeNode * leaves[4])
 {
-	/* NOTE */ //implémentation douteuse sans doute mieux a faire.
 	this->leaves[0] = new QuadTreeNode(leaves[0]);
 	this->leaves[1] = new QuadTreeNode(leaves[1]);
 	this->leaves[2] = new QuadTreeNode(leaves[2]);
@@ -268,14 +267,5 @@ void QuadTreeNode::printTree()
 		}
 	}
 	
-	//si ses fils ne sont pas vide
-	/*if (this->gotChildren == true)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			this->leaves[i]->printTree();
-		}
-	}*/
-		//lancer pour les fils
 }
 

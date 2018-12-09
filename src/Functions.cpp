@@ -60,7 +60,7 @@ namespace utils
 
 	float distFromPlan(Plan plan, Vector3D point)
 	{
-		float distance;  /*NOTE*/ //Probabelement pas mais pourrait être faux
+		float distance;  
 		
 		distance = (point - plan.getPosition()) * plan.getDirection();
 		
