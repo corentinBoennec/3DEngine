@@ -49,6 +49,16 @@ Quaternion Quaternion::operator+(const Quaternion& quaternion) const
 	return result;
 }
 
+bool Quaternion::operator==(Quaternion q1)
+{
+	if (this->getAngle() == q1.getAngle() && this->getX() == q1.getX() && this->getY() == q1.getY() && this->getZ() == this->getZ())
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
 
 Matrix3x3 Quaternion::quaternToMatrix3()
 {

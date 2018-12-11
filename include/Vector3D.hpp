@@ -28,6 +28,7 @@ public:
 	Vector3D operator +(const Vector3D& vector) const; // surcharge de l'opérateur + pour la somme de 2 vecteurs
 	Vector3D operator -(const Vector3D& vector) const; // surcharge de l'opérateur - pour la somme de 2 vecteurs
 	void operator +=(const Vector3D& vector); // surcharge de l'operateur += pour ajouter un vecteur dans un autre
+	bool operator==(const Vector3D v1);
 	Vector3D compose(const Vector3D& vector1) const; // pas de surcharge car pas de signe ressemblant
 	float norme() const; //norme
 	Vector3D project(const Vector3D& vector1) const; // projection

@@ -97,6 +97,16 @@ Vector3D Vector3D::operator*(float a) const
 
 	return result;
 }
+bool Vector3D::operator==(Vector3D v1)
+{
+	if (this->getX() == v1.getX() && this->getY() == v1.getY() && this->getZ() == v1.getZ())
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
 
 Vector3D Vector3D::operator/(float a) const
 {

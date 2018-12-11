@@ -24,6 +24,7 @@ class Quaternion
         Quaternion operator *(const Quaternion& quaternion) const;
 		Quaternion operator *(const float& scalaire) const;
 		Quaternion operator +(const Quaternion& quaternion) const;
+		bool operator==(Quaternion q1);
 
 		Matrix3x3 quaternToMatrix3();
 		Matrix4x4 quaternToMatrix4();

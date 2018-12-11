@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "RigidBody.hpp"
-#include "Tree\QuadtreeNode.hpp"
+#include "Tree\Quadtree.hpp"
 #include <vector>
 #include <math.h> 
 
@@ -14,14 +14,15 @@ struct contactBroad {
 class WorldRigidBody
 {
 private:
-	std::vector<RigidBody*> rigidbody;
-	QuadTreeNode quadtree;
+	std::vector<RigidBody> rigidBodies;
+	QuadTree quadTree;
 
 	
 public:
 
 	WorldRigidBody();
-	std::vector<RigidBody*> getRigidBody();
-	void addRigidBody(RigidBody * rigidbody);
+	WorldRigidBody(QuadTreeNode node, std::vector<RigidBody> rigidBodies);
+	std::vector<RigidBody> getRigidBody();
+	void addRigidBody(RigidBody rigidbody);
 	std::vector<contactBroad> getAllContactBroad(int nbDivideSpace);
 };

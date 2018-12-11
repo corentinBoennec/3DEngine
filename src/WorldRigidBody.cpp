@@ -2,39 +2,46 @@
 
 WorldRigidBody::WorldRigidBody()
 {
-
+	
 }
 
-void WorldRigidBody::addRigidBody(RigidBody* rigidbody)
+WorldRigidBody::WorldRigidBody(QuadTreeNode node, std::vector<RigidBody> rigidBodies)
 {
-	this->rigidbody.push_back(rigidbody);
+	this->quadTree = QuadTree(node, rigidBodies);
+	this->rigidBodies = rigidBodies;
 }
 
-std::vector<RigidBody*> WorldRigidBody::getRigidBody()
+void WorldRigidBody::addRigidBody(RigidBody rigidbody)
 {
-	return rigidbody;
+	this->rigidBodies.push_back(rigidbody);
+	quadTree.addElement(rigidbody);
+}
+
+std::vector<RigidBody> WorldRigidBody::getRigidBody()
+{
+	return rigidBodies;
 }
 
 std::vector<contactBroad> WorldRigidBody::getAllContactBroad(int nbDivideSpace)
 {
-	quadtree.divide(0, nbDivideSpace);
+	quadTree.divideSpaceNTime(nbDivideSpace);
 	std::vector<contactBroad> allContactBroad;
+	std::vector<QuadTreeNode> finalLeaves;
 	contactBroad tmpContact;
-	QuadTreeNode * finalLeaves = quadtree.getAllFinalLeaves();
-
+	finalLeaves = quadTree.getFinalLeaves();
 	// pour chaque feuille finale
-	for (int i = 0; i < pow(4.0, nbDivideSpace); i++)
+	for (int i = 0; i < finalLeaves.size(); i++)
 	{
 		// Si la feuilles contient 2 éléments ou plus
-		if (finalLeaves[i].getNbContainedElements() >= 2)
+		if (finalLeaves.at(i).getNbContainedElements() >= 2)
 		{
 			// Pour chaque paire pair d'éléments possible dans la feuille on ajoute un contact broad
-			for (int j = 0; j < finalLeaves[i].getNbContainedElements(); j++)
+			for (int j = 0; j < finalLeaves.at(i).getNbContainedElements(); j++)
 			{
-				for (int k = j+1; k < finalLeaves[i].getNbContainedElements(); k++)
+				for (int k = j+1; k < finalLeaves.at(i).getNbContainedElements(); k++)
 				{
-					tmpContact.rb1 = finalLeaves[i].getContainedElements().at(j);
-					tmpContact.rb2 = finalLeaves[i].getContainedElements().at(k);
+					tmpContact.rb1 = finalLeaves.at(i).getContainedElements().at(j);
+					tmpContact.rb2 = finalLeaves.at(i).getContainedElements().at(k);
 					allContactBroad.push_back(tmpContact);
 				}
 			}

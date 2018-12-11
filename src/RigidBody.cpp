@@ -163,5 +163,16 @@ void RigidBody::updateAllVelocity(float timeFrame)
 	this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) + (accAngulaire * (timeFrame / 1000)));
 }
 
+bool RigidBody::operator==(RigidBody r1)
+{
+	if (this->getPosition() == r1.getPosition() && this->getOrientation() == r1.getOrientation())
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
+
 
 

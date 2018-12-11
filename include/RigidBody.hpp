@@ -57,6 +57,7 @@ public:
 	float getRadiusBoudingSphere();
 	Vector3D getCenterBoudingSphere();
 	Quaternion getOrientation();
+	bool operator==(const RigidBody r1);
 
 
 	void calculDerivedData();

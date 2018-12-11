@@ -1,3 +1,4 @@
+#pragma once
 #include "RigidBody.hpp"
 #include "Plan.hpp"
 #include <vector>
@@ -6,7 +7,7 @@
 class QuadTreeNode
 {
 private:
-	QuadTreeNode * leaves[4];
+	QuadTreeNode * leaves;
 	std::vector<RigidBody> containedElements;
 	 // right / left / top / Bottom
 	Plan plans[4];
@@ -18,11 +19,15 @@ public:
 	QuadTreeNode(Plan plans[4]);
 	QuadTreeNode(Plan plans[4], std::vector<RigidBody> containedElements);
 	QuadTreeNode(QuadTreeNode * quadTree);
-	void divide(int iteration, int maxIteration);
-	void addLeaves(QuadTreeNode * leaves[4]);
+	void divide(/*int iteration, int maxIteration*/);
+	void addLeaves(QuadTreeNode leaves[4]);
 	int getNbContainedElements();
 	std::vector<RigidBody> getContainedElements();
 	void printTree();
-	QuadTreeNode * getAllFinalLeaves();
-
+	std::vector<QuadTreeNode> getAllFinalLeaves();
+	std::vector<QuadTreeNode> getAllFinalLeaves2();
+	std::vector<QuadTreeNode> getAllFinalLeaves3();
+	void addElement(RigidBody element);
+	bool doGotChildren();
+	QuadTreeNode * getLeaves();
 };

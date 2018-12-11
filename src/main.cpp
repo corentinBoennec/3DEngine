@@ -22,6 +22,7 @@
 #include "WorldRigidBody.hpp"
 #include "Tree\Plan.hpp"
 #include "Tree\QuadtreeNode.hpp"
+#include "Tree\QuadTree.hpp"
 
 
 // TODO: Update les différentes accélération
@@ -56,8 +57,8 @@ DragGenerator drag(1, 1);
 GravityGenerator grav(gravity);
 */
 
-std::vector<RigidBody*> tableRigidBody;
-WorldRigidBody worldR;
+std::vector<RigidBody> tableRigidBody;
+
 
 Plan rightWall(Vector3D(10, 0, 0), Vector3D(1, 0, 0));
 Plan leftWall(Vector3D(-10, 0, 0), Vector3D(1, 0, 0));
@@ -71,18 +72,18 @@ Vector3D gravity(0, 0, -10);
 float linearDamping = 0.95f;
 float angularDamping = 1.0f;
 
-Vector3D position(5.0, 0.0, 5.0);
-Vector3D position2(5.0, 0.0, 10.0);
-Vector3D position3(-5.0, 0.0, 5.0);
+Vector3D position(-8.9, 0.0, 18.9);
+Vector3D position2(-6.1, 0.0, 18.9);
+Vector3D position3(-7.5, 0.0, 15);
 
 
 Vector3D velocity(-0.5, 0.0, 0.0);
 Vector3D angularVelocity(4.0, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
-RigidBody sphere(5, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 40.0);
-RigidBody sphere2(5, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 4.0);
-RigidBody sphere3(5, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 4.0);
+RigidBody sphere(1, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 1.0);
+RigidBody sphere2(2, linearDamping, angularDamping, position2, velocity, angularVelocity, gravity, orientation, 1.0);
+RigidBody sphere3(3, linearDamping, angularDamping, position3, velocity, angularVelocity, gravity, orientation, 1.0);
 
 // Forces
 RegistreForceRigidBody registre;
@@ -136,7 +137,7 @@ void idleFunc(void)
 	resolver.resolveContact(timeFrame);*/
 
 	registre.update(timeFrame); // MAJ des forces
-	utils::integratorRigidBody(worldR.getRigidBody(), timeFrame); // MAJ des positions et vélocité
+	//utils::integratorRigidBody(worldR.getRigidBody(), timeFrame); // MAJ des positions et vélocité
 	registre.cleanRegistre();
 	
 	glutPostRedisplay();
@@ -147,13 +148,14 @@ int main(int argc, char **argv)
 {
 
 	
-	tableRigidBody.insert(tableRigidBody.begin(), &sphere);
-	tableRigidBody.push_back(&sphere2);
-	tableRigidBody.push_back(&sphere3);
-	QuadTreeNode firstNode(tabPlan, tableRigidBody);
-	firstNode.divide(0, 4);
-	firstNode.printTree();
+	tableRigidBody.insert(tableRigidBody.begin(), sphere);
+	tableRigidBody.push_back(sphere2);
+	tableRigidBody.push_back(sphere3);
+	QuadTreeNode firstNode(tabPlan, tableRigidBody);// pas très beau, a changer
+	WorldRigidBody worldR(firstNode, tableRigidBody);// pas très beau, a changer 
+	std::vector<contactBroad> broadContacts = worldR.getAllContactBroad(2);
 
+	std::cout << broadContacts.size();
 	
 	std::cout << "fin ";
 
