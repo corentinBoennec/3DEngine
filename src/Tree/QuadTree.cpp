@@ -1,9 +1,9 @@
 #include "Tree\QuadTree.hpp"
 
-QuadTree::QuadTree(QuadTreeNode firstNode, std::vector<RigidBody> Elements)
+QuadTree::QuadTree(QuadTreeNode firstNode, std::vector<RigidBody*> Elements)
 {
 	this->nodes.push_back(firstNode);
-	for each (RigidBody r in Elements)
+	for each (RigidBody* r in Elements)
 	{
 		this->Elements.push_back(r);
 	}
@@ -27,7 +27,7 @@ std::vector<QuadTreeNode> QuadTree::getFinalLeaves()
 	}
 	return finalLeaves;
 }
-std::vector<RigidBody> QuadTree::getElements()
+std::vector<RigidBody*> QuadTree::getElements()
 {
 	return this->Elements;
 }
@@ -61,7 +61,7 @@ void QuadTree::divideNodeAtDepth(int depth)
 	}
 }
 
-void QuadTree::addElement(RigidBody newElement)
+void QuadTree::addElement(RigidBody * newElement)
 {
 	this->Elements.push_back(newElement);
 }

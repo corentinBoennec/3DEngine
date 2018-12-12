@@ -57,7 +57,7 @@ DragGenerator drag(1, 1);
 GravityGenerator grav(gravity);
 */
 
-std::vector<RigidBody> tableRigidBody;
+std::vector<RigidBody*> tableRigidBody;
 
 
 Plan rightWall(Vector3D(10, 0, 0), Vector3D(1, 0, 0));
@@ -81,9 +81,9 @@ Vector3D velocity(-0.5, 0.0, 0.0);
 Vector3D angularVelocity(4.0, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
-RigidBody sphere(1, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 0.1);
-RigidBody sphere2(2, linearDamping, angularDamping, position2, velocity, angularVelocity, gravity, orientation, 0.1);
-RigidBody sphere3(3, linearDamping, angularDamping, position3, velocity, angularVelocity, gravity, orientation, 0.1);
+RigidBody * sphere = new RigidBody(1, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 0.1);
+RigidBody * sphere2 = new RigidBody(2, linearDamping, angularDamping, position2, velocity, angularVelocity, gravity, orientation, 0.1);
+RigidBody * sphere3 = new RigidBody(3, linearDamping, angularDamping, position3, velocity, angularVelocity, gravity, orientation, 0.1);
 
 // Forces
 RegistreForceRigidBody registre;
@@ -104,26 +104,26 @@ void reshapeFunc(int x, int y)
 
 void Draw_Spheres(void)
 {
-	glMatrixMode(GL_MODELVIEW);
+	/*glMatrixMode(GL_MODELVIEW);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslatef(0.0, 0.0, -15.0);
 
 	glColor3f(0.8, 0.2, 0.1);
 	glPushMatrix();
-	glTranslatef(1.0 * sphere.getPosition().getX(), 1.0 * sphere.getPosition().getY(), 1.0 * sphere.getPosition().getZ());
-	glRotatef(1.0 * utils::radToDegree(sphere.getOrientation().getAngle()), 1.0 * sphere.getOrientation().getX(), 1.0 * sphere.getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
+	glTranslatef(1.0 * sphere->getPosition().getX(), 1.0 * sphere->getPosition().getY(), 1.0 * sphere->getPosition().getZ());
+	glRotatef(1.0 * utils::radToDegree(sphere->getOrientation().getAngle()), 1.0 * sphere->getOrientation().getX(), 1.0 * sphere->getOrientation().getY(), 1.0 * sphere.getOrientation().getZ());
 	//std::cout << sphere.getPosition().getX() << " " << sphere.getPosition().getY() << " " << sphere.getPosition().getZ();
 	//std::cout << sphere.getOrientation().getAngle() << " " << sphere.getOrientation().getX() << " " << sphere.getOrientation().getY() << " " << sphere.getOrientation().getZ() << std::endl;
-	glutSolidSphere(sphere.getRadiusBoudingSphere(), 20, 50);
+	glutSolidSphere(sphere->getRadiusBoudingSphere(), 20, 50);
 	glPopMatrix();
 
-	glutSwapBuffers();
+	glutSwapBuffers();*/
 }
 
 void idleFunc(void)
 {
-	registre.add(&sphere, &grav);
+	registre.add(sphere, &grav);
 	
 	// Detection des contacts
 	// std::vector<ParticleContact> contacts = worldR.getAllContact();
@@ -153,7 +153,7 @@ int main(int argc, char **argv)
 	tableRigidBody.push_back(sphere3);
 	QuadTreeNode firstNode(tabPlan, tableRigidBody);// pas très beau, a changer
 	WorldRigidBody worldR(firstNode, tableRigidBody);// pas très beau, a changer 
-	std::vector<contactBroad> broadContacts = worldR.getAllContactBroad(2);
+	std::vector<contactBroad> broadContacts = worldR.getAllContactBroad(0);
 
 
 	std::cout << broadContacts.size();

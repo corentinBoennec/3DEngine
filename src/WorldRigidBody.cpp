@@ -5,19 +5,19 @@ WorldRigidBody::WorldRigidBody()
 	
 }
 
-WorldRigidBody::WorldRigidBody(QuadTreeNode node, std::vector<RigidBody> rigidBodies)
+WorldRigidBody::WorldRigidBody(QuadTreeNode node, std::vector<RigidBody*> rigidBodies)
 {
 	this->quadTree = QuadTree(node, rigidBodies);
 	this->rigidBodies = rigidBodies;
 }
 
-void WorldRigidBody::addRigidBody(RigidBody rigidbody)
+void WorldRigidBody::addRigidBody(RigidBody * rigidbody)
 {
 	this->rigidBodies.push_back(rigidbody);
 	quadTree.addElement(rigidbody);
 }
 
-std::vector<RigidBody> WorldRigidBody::getRigidBody()
+std::vector<RigidBody*> WorldRigidBody::getRigidBody()
 {
 	return rigidBodies;
 }
@@ -30,7 +30,6 @@ std::vector<contactBroad> WorldRigidBody::getAllContactBroad(int nbDivideSpace)
 	std::vector<QuadTreeNode> finalLeaves;
 	contactBroad tmpContact;
 	finalLeaves = quadTree.getFinalLeaves();
-	std::cout << finalLeaves.size() << std::endl;
 	// pour chaque feuille finale
 	for (int i = 0; i < finalLeaves.size(); i++)
 	{
