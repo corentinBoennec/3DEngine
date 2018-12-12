@@ -36,4 +36,11 @@ class Quaternion
 		float getX();
 		float getY();
 		float getZ();
+
+		//Setter
+		void setAngle(float angle);
+		void setX(float x);
+		void setY(float y);
+		void setZ(float z);
+
 };

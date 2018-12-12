@@ -1,5 +1,7 @@
 #include "Functions.hpp"
 
+#include "Contact/Contact.hpp"
+
 #include <chrono>
 #include <algorithm>
 #include <thread>
@@ -42,13 +44,22 @@ namespace utils
 
 	void integratorRigidBody(std::vector<RigidBody*> tableRigidBody, float timeFrame)
 	{
-		std::for_each(tableRigidBody.begin(), tableRigidBody.end(), [timeFrame](RigidBody *r_rigidbody)
+		if (tableRigidBody.size() > 0)
 		{
-			r_rigidbody->updateAllVelocity(timeFrame);
-			r_rigidbody->updatePositionOrientation(timeFrame);
-			r_rigidbody->calculDerivedData();
-			r_rigidbody->clearAccumulator();
-		});
+
+			std::for_each(tableRigidBody.begin(), tableRigidBody.end(), [timeFrame](RigidBody *r_rigidbody)
+			{
+				r_rigidbody->updateAllVelocity(timeFrame);
+				r_rigidbody->updatePositionOrientation(timeFrame);
+				r_rigidbody->calculDerivedData();
+				r_rigidbody->clearAccumulator();
+			});
+		}
+		else
+		{
+			std::cout << "Il n'y a pas d'objet dans le monde...";
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	float radToDegree(float angle)
@@ -78,6 +89,22 @@ namespace utils
 		{
 			return false;
 		}
+	}
+
+	void generateContacts(Box box, Plane plane, CollisionData * collisionDate)
+	{
+		std::vector<Vector3D> vertices = box.getAllVertices();
+		for (int i = 0; i < vertices.size(); i++)
+		{
+			float distance = (plane.getNormal() * vertices.at(i)) + plane.getOffset();
+			//std::cout << plane.getNormal() * vertices.at(i) << std::endl;
+			if (distance <= 0)
+			{
+				Contact contact(vertices.at(i), plane.getNormal(), distance * -1);
+				collisionDate->addContact(&contact);
+			}
+		}
+
 	}
 
 }

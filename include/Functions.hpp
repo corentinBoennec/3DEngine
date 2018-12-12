@@ -9,6 +9,9 @@
 #include "RigidBody.hpp"
 #include "Contact\Sphere.hpp"
 #include "Tree\Plan.hpp"
+#include "Box.hpp"
+#include "Plane.hpp"
+#include "Contact/CollisionData.hpp"
 
 namespace utils
 {
@@ -18,8 +21,5 @@ namespace utils
 	float radToDegree(float angle);
 	float distFromPlan(Plan plan, Vector3D point);
 	bool sameSideAsNormal(Plan plan, Vector3D point);
+	void generateContacts(Box box, Plane plane, CollisionData* collisionDate);
 }
-
-
-
-

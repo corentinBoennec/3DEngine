@@ -19,7 +19,7 @@ Quaternion Quaternion::operator *(const Quaternion& quaternion) const
 
     result.r = this->r * quaternion.r - this->i * quaternion.i - this->j * quaternion.j - this->k * quaternion.k;
     result.i = this->r * quaternion.i + this->i * quaternion.r + this->j * quaternion.k - this->k * quaternion.j;
-    result.j = this->r * quaternion.j + this->j * quaternion.r + this->k * quaternion.i - this->i * quaternion.k;
+    result.j = this->r * quaternion.j + this->j * quaternion.r + this->k * quaternion.i - this->k * quaternion.j;
     result.k = this->r * quaternion.k + this->k * quaternion.r + this->i * quaternion.j - this->j * quaternion.i;
 
     return result;
@@ -117,13 +117,10 @@ Quaternion Quaternion::operator/(const float& scalaire) const
 
 void Quaternion::normalize()
 {
-    float d = (this->i * this->i) + (this->j * this->j) + (this->k * this->k);
+    float d = (this->r * this->r) + (this->i * this->i) + (this->j * this->j) + (this->k * this->k);
     if (d == 0)
     {
 		r = 1;
-        i = 0;
-        j = 0;
-        k = 0;
     }
     else
     {
@@ -139,7 +136,9 @@ void Quaternion::doRotation(Vector3D v)
 {
 	Quaternion quatern(0, v.getX(), v.getY(), v.getZ());
 	Quaternion quatern2(this->getAngle(), this->getX(), this->getY(), this->getZ());
+	quatern2.normalize();
 	Quaternion newQuatern = quatern * quatern2;
+
 	this->r = newQuatern.getAngle();
 	this->i = newQuatern.getX();
 	this->j = newQuatern.getY();
@@ -155,7 +154,7 @@ void Quaternion::updateAngularVelocity(Vector3D v, float timeFrame)
 
 void Quaternion::modulateToPI()
 {
-	this->r = (this->r, 2 * M_PI);
+	this->r = std::fmodf(this->r, M_PI);
 }
 
 
@@ -179,3 +178,25 @@ float Quaternion::getZ()
 {
 	return this->k;
 }
+
+void Quaternion::setAngle(float angle)
+{
+	this->r = angle;
+}
+
+void Quaternion::setX(float x)
+{
+	this->i = x;
+}
+
+void Quaternion::setY(float y)
+{
+	this->j = y;
+}
+
+void Quaternion::setZ(float z)
+{
+	this->k = z;
+}
+
+

@@ -12,12 +12,10 @@ RigidBody::RigidBody(float mass, float linearDamping, float angularDamping ,Vect
 	this->velocity = velocity;
 	this->angularVelocity = angularVelocity;
 	this->gravity = gravity;
-	orientation.normalize();
 	this->orientation = orientation;
 	this->inverseMass = 1 / mass;
-	this->radius = radius;
 	this->sphere.center = position; /*NOTE*/ // à changer 
-	this->sphere.radius = radius;  /*NOTE*/	// à changer
+	this->sphere.radius = radius;  /*NOTE*/	// à changer quand on aura la box
 	calculDerivedData();
 }
 
@@ -112,22 +110,23 @@ Quaternion RigidBody::getOrientation()
 
 void RigidBody::calculDerivedData()
 {
+	orientation.normalize();
 	transformMatrix = orientation.quaternToMatrix3();
-	this->inverseInertiaTensor = transformMatrix * (this->inverseInertiaTensor * transformMatrix.inverse());
+	this->inverseInertiaTensor = transformMatrix * this->inverseInertiaTensor * transformMatrix.inverse();
 }
 
 void RigidBody::addForceAtPoint(Vector3D force, Vector3D point)
 {
-	point.worldToLocal(transformMatrix);
-	//std::cout << point.getX() << " " << point.getZ() << " " << point.getZ() << " " << std::endl;
+	//point.worldToLocal(transformMatrix.inverse());
 	this->forceAccum += force;
-	this->torqueAccum += point ^ force;
+	//this->torqueAccum += force ^ point;
 
 }
 
 void RigidBody::addForceAtBodyPoint(Vector3D force, Vector3D point)
 {
-	point.localToWorld(transformMatrix);
+	//point.localToWorld(transformMatrix);
+	//std::cout << point.getX() << " " << point.getY() << " " << point.getZ() << std::endl;
 	addForceAtPoint(force, point);
 }
 
@@ -140,27 +139,25 @@ void RigidBody::clearAccumulator()
 void RigidBody::updatePositionOrientation(float timeFrame)
 {
 	this->position = this->position + this->velocity * (timeFrame / 1000);
-	if (this->position.getZ() <= this->radius)
+	if (this->position.getZ() <= 0)
 	{
-		this->position.setZ(this->radius);
+		this->position.setZ(0);
 	}
 
-	this->orientation.normalize();
-	this->orientation.modulateToPI();
-	this->orientation.doRotation(angularVelocity);
+	// Pour cette dernière phase l'orientation est laissé de côté
 }
 
 void RigidBody::updateAllVelocity(float timeFrame)
 {
 	Vector3D accLineaire(inverseMass * this->forceAccum.getX(), inverseMass * this->forceAccum.getY(), inverseMass * this->forceAccum.getY());
-	this->torqueAccum.localToWorld(inverseInertiaTensor);
-	//std::cout << this->torqueAccum.getX() << "," << this->torqueAccum.getY() << "," << this->torqueAccum.getZ() << std::endl;
-	Vector3D accAngulaire(this->torqueAccum.getX(), this->torqueAccum.getY(), this->torqueAccum.getZ());
+	//this->torqueAccum.localToWorld(inverseInertiaTensor);
+	// std::cout << this->torqueAccum.getX() << "," << this->torqueAccum.getY() << "," << this->torqueAccum.getZ() << std::endl;
+	//Vector3D accAngulaire(this->torqueAccum.getX(), this->torqueAccum.getY(), this->torqueAccum.getZ());
 	
 
 
 	this->velocity = (this->velocity * (float)pow(this->linearDamping, (timeFrame / 1000)) + (accLineaire * (timeFrame / 1000)));
-	this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) + (accAngulaire * (timeFrame / 1000)));
+	//this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) + (accAngulaire * (timeFrame / 1000)));
 }
 
 bool RigidBody::operator==(RigidBody r1)

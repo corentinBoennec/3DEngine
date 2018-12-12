@@ -50,8 +50,9 @@ Matrix3x3 Matrix3x3::inverse()
 	}
 	else
 	{
+		std::cout << "Determinant null" << std::endl;
 		exit(EXIT_FAILURE);
-		// return somthing for non inversible matrix
+		// return something for non inversible matrix
 	}
 }
 

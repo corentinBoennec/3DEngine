@@ -145,9 +145,7 @@ Vector3D Vector3D::project(const Vector3D& vector1) const
 
 float Vector3D::distance(const Vector3D& vector1) const
 {
-	float result = sqrt((this->x - vector1.x) * (this->x - vector1.x) +
-		(this->y - vector1.y) * (this->y - vector1.y) +
-		(this->z - vector1.z) * (this->z - vector1.z));
+	float result = sqrt((this->x - vector1.x) * (this->x - vector1.x) +	(this->y - vector1.y) * (this->y - vector1.y) +	(this->z - vector1.z) * (this->z - vector1.z));
 	return result;
 }
 
@@ -200,14 +198,11 @@ void Vector3D::localToWorld(Matrix4x4 transformationMatrix)
 
 void Vector3D::localToWorld(Matrix3x3 transformationMatrix)
 {
-	int w = 0;
-
-	// En tirer une fonction
-	*this = transformationMatrix * *this * transformationMatrix.inverse();
+	*this = transformationMatrix.inverse() * *this * transformationMatrix;
 }
 
 void Vector3D::worldToLocal(Matrix3x3 transformationMatrix)
-{
+{	
 	localToWorld(transformationMatrix.inverse());
 }
 

@@ -21,8 +21,6 @@ private:
 	Matrix3x3 transformMatrix;
 	Matrix3x3 inverseInertiaTensor; // Utilisé par l'intégrateur
 
-	float radius; // Uniquement des sphères pour le moment
-
 	Vector3D forceAccum = Vector3D(0, 0, 0); //acummulateur des forces
 	Vector3D torqueAccum = Vector3D(0, 0, 0); //acummulateur torque
 
