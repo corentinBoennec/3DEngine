@@ -19,6 +19,17 @@ QuadTreeNode::QuadTreeNode()
 	
 }
 
+void QuadTreeNode::destroyQuadTreeNode()
+{
+	if (doGotChildren())
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			delete(&this->leaves[i]);
+		}
+	}
+}
+
 QuadTreeNode::QuadTreeNode(Plan plans[4], std::vector<RigidBody*> containedElements)
 {
 	this->plans[0] = plans[0];
@@ -214,6 +225,11 @@ void QuadTreeNode::divide()
 	//on ajoute a notre noeuds parents ses 4 fils
 	this->addLeaves(tmpLeaves);
 
+	for (int i = 0; i < 4; i++)
+	{
+		delete(&tmpLeaves[i]);
+	}
+	delete(tmpLeaves);
 }
 
 

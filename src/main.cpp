@@ -155,79 +155,15 @@ int main(int argc, char **argv)
 	WorldRigidBody worldR(firstNode, tableRigidBody);// pas très beau, a changer 
 	std::vector<contactBroad> broadContacts = worldR.getAllContactBroad(0);
 
+	worldR.cleanTree();
 
 	std::cout << broadContacts.size();
 	
 	std::cout << "fin ";
 
-	
-	/*float tab[9];
-	for (int i = 0; i < 9; i++)
-	{
-		if (i % 4 == 0)
-			tab[i] = (2.0 / 5.0) * sphere.getMass() * sphere.getRadius() * sphere.getRadius();
-		else
-			tab[i] = 0;
-	}
-	Matrix3x3 inertiaTensor(tab);
-	sphere.setInertiaTensor(inertiaTensor);
+	delete(sphere);
+	delete(sphere2);
+	delete(sphere3);
 
-	tableRigidBody.insert(tableRigidBody.begin(), &sphere);
-	worldR.addRigidBody(&sphere);
-
-	/*std::ofstream myfile; // fichier d'écriture des positions
-
-	myfile.open("updateParticule.txt");
-
-	while (true)
-	{
-		//registre.add(&particule1, &drag);
-		registre.add(&particule1, &grav);
-		//registre.add(&particule2, &drag);
-		registre.add(&particule2, &grav);
-
-		utils::timeGestion(timeFrame); // gestion des FPS
-		// Detection des contacts
-		std::vector<ParticleContact> contacts = world.getAllContact();
-	
-		// résolutions des contacts
-		ParticleContactResolver resolver = ParticleContactResolver();
-		for (auto &contact : contacts)
-		{
-			resolver.setIterations(&contact);
-		}
-		resolver.resolveContact(timeFrame);
-
-		particule1.PrintPosition(myfile);
-		particule2.PrintPosition(myfile);
-		myfile << std::endl;
-
-		registre.update(timeFrame); // MAJ des forces
-		//spring.updateForce(&particule1, timeFrame); // MAJ des forces du ressort
-		integrator(world.getParticles(), timeFrame); // MAJ des positions et vélocité
-		registre.cleanRegistre();
-	}
-	myfile.close();*/
-	/*
-	utils::timeGestion(timeFrame); // gestion des FPS
-
-	// Initialisation de GLUT
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE);
-	glutInitWindowSize(1720, 980);
-	glutInitWindowPosition(50, 50);
-	glutCreateWindow("3DEngine");
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-
-	// Callback functions
-	glutDisplayFunc(Draw_Spheres);
-	glutReshapeFunc(reshapeFunc);
-	glutIdleFunc(idleFunc);
-
-	glutMainLoop();
-
-	*/
 	return 1;  
 }

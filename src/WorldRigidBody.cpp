@@ -53,3 +53,7 @@ std::vector<contactBroad> WorldRigidBody::getAllContactBroad(int nbDivideSpace)
 	
 }
 
+void WorldRigidBody::cleanTree()
+{
+	this->quadTree.cleanQuadTree();
+}

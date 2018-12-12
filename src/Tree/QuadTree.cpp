@@ -13,6 +13,11 @@ QuadTree::QuadTree()
 
 }
 
+void QuadTree::cleanQuadTree()
+{
+	this->nodes.at(0).destroyQuadTreeNode();
+}
+
 std::vector<QuadTreeNode> QuadTree::getNodes()
 {
 	return this->nodes;

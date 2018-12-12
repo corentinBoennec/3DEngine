@@ -25,4 +25,5 @@ public:
 	std::vector<RigidBody*> getRigidBody();
 	void addRigidBody(RigidBody * rigidbody);
 	std::vector<contactBroad> getAllContactBroad(int nbDivideSpace);
+	void cleanTree();
 };
