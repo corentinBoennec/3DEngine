@@ -25,9 +25,10 @@ void QuadTreeNode::destroyQuadTreeNode()
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			delete(&this->leaves[i]);
+			//delete(&this->leaves[i]);
 		}
 	}
+	gotChildren = false;
 }
 
 QuadTreeNode::QuadTreeNode(Plan plans[4], std::vector<RigidBody*> containedElements)
@@ -227,9 +228,9 @@ void QuadTreeNode::divide()
 
 	for (int i = 0; i < 4; i++)
 	{
-		delete(&tmpLeaves[i]);
+		tmpLeaves[i].destroyQuadTreeNode();
 	}
-	delete(tmpLeaves);
+	tmpLeaves->destroyQuadTreeNode();
 }
 
 
