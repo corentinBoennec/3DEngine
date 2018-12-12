@@ -218,8 +218,5 @@ int main(int argc, char **argv)
 
 	glutMainLoop();
 
-	/*delete(sphere);
-	delete(sphere2);
-	delete(sphere3);*/
 	return 1;
 }

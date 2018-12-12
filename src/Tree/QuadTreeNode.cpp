@@ -23,12 +23,10 @@ void QuadTreeNode::destroyQuadTreeNode()
 {
 	if (doGotChildren())
 	{
-		for (int i = 0; i < 4; i++)
-		{
-			//delete(&this->leaves[i]);
-		}
+		delete[] this->leaves;
+		gotChildren = false;
 	}
-	gotChildren = false;
+	
 }
 
 QuadTreeNode::QuadTreeNode(Plan plans[4], std::vector<RigidBody*> containedElements)
@@ -213,9 +211,9 @@ void QuadTreeNode::divide()
 	//On efface la mémoire alloué à notre tableau mur/éléments
 	for (int i = 0; i < getNbContainedElements(); i++)
 	{
-		delete(isWallCrossed[i]);
+		delete[] isWallCrossed[i];
 	}
-	delete(isWallCrossed);
+	delete[] isWallCrossed;
 
 	QuadTreeNode * tmpLeaves = new QuadTreeNode[4];
 	tmpLeaves[0] = leaf1;
@@ -226,21 +224,21 @@ void QuadTreeNode::divide()
 	//on ajoute a notre noeuds parents ses 4 fils
 	this->addLeaves(tmpLeaves);
 
-	for (int i = 0; i < 4; i++)
-	{
-		tmpLeaves[i].destroyQuadTreeNode();
-	}
-	tmpLeaves->destroyQuadTreeNode();
+	delete leaf1;
+	delete leaf2;
+	delete leaf3;
+	delete leaf4;
+	delete[] tmpLeaves;
 }
 
 
 void QuadTreeNode::addLeaves(QuadTreeNode leaves[4])
 {
 	this->leaves = new QuadTreeNode[4];
-	this->leaves[0] = new QuadTreeNode(leaves[0]);
-	this->leaves[1] = new QuadTreeNode(leaves[1]);
-	this->leaves[2] = new QuadTreeNode(leaves[2]);
-	this->leaves[3] = new QuadTreeNode(leaves[3]);
+	this->leaves[0] = QuadTreeNode(leaves[0]);
+	this->leaves[1] = QuadTreeNode(leaves[1]);
+	this->leaves[2] = QuadTreeNode(leaves[2]);
+	this->leaves[3] = QuadTreeNode(leaves[3]);
 	this->gotChildren = true;
 
 }
