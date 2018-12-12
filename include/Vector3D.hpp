@@ -44,11 +44,8 @@ public:
 	void localToWorld(Matrix3x3 transformationMatrix);
 	void worldToLocal(Matrix3x3 transformationMatrix);
 
-
 private:
 	float x;
 	float y;
 	float z;
-
 };
-

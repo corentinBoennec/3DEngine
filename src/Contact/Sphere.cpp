@@ -1,6 +1,5 @@
 #include "Contact\Sphere.hpp"
 
-
 Sphere::Sphere(Vector3D center, float radius)
 {
 	this->center = center;
@@ -8,12 +7,11 @@ Sphere::Sphere(Vector3D center, float radius)
 }
 Sphere::Sphere()
 {
-	this->center = Vector3D(0,0,0);
+	this->center = Vector3D(0, 0, 0);
 	this->radius = 0.0;
 }
 Sphere::~Sphere()
 {
-
 }
 Vector3D Sphere::getCenter()
 {

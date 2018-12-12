@@ -5,11 +5,10 @@ class Vector3D;
 
 class Matrix3x3
 {
-private :
+private:
 	float cells[9] = {};
 
-	
-public :
+public:
 	Matrix3x3();
 	Matrix3x3(float tab[9]);
 

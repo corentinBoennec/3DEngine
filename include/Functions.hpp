@@ -21,5 +21,5 @@ namespace utils
 	float radToDegree(float angle);
 	float distFromPlan(Plan plan, Vector3D point);
 	bool sameSideAsNormal(Plan plan, Vector3D point);
-	void generateContacts(Box box, Plane plane, CollisionData* collisionDate);
+	void generateContacts(Box box, Plane plane, CollisionData* collisionData, std::ofstream* myfile);
 }

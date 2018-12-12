@@ -8,9 +8,9 @@ Plane::Plane(Vector3D normal, float offset)
 	this->offset = offset;
 }
 
-Plane::Plane(){}
+Plane::Plane() {}
 
-Plane::~Plane(){}
+Plane::~Plane() {}
 
 Vector3D Plane::getNormal()
 {
@@ -24,8 +24,8 @@ float Plane::getOffset()
 
 void Plane::DrawPlane()
 {
-	//glScalef(1, 1, 1);
-	glTranslatef(this->normal.getX() * this->offset, this->normal.getY(), this->normal.getZ());
+	//glScalef(0.5, 0.5, 0.5);
+	glTranslatef(this->offset, this->normal.getY(), this->normal.getZ());
 
 	glBegin(GL_QUADS);
 	// Front face

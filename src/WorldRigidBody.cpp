@@ -2,7 +2,6 @@
 
 WorldRigidBody::WorldRigidBody()
 {
-	
 }
 
 WorldRigidBody::WorldRigidBody(QuadTreeNode node, std::vector<RigidBody*> rigidBodies)
@@ -39,7 +38,7 @@ std::vector<contactBroad> WorldRigidBody::getAllContactBroad(int nbDivideSpace)
 			// Pour chaque paire pair d'éléments possible dans la feuille on ajoute un contact broad
 			for (int j = 0; j < finalLeaves.at(i).getNbContainedElements(); j++)
 			{
-				for (int k = j+1; k < finalLeaves.at(i).getNbContainedElements(); k++)
+				for (int k = j + 1; k < finalLeaves.at(i).getNbContainedElements(); k++)
 				{
 					tmpContact.rb1 = finalLeaves.at(i).getContainedElements().at(j);
 					tmpContact.rb2 = finalLeaves.at(i).getContainedElements().at(k);
@@ -50,7 +49,6 @@ std::vector<contactBroad> WorldRigidBody::getAllContactBroad(int nbDivideSpace)
 	}
 
 	return allContactBroad;
-	
 }
 
 void WorldRigidBody::cleanTree()

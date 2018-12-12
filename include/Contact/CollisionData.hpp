@@ -10,7 +10,6 @@ public:
 	CollisionData(int nbMaxContact);
 	~CollisionData();
 	void addContact(Contact* contact);
-	void printData();
 	std::vector<Contact*> getContacts();
 	int getContactRestant();
 

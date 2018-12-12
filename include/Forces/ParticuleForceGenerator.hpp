@@ -1,7 +1,6 @@
 #pragma once
 #include "Particule.hpp"
 
-
 class ParticuleForceGenerator
 {
 public:

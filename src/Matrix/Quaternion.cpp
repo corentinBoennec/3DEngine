@@ -1,28 +1,28 @@
 #define _USE_MATH_DEFINES
 #include "Matrix/Quaternion.hpp"
 
-Quaternion::Quaternion(){}
+Quaternion::Quaternion() {}
 
 Quaternion::Quaternion(float r, float i, float j, float k)
 {
-    this->r = r;
-    this->i = i;
-    this->j = j;
-    this->k = k;
+	this->r = r;
+	this->i = i;
+	this->j = j;
+	this->k = k;
 }
 
-Quaternion::~Quaternion(){}
+Quaternion::~Quaternion() {}
 
 Quaternion Quaternion::operator *(const Quaternion& quaternion) const
 {
-    Quaternion result;
+	Quaternion result;
 
-    result.r = this->r * quaternion.r - this->i * quaternion.i - this->j * quaternion.j - this->k * quaternion.k;
-    result.i = this->r * quaternion.i + this->i * quaternion.r + this->j * quaternion.k - this->k * quaternion.j;
-    result.j = this->r * quaternion.j + this->j * quaternion.r + this->k * quaternion.i - this->k * quaternion.j;
-    result.k = this->r * quaternion.k + this->k * quaternion.r + this->i * quaternion.j - this->j * quaternion.i;
+	result.r = this->r * quaternion.r - this->i * quaternion.i - this->j * quaternion.j - this->k * quaternion.k;
+	result.i = this->r * quaternion.i + this->i * quaternion.r + this->j * quaternion.k - this->k * quaternion.j;
+	result.j = this->r * quaternion.j + this->j * quaternion.r + this->k * quaternion.i - this->k * quaternion.j;
+	result.k = this->r * quaternion.k + this->k * quaternion.r + this->i * quaternion.j - this->j * quaternion.i;
 
-    return result;
+	return result;
 }
 
 Quaternion Quaternion::operator*(const float& scalaire) const
@@ -58,7 +58,6 @@ bool Quaternion::operator==(Quaternion q1)
 	else
 		return false;
 }
-
 
 Matrix3x3 Quaternion::quaternToMatrix3()
 {
@@ -112,24 +111,21 @@ Quaternion Quaternion::operator/(const float& scalaire) const
 	return result;
 } */
 
-
-
-
 void Quaternion::normalize()
 {
-    float d = (this->r * this->r) + (this->i * this->i) + (this->j * this->j) + (this->k * this->k);
-    if (d == 0)
-    {
+	float d = (this->r * this->r) + (this->i * this->i) + (this->j * this->j) + (this->k * this->k);
+	if (d == 0)
+	{
 		r = 1;
-    }
-    else
-    {
+	}
+	else
+	{
 		d = 1 / sqrt(d);
 		r *= d;
-        i *= d; 
-        j *= d;
-        k *= d;
-    }
+		i *= d;
+		j *= d;
+		k *= d;
+	}
 }
 
 void Quaternion::doRotation(Vector3D v)
@@ -145,7 +141,6 @@ void Quaternion::doRotation(Vector3D v)
 	this->k = newQuatern.getZ();
 }
 
-
 void Quaternion::updateAngularVelocity(Vector3D v, float timeFrame)
 {
 	Quaternion w(0, v.getX(), v.getY(), v.getZ());
@@ -156,8 +151,6 @@ void Quaternion::modulateToPI()
 {
 	this->r = std::fmodf(this->r, M_PI);
 }
-
-
 
 float Quaternion::getAngle()
 {
@@ -198,5 +191,3 @@ void Quaternion::setZ(float z)
 {
 	this->k = z;
 }
-
-

@@ -8,7 +8,7 @@ public:
 	Contact(Vector3D contactPoint, Vector3D contactNormal, float interpenetration);
 	~Contact();
 
-	// Getter 
+	// Getter
 	Vector3D getContactPoint();
 	Vector3D getContactNormal();
 	float getInterpenetration();

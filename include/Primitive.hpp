@@ -4,7 +4,6 @@
 #include "Matrix/Matrix4x4.hpp"
 
 class Primitive {
-
 private:
 	RigidBody* rigidbody;
 	Matrix4x4 offset; // Transformation au centre de l'objet

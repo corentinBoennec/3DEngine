@@ -1,7 +1,7 @@
 #include "Vector3D.hpp"
 
 class Sphere {
-private :
+private:
 	Vector3D center;
 	float radius;
 

@@ -5,42 +5,41 @@
 
 class Quaternion
 {
-    private:
-		float r; 
-		float i;
-		float j;
-		float k;
+private:
+	float r;
+	float i;
+	float j;
+	float k;
 
-    public:
-        Quaternion();
-        Quaternion(float r, float i, float j, float k);
-        ~Quaternion();
+public:
+	Quaternion();
+	Quaternion(float r, float i, float j, float k);
+	~Quaternion();
 
-        void normalize();
-        void doRotation(Vector3D v);
-		void updateAngularVelocity(Vector3D v, float timeFrame);
-		void modulateToPI();
+	void normalize();
+	void doRotation(Vector3D v);
+	void updateAngularVelocity(Vector3D v, float timeFrame);
+	void modulateToPI();
 
-        Quaternion operator *(const Quaternion& quaternion) const;
-		Quaternion operator *(const float& scalaire) const;
-		Quaternion operator +(const Quaternion& quaternion) const;
-		bool operator==(Quaternion q1);
+	Quaternion operator *(const Quaternion& quaternion) const;
+	Quaternion operator *(const float& scalaire) const;
+	Quaternion operator +(const Quaternion& quaternion) const;
+	bool operator==(Quaternion q1);
 
-		Matrix3x3 quaternToMatrix3();
-		Matrix4x4 quaternToMatrix4();
+	Matrix3x3 quaternToMatrix3();
+	Matrix4x4 quaternToMatrix4();
 
-		//Quaternion operator/(const float& scalaire) const;
+	//Quaternion operator/(const float& scalaire) const;
 
-		//Getter
-		float getAngle();
-		float getX();
-		float getY();
-		float getZ();
+	//Getter
+	float getAngle();
+	float getX();
+	float getY();
+	float getZ();
 
-		//Setter
-		void setAngle(float angle);
-		void setX(float x);
-		void setY(float y);
-		void setZ(float z);
-
+	//Setter
+	void setAngle(float angle);
+	void setX(float x);
+	void setY(float y);
+	void setZ(float z);
 };

@@ -11,5 +11,4 @@ public:
 	DragGenerator(float K1, float K2);
 	~DragGenerator();
 	void updateForce(Particule* particule, float timeFrame);
-
 };

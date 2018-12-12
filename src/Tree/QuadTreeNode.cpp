@@ -16,7 +16,6 @@ QuadTreeNode::QuadTreeNode(Plan plans[4])
 
 QuadTreeNode::QuadTreeNode()
 {
-	
 }
 
 void QuadTreeNode::destroyQuadTreeNode()
@@ -40,7 +39,6 @@ QuadTreeNode::QuadTreeNode(Plan plans[4], std::vector<RigidBody*> containedEleme
 		this->containedElements.push_back(containedElements[i]);
 	}
 	this->gotChildren = false;
-	
 }
 QuadTreeNode::QuadTreeNode(QuadTreeNode * quadTree)
 {
@@ -63,7 +61,6 @@ QuadTreeNode::QuadTreeNode(QuadTreeNode * quadTree)
 		}
 	}
 	this->gotChildren = quadTree->gotChildren;
-	
 }
 
 // Inclus parfois des éléments de trop dans le noeuds du fait que les plans des noeuds ont une longueurs infini et ne sont pas simplement des segments
@@ -71,18 +68,17 @@ QuadTreeNode::QuadTreeNode(QuadTreeNode * quadTree)
 void QuadTreeNode::divide()
 {
 	//on defini les 2/3 droites/plans qui coupe l'espace du QuadTreeNode/OctreeNode
-	Plan midplanX = Plan((this->plans[0].getPosition() + this->plans[1].getPosition()) / 2, Vector3D(1,0,0));
-	Plan midplanY = Plan((this->plans[2].getPosition() + this->plans[3].getPosition()) / 2, Vector3D(0,0,1));
+	Plan midplanX = Plan((this->plans[0].getPosition() + this->plans[1].getPosition()) / 2, Vector3D(1, 0, 0));
+	Plan midplanY = Plan((this->plans[2].getPosition() + this->plans[3].getPosition()) / 2, Vector3D(0, 0, 1));
 
 	std::vector<RigidBody*> containedElements1;
 	std::vector<RigidBody*> containedElements2;
 	std::vector<RigidBody*> containedElements3;
 	std::vector<RigidBody*> containedElements4;
 
-
 	// On regarde dans quel feuille chaque élément doit allé en fonction de la position de son centre par rapport aux plan qui découpe l'expace
 	for (int i = 0; i < this->getNbContainedElements(); i++)
-	{	
+	{
 		bool up;
 		bool right;
 		if (utils::distFromPlan(midplanX, containedElements.at(i)->getCenterBoudingSphere()) >= 0)
@@ -102,13 +98,12 @@ void QuadTreeNode::divide()
 			containedElements3.push_back(this->containedElements.at(i));
 		if (!right && !up)
 			containedElements4.push_back(this->containedElements.at(i));
-
 	}
 
 	//On construit un tableau de plan constituer des 4 cotés du noeud parents et des 2 plan coupant dans les 2 directions
 	Plan tabPlans[6] = { midplanX, midplanY, plans[0], plans[1], plans[2], plans[3] };
 
-	//On defini un tableau à double entrée qui dit si oui ou non pour chaque élément du noeud parents et chaque mur l'élement traverse le mur. 
+	//On defini un tableau à double entrée qui dit si oui ou non pour chaque élément du noeud parents et chaque mur l'élement traverse le mur.
 	bool ** isWallCrossed = new bool*[getNbContainedElements()];
 	for (int i = 0; i < getNbContainedElements(); i++)
 	{
@@ -122,7 +117,6 @@ void QuadTreeNode::divide()
 		for (int j = 0; j < 6; j++)
 		{
 			//si la distance entre le mur et le centre du volume englobant est plus petite que le rayon du volume englobant
-				
 
 			if (fabs(utils::distFromPlan(tabPlans[j], containedElements.at(i)->getCenterBoudingSphere())) < containedElements.at(i)->getRadiusBoudingSphere())
 			{
@@ -142,7 +136,7 @@ void QuadTreeNode::divide()
 	Plan plans1[4] = { midplanX, this->plans[1], this->plans[2], midplanY };
 	for (int i = 0; i < this->getNbContainedElements(); i++)
 	{
-		// si un des mur qui compose ce noeud fils est traversé, l'objet est présent dans ce noeud. 
+		// si un des mur qui compose ce noeud fils est traversé, l'objet est présent dans ce noeud.
 		// cette étape n'est pas parfaite, elle detecte certain cas qui pourrait peut être être évités
 		if ((isWallCrossed[i][0]) || (isWallCrossed[i][1]) || (isWallCrossed[i][3]) || (isWallCrossed[i][4]))
 		{
@@ -153,9 +147,6 @@ void QuadTreeNode::divide()
 			//sinon il est deja présent
 		}
 	}
-		
-		
-
 
 	Plan plans2[4] = { this->plans[0], midplanX, this->plans[2],  midplanY };
 	for (int i = 0; i < this->getNbContainedElements(); i++)
@@ -170,8 +161,6 @@ void QuadTreeNode::divide()
 			//sinon il est deja présent
 		}
 	}
-		
-
 
 	Plan plans3[4] = { this->plans[0], midplanX, midplanY,  this->plans[3] };
 	for (int i = 0; i < this->getNbContainedElements(); i++)
@@ -201,7 +190,6 @@ void QuadTreeNode::divide()
 		}
 	}
 
-		
 	// On crée les noeuds fils
 	QuadTreeNode * leaf1 = new QuadTreeNode(plans1, containedElements1);
 	QuadTreeNode * leaf2 = new QuadTreeNode(plans2, containedElements2);
@@ -231,7 +219,6 @@ void QuadTreeNode::divide()
 	delete[] tmpLeaves;
 }
 
-
 void QuadTreeNode::addLeaves(QuadTreeNode leaves[4])
 {
 	this->leaves = new QuadTreeNode[4];
@@ -240,7 +227,6 @@ void QuadTreeNode::addLeaves(QuadTreeNode leaves[4])
 	this->leaves[2] = QuadTreeNode(leaves[2]);
 	this->leaves[3] = QuadTreeNode(leaves[3]);
 	this->gotChildren = true;
-
 }
 
 int QuadTreeNode::getNbContainedElements()
@@ -267,4 +253,3 @@ bool QuadTreeNode::doGotChildren()
 {
 	return gotChildren;
 }
-

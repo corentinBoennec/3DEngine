@@ -45,8 +45,8 @@ Matrix3x3 Matrix3x3::inverse()
 	float det = getDeterminant();
 	if (det != 0)
 	{
-		 Matrix3x3 inverse = coMatrix * (1 / det);
-		 return inverse;
+		Matrix3x3 inverse = coMatrix * (1 / det);
+		return inverse;
 	}
 	else
 	{
@@ -72,15 +72,12 @@ Matrix3x3 Matrix3x3::transpose()
 	Matrix3x3 transpose(transposeTab);
 
 	return transpose;
-
 }
 
 float Matrix3x3::getCells(int i)
 {
 	return this->cells[i];
 }
-
-
 
 Matrix3x3 Matrix3x3::operator*(float a) const
 {
@@ -94,7 +91,7 @@ Matrix3x3 Matrix3x3::operator*(float a) const
 
 	return result;
 }
- 
+
 Matrix3x3 Matrix3x3::operator*(const Matrix3x3& m) const
 {
 	float tab[9];
@@ -111,7 +108,6 @@ Matrix3x3 Matrix3x3::operator*(const Matrix3x3& m) const
 	Matrix3x3 result(tab);
 
 	return result;
-	
 }
 
 Vector3D Matrix3x3::operator*(Vector3D& v) const

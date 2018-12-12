@@ -3,7 +3,7 @@
 
 #include "Vector3D.hpp"
 
-class Particule 
+class Particule
 {
 private:
 	float mass;
@@ -14,7 +14,7 @@ private:
 	Vector3D gravity;
 	float inverseMass;
 	float radius;
-	
+
 	Vector3D accumForce = Vector3D(0, 0, 0); //acummulateur des forces
 
 public:
@@ -50,7 +50,4 @@ public:
 	// Forces
 	void addForce(const Vector3D &force);
 	void clearAccumulator();
-
-
-
 };

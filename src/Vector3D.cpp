@@ -1,8 +1,7 @@
 #include "Vector3D.hpp"
 
-
 // Constructeurs
-Vector3D::Vector3D(void){}
+Vector3D::Vector3D(void) {}
 
 Vector3D::Vector3D(float x, float y, float z)
 {
@@ -13,7 +12,6 @@ Vector3D::Vector3D(float x, float y, float z)
 
 Vector3D::~Vector3D(void)
 {
-
 }
 
 // Définition des accesseurs
@@ -46,7 +44,6 @@ void Vector3D::setZ(float z)
 {
 	this->z = z;
 }
-
 
 // Surcharge des opérateurs pour des calculs vectoriels
 Vector3D Vector3D::operator+(const Vector3D& vector) const
@@ -85,8 +82,6 @@ float Vector3D::operator*(const Vector3D & v) const
 	return result;
 }
 
-
-
 Vector3D Vector3D::operator*(float a) const
 {
 	Vector3D result;
@@ -106,7 +101,6 @@ bool Vector3D::operator==(Vector3D v1)
 	else
 		return false;
 }
-
 
 Vector3D Vector3D::operator/(float a) const
 {
@@ -145,7 +139,7 @@ Vector3D Vector3D::project(const Vector3D& vector1) const
 
 float Vector3D::distance(const Vector3D& vector1) const
 {
-	float result = sqrt((this->x - vector1.x) * (this->x - vector1.x) +	(this->y - vector1.y) * (this->y - vector1.y) +	(this->z - vector1.z) * (this->z - vector1.z));
+	float result = sqrt((this->x - vector1.x) * (this->x - vector1.x) + (this->y - vector1.y) * (this->y - vector1.y) + (this->z - vector1.z) * (this->z - vector1.z));
 	return result;
 }
 
@@ -174,7 +168,7 @@ Vector3D Vector3D::unit() const
 	return result;
 }
 
-Vector3D Vector3D::operator*(Matrix3x3 & m) 
+Vector3D Vector3D::operator*(Matrix3x3 & m)
 {
 	float x, y, z;
 	x = m.getCells(0) * this->getX() + m.getCells(1) * this->getY() + m.getCells(2) * this->getZ();
@@ -202,7 +196,7 @@ void Vector3D::localToWorld(Matrix3x3 transformationMatrix)
 }
 
 void Vector3D::worldToLocal(Matrix3x3 transformationMatrix)
-{	
+{
 	localToWorld(transformationMatrix.inverse());
 }
 
@@ -210,10 +204,3 @@ void Vector3D::worldToLocal(Matrix4x4 transformationMatrix)
 {
 	localToWorld(transformationMatrix.inverse());
 }
-
-
-
-
-
-
-

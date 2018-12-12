@@ -1,6 +1,5 @@
 #include "Plan.hpp"
 
-
 class BSPNode {
 private:
 	Plan plan;
@@ -12,5 +11,4 @@ public:
 	Plan getPlan();
 	BSPNode * getFrontNode();
 	BSPNode * getBackNodes();
-
 };

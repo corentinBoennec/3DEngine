@@ -57,13 +57,11 @@ public:
 	Quaternion getOrientation();
 	bool operator==(const RigidBody r1);
 
-
 	void calculDerivedData();
-	
 
 	// Fonction de l'intégrateur
 	void updatePositionOrientation(float timeFrame);
-	void updateAllVelocity(float timeFrame); 
+	void updateAllVelocity(float timeFrame);
 
 	// Forces
 	void addForceAtPoint(Vector3D force, Vector3D point); // Applique une force en un point précis de l'objet - repère du monde

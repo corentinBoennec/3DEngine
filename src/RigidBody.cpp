@@ -1,9 +1,9 @@
 ﻿#include "RigidBody.hpp"
 #include "Functions.hpp"
 
-RigidBody::RigidBody(){}
+RigidBody::RigidBody() {}
 
-RigidBody::RigidBody(float mass, float linearDamping, float angularDamping ,Vector3D position, Vector3D velocity, Vector3D angularVelocity, Vector3D gravity, Quaternion orientation, float radius)
+RigidBody::RigidBody(float mass, float linearDamping, float angularDamping, Vector3D position, Vector3D velocity, Vector3D angularVelocity, Vector3D gravity, Quaternion orientation, float radius)
 {
 	this->mass = mass;
 	this->linearDamping = linearDamping;
@@ -14,12 +14,12 @@ RigidBody::RigidBody(float mass, float linearDamping, float angularDamping ,Vect
 	this->gravity = gravity;
 	this->orientation = orientation;
 	this->inverseMass = 1 / mass;
-	this->sphere.center = position; /*NOTE*/ // à changer 
+	this->sphere.center = position; /*NOTE*/ // à changer
 	this->sphere.radius = radius;  /*NOTE*/	// à changer quand on aura la box
 	calculDerivedData();
 }
 
-RigidBody::~RigidBody(){}
+RigidBody::~RigidBody() {}
 
 // Définition des accesseurs
 float RigidBody::getMass()
@@ -67,7 +67,6 @@ float RigidBody::getInverseMass()
 	return inverseMass;
 }
 
-
 Vector3D RigidBody::getPosition()
 {
 	return position;
@@ -107,7 +106,6 @@ Quaternion RigidBody::getOrientation()
 	return this->orientation;
 }
 
-
 void RigidBody::calculDerivedData()
 {
 	orientation.normalize();
@@ -120,7 +118,6 @@ void RigidBody::addForceAtPoint(Vector3D force, Vector3D point)
 	//point.worldToLocal(transformMatrix.inverse());
 	this->forceAccum += force;
 	//this->torqueAccum += force ^ point;
-
 }
 
 void RigidBody::addForceAtBodyPoint(Vector3D force, Vector3D point)
@@ -153,8 +150,6 @@ void RigidBody::updateAllVelocity(float timeFrame)
 	//this->torqueAccum.localToWorld(inverseInertiaTensor);
 	// std::cout << this->torqueAccum.getX() << "," << this->torqueAccum.getY() << "," << this->torqueAccum.getZ() << std::endl;
 	//Vector3D accAngulaire(this->torqueAccum.getX(), this->torqueAccum.getY(), this->torqueAccum.getZ());
-	
-
 
 	this->velocity = (this->velocity * (float)pow(this->linearDamping, (timeFrame / 1000)) + (accLineaire * (timeFrame / 1000)));
 	//this->angularVelocity = (this->angularVelocity * (float)pow(this->angularDamping, (timeFrame / 1000)) + (accAngulaire * (timeFrame / 1000)));
@@ -169,7 +164,3 @@ bool RigidBody::operator==(RigidBody r1)
 	else
 		return false;
 }
-
-
-
-

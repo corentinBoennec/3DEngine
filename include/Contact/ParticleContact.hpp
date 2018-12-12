@@ -15,5 +15,4 @@ public:
 	float computeVs();
 	void resolveImpulsion();
 	void resolveInterPenetration();
-
 };

@@ -13,4 +13,3 @@ public:
 	~SimpleSpring();
 	void updateForce(Particule* particule, float timeFrame);
 };
-

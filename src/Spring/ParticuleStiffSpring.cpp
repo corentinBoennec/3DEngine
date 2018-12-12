@@ -7,7 +7,7 @@ ParticuleStiffString::ParticuleStiffString(Vector3D anchor, float k, float damp)
 	this->damp = damp;
 }
 
-ParticuleStiffString::~ParticuleStiffString(){}
+ParticuleStiffString::~ParticuleStiffString() {}
 
 void ParticuleStiffString::updateForce(Particule* particule, float timeFrame)
 {

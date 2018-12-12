@@ -4,7 +4,6 @@ RegistreForceRigidBody::RegistreForceRigidBody() {}
 
 RegistreForceRigidBody::~RegistreForceRigidBody() {}
 
-
 void RegistreForceRigidBody::update(float timeFrame)
 {
 	for (auto eF : this->registre)

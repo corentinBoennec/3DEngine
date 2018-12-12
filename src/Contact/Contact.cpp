@@ -7,7 +7,7 @@ Contact::Contact(Vector3D contactPoint, Vector3D contactNormal, float interpenet
 	this->interpenetration = interpenetration;
 }
 
-Contact::~Contact(){}
+Contact::~Contact() {}
 
 Vector3D Contact::getContactPoint()
 {

@@ -7,7 +7,7 @@ SimpleSpring::SimpleSpring(Particule* otherParticule, float k, float length0)
 	this->length0 = length0;
 }
 
-SimpleSpring::~SimpleSpring(){}
+SimpleSpring::~SimpleSpring() {}
 
 void SimpleSpring::updateForce(Particule* particule, float timeFrame)
 {
@@ -16,4 +16,3 @@ void SimpleSpring::updateForce(Particule* particule, float timeFrame)
 	// std::cout << (delta.norme());
 	particule->addForce(F * (timeFrame / 1000));
 }
-

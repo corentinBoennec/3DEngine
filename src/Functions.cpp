@@ -29,31 +29,28 @@ namespace utils
 			unsigned int sleepingDuration = static_cast<unsigned int>(timeFrame - delta.count());
 			std::this_thread::sleep_for(std::chrono::milliseconds(sleepingDuration));
 		}
-
 	}
 
 	void integrator(std::vector<Particule*> tableParticule, float timeFrame)
 	{
 		std::for_each(tableParticule.begin(), tableParticule.end(), [timeFrame](Particule *p_particule)
-		{
-			p_particule->updatePosition(timeFrame);
-			p_particule->updateVelocity(timeFrame);
-		});
+			{
+				p_particule->updatePosition(timeFrame);
+				p_particule->updateVelocity(timeFrame);
+			});
 	}
-
 
 	void integratorRigidBody(std::vector<RigidBody*> tableRigidBody, float timeFrame)
 	{
 		if (tableRigidBody.size() > 0)
 		{
-
 			std::for_each(tableRigidBody.begin(), tableRigidBody.end(), [timeFrame](RigidBody *r_rigidbody)
-			{
-				r_rigidbody->updateAllVelocity(timeFrame);
-				r_rigidbody->updatePositionOrientation(timeFrame);
-				r_rigidbody->calculDerivedData();
-				r_rigidbody->clearAccumulator();
-			});
+				{
+					r_rigidbody->updateAllVelocity(timeFrame);
+					r_rigidbody->updatePositionOrientation(timeFrame);
+					r_rigidbody->calculDerivedData();
+					r_rigidbody->clearAccumulator();
+				});
 		}
 		else
 		{
@@ -71,11 +68,10 @@ namespace utils
 
 	float distFromPlan(Plan plan, Vector3D point)
 	{
-		float distance;  
-		
+		float distance;
+
 		distance = (point - plan.getPosition()) * plan.getDirection();
-		
-		
+
 		return distance;
 	}
 
@@ -85,13 +81,13 @@ namespace utils
 		{
 			return true;
 		}
-		else 
+		else
 		{
 			return false;
 		}
 	}
 
-	void generateContacts(Box box, Plane plane, CollisionData * collisionDate)
+	void generateContacts(Box box, Plane plane, CollisionData* collisionData, std::ofstream* myfile)
 	{
 		std::vector<Vector3D> vertices = box.getAllVertices();
 		for (int i = 0; i < vertices.size(); i++)
@@ -100,14 +96,11 @@ namespace utils
 			//std::cout << plane.getNormal() * vertices.at(i) << std::endl;
 			if (distance <= 0)
 			{
+				//std::cout << vertices.at(i).getX() << " " << vertices.at(i).getY() << " " << vertices.at(i).getZ() << std::endl;
 				Contact contact(vertices.at(i), plane.getNormal(), distance * -1);
-				collisionDate->addContact(&contact);
+				collisionData->addContact(&contact);
+				*myfile << "Contact >" << " Point de contact > (" << contact.getContactPoint().getX() << ", " << contact.getContactPoint().getY() << ", " << contact.getContactPoint().getZ() << ") - Normal > (" << contact.getContactNormal().getX() << ", " << contact.getContactNormal().getY() << ", " << contact.getContactNormal().getZ() << ") - Interpénétration > " << contact.getInterpenetration() << std::endl;
 			}
 		}
-
 	}
-
 }
-
-
-

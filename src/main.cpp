@@ -37,15 +37,15 @@ Plan tabPlan[4] = { rightWall, leftWall, topWall, bottomWall };
 // Les normales pointes vers la droite et le haut
 
 Vector3D gravity(0, 0, -10);
-float linearDamping = 0.95f;
+float linearDamping = 1.00f;
 float angularDamping = 1.0f;
 
 // Les positions se trouve sur un plan 2D allant de -10 à 10 sur l'axe x et de 0 à 20 sur l'axe z
-Vector3D position(3.0, 0.0, 18.0);
-Vector3D position2(7.0, 0.0, 17.0);
+Vector3D position(2.1, 0.0, 18.0);
+Vector3D position2(9.1, 0.0, 17.0);
 Vector3D position3(-7.5, 0.0, 4);
 
-Vector3D velocity(1, 0.0, 0.0);
+Vector3D velocity(0.25, 0.0, 0.0);
 Vector3D angularVelocity(4.0, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
@@ -64,11 +64,13 @@ std::vector<contactBroad> broadContacts;
 CollisionData collisionData(5);
 
 Vector3D halfSizeBox(2.0, 2.0, 2.0);
-Vector3D planeNormal(1.0, 0.0, 0.0);
+Vector3D planeNormal(-1.0, 0.0, 0.0);
 
 //Déclaration des primitives ici pour pouvoir les utiliser dans OpenGL, d
 Box box(halfSizeBox, sphere);
-Plane plane(planeNormal, 7);
+Plane plane(planeNormal, 9.1);
+
+std::ofstream myfile;
 
 // OpenGL functions
 
@@ -77,7 +79,7 @@ void reshapeFunc(int x, int y)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(100.0, (GLdouble)x / (GLdouble)y, 0, 100.0);
+	gluPerspective(90.0, (GLdouble)x / (GLdouble)y, 0.2, 50.0);
 	glMatrixMode(GL_MODELVIEW);
 	glViewport(0, 0, x, y);
 }
@@ -91,44 +93,41 @@ void Draw_Spheres(void)
 
 	glColor3f(0.8, 0.2, 0.1);
 	glPushMatrix();
-	glScalef(0.5, 0.5, 0.0);
-	glTranslatef(1.0 * sphere->getPosition().getX(), 1.0 * sphere->getPosition().getY(), 1.0 * sphere->getPosition().getZ());
+	glScalef(0.1, 0.1, 0.1); // Pas au top mais permet de tout bien voir
+	glTranslatef(1.0 * sphere->getPosition().getX(), 1.0 * sphere->getPosition().getY(), 1.0 * sphere->getPosition().getZ()); // Positionnement de la boite
 	box.DrawBox();
-	glTranslatef(-1.0 * sphere->getPosition().getX(), -1.0 * sphere->getPosition().getY(), -1.0 * sphere->getPosition().getZ());
+	glTranslatef(-1.0 * sphere->getPosition().getX(), -1.0 * sphere->getPosition().getY(), -1.0 * sphere->getPosition().getZ()); // Retour à l'origine pour placer le plan
 	plane.DrawPlane();
 	glPopMatrix();
 
 	glutSwapBuffers();
 }
 
-void idleFunc(void)
+void idleFunc(void) // Permet la mise à jour à chaque frame
 {
 	registre.add(sphere, &grav);
 	registre.add(sphere2, &grav);
 	registre.add(sphere3, &grav);
 
-	broadContacts = worldR.getAllContactBroad(1);
-	std::cout << broadContacts.size();
 	//Detection des contacts
 	if (broadContacts.size() > 0)
 	{
+		// Permet de ne pas dépasser le nombre de collision max tout en évitant de sortir du tableau
 		int maxCollision;
 		if (broadContacts.size() < collisionData.getContactRestant())
 			maxCollision = broadContacts.size();
 		else
 			maxCollision = collisionData.getContactRestant();
 
-		// Faire une boucle qui prend en compte le nombre max de collision
 		for (int i = 0; i < maxCollision; i++)
 		{
 			box = Box(halfSizeBox, broadContacts[i].rb1);
-			plane = Plane(planeNormal, 22);
-			utils::generateContacts(box, plane, &collisionData);
+			plane = Plane(planeNormal, 9.1);
+			utils::generateContacts(box, plane, &collisionData, &myfile);
 		}
 
 		if (collisionData.getContacts().size() > 0)
 		{
-			collisionData.printData();
 			exit(EXIT_SUCCESS);
 		}
 	}
@@ -145,13 +144,14 @@ void idleFunc(void)
 
 int main(int argc, char **argv)
 {
-
-
 	tableRigidBody.insert(tableRigidBody.begin(), sphere);
 	tableRigidBody.push_back(sphere2);
 	tableRigidBody.push_back(sphere3);
-	QuadTreeNode firstNode(tabPlan, tableRigidBody);// pas très beau, a changer
-	worldR = WorldRigidBody(firstNode, tableRigidBody);// pas très beau, a changer
+	QuadTreeNode firstNode(tabPlan, tableRigidBody); // pas très beau, a changer
+	worldR = WorldRigidBody(firstNode, tableRigidBody); // pas très beau, a changer
+	broadContacts = worldR.getAllContactBroad(1); // Ne se met pas à jour à chaque frame car soucis de mémoire (Tous s'accumule)
+
+	myfile.open("updateParticule.txt");
 
 	float tab[9];
 	for (int i = 0; i < 9; i++)
@@ -163,41 +163,6 @@ int main(int argc, char **argv)
 	}
 	Matrix3x3 inertiaTensor(tab);
 	sphere->setInertiaTensor(inertiaTensor);
-
-
-	/*std::ofstream myfile; // fichier d'écriture des positions
-
-	myfile.open("updateParticule.txt");
-
-	while (true)
-	{
-		//registre.add(&particule1, &drag);
-		registre.add(&particule1, &grav);
-		//registre.add(&particule2, &drag);
-		registre.add(&particule2, &grav);
-
-		utils::timeGestion(timeFrame); // gestion des FPS
-		// Detection des contacts
-		std::vector<ParticleContact> contacts = world.getAllContact();
-
-		// résolutions des contacts
-		ParticleContactResolver resolver = ParticleContactResolver();
-		for (auto &contact : contacts)
-		{
-			resolver.setIterations(&contact);
-		}
-		resolver.resolveContact(timeFrame);
-
-		particule1.PrintPosition(myfile);
-		particule2.PrintPosition(myfile);
-		myfile << std::endl;
-
-		registre.update(timeFrame); // MAJ des forces
-		//spring.updateForce(&particule1, timeFrame); // MAJ des forces du ressort
-		integrator(world.getParticles(), timeFrame); // MAJ des positions et vélocité
-		registre.cleanRegistre();
-	}
-	myfile.close();*/
 
 	utils::timeGestion(timeFrame); // gestion des FPS
 
@@ -218,5 +183,9 @@ int main(int argc, char **argv)
 
 	glutMainLoop();
 
+	delete(sphere);
+	delete(sphere2);
+	delete(sphere3);
+	myfile.close();
 	return 1;
 }

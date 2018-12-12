@@ -9,11 +9,10 @@ class QuadTreeNode
 private:
 	QuadTreeNode * leaves; // pointes vers les noeuds fils de ce noeud
 	std::vector<RigidBody*> containedElements; // Les éléments contenues dans le noeud
-	
-	Plan plans[4]; // les 4 plans qui encadre l'espace de ce noeud dans cet ordre :  right / left / top / Bottom
-																					 
-	bool gotChildren; // vrai si le noeud a des feuilles 
 
+	Plan plans[4]; // les 4 plans qui encadre l'espace de ce noeud dans cet ordre :  right / left / top / Bottom
+
+	bool gotChildren; // vrai si le noeud a des feuilles
 
 public:
 	//Constructeur par default

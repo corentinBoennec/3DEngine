@@ -1,9 +1,8 @@
 #include "Forces/RegistreForce.hpp"
 
-RegistreForce::RegistreForce(){}
+RegistreForce::RegistreForce() {}
 
-RegistreForce::~RegistreForce(){}
-
+RegistreForce::~RegistreForce() {}
 
 void RegistreForce::update(float timeFrame)
 {

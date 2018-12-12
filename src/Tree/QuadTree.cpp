@@ -10,7 +10,6 @@ QuadTree::QuadTree(QuadTreeNode firstNode, std::vector<RigidBody*> Elements)
 }
 QuadTree::QuadTree()
 {
-
 }
 
 void QuadTree::cleanQuadTree()
@@ -27,7 +26,7 @@ std::vector<QuadTreeNode> QuadTree::getFinalLeaves()
 	std::vector<QuadTreeNode> finalLeaves;
 	for each (QuadTreeNode n in nodes)
 	{
-		if(!n.doGotChildren())
+		if (!n.doGotChildren())
 			finalLeaves.push_back(n);
 	}
 	return finalLeaves;
@@ -47,13 +46,12 @@ void QuadTree::divideSpaceNTime(int nbDivision)
 void QuadTree::divideNodeAtDepth(int depth)
 {
 	int begin = 0;
-	for (int i = 0; i <= depth-1; i++)
+	for (int i = 0; i <= depth - 1; i++)
 	{
 		begin += (int)pow(4, i);
-		
 	}
 	int currentNbFeuilles = nodes.size();
-	for (int i = begin; i < currentNbFeuilles; i++) //de la dernieres feuilles de la profondeurs précédente 
+	for (int i = begin; i < currentNbFeuilles; i++) //de la dernieres feuilles de la profondeurs précédente
 	{
 		if (nodes.at(i).getNbContainedElements() > 0)
 		{

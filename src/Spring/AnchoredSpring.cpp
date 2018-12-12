@@ -9,11 +9,9 @@ AnchoredSpring::AnchoredSpring(Vector3D anchorPoint, float K, float length0)
 
 AnchoredSpring::~AnchoredSpring()
 {
-
 }
 
-
-void AnchoredSpring::updateForce(Particule* particule, float timeFrame) 
+void AnchoredSpring::updateForce(Particule* particule, float timeFrame)
 {
 	Vector3D delta = this->anchorPoint - particule->getPosition();
 	Vector3D F = (delta / delta.norme()) * -1 * this->K * (delta.norme() - this->length0);

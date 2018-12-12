@@ -7,8 +7,8 @@
 
 class RegistreForce
 {
-private: 
-	struct EnregistrementForce{
+private:
+	struct EnregistrementForce {
 		Particule* particule;
 		ParticuleForceGenerator* forceGenerator;
 	};

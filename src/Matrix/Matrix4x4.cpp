@@ -1,7 +1,7 @@
 #include "Matrix\Matrix4x4.hpp"
 #include <iostream>
 
-Matrix4x4::Matrix4x4(){}
+Matrix4x4::Matrix4x4() {}
 
 Matrix4x4::Matrix4x4(float tab[12])
 {
@@ -15,7 +15,6 @@ Matrix4x4::Matrix4x4(float tab[12])
 	cells[15] = 1;
 }
 
-
 float Matrix4x4::getWithIndice(int i)
 {
 	return cells[i];
@@ -23,11 +22,11 @@ float Matrix4x4::getWithIndice(int i)
 
 float Matrix4x4::getDeterminant()
 {
-	float result = (cells[8] * cells[5] * cells[2]) 
-		+ (cells[4] * cells[9] * cells[2]) 
-		+ (cells[8] * cells[1] * cells[6]) 
-		- (cells[0] * cells[9] * cells[6]) 
-		- (cells[4] * cells[1] * cells[10]) 
+	float result = (cells[8] * cells[5] * cells[2])
+		+ (cells[4] * cells[9] * cells[2])
+		+ (cells[8] * cells[1] * cells[6])
+		- (cells[0] * cells[9] * cells[6])
+		- (cells[4] * cells[1] * cells[10])
 		- (cells[0] * cells[5] * cells[9]);
 
 	return result;
@@ -69,7 +68,6 @@ Matrix4x4 Matrix4x4::inverse()
 	}
 }
 
-
 Matrix4x4 Matrix4x4::operator *(float a) const
 {
 	float tab[16];
@@ -81,7 +79,6 @@ Matrix4x4 Matrix4x4::operator *(float a) const
 	Matrix4x4 result(tab);
 	return result;
 }
-
 
 /*Matrix4x4 Matrix4x4::operator* (const Matrix4x4& m) const{}
 Quaternion Matrix4x4::operator *(const Quaternion& q) const{}*/

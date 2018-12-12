@@ -7,7 +7,7 @@ BungeeSpring::BungeeSpring(Particule* otherParticule, float k, float length0)
 	this->length0 = length0;
 }
 
-BungeeSpring::~BungeeSpring(){}
+BungeeSpring::~BungeeSpring() {}
 
 void BungeeSpring::updateForce(Particule* particule, float timeFrame)
 {

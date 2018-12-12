@@ -28,7 +28,7 @@ void ParticleContactResolver::resolveContact(float timeFrame)
 	std::vector<ParticleContact>::iterator it;
 	it = contacts.begin();
 	int i = 0;
-	while ((it != contacts.end()) && (i != maxIteration) )
+	while ((it != contacts.end()) && (i != maxIteration))
 	{
 		contacts[i].resolve(timeFrame);
 		i++;

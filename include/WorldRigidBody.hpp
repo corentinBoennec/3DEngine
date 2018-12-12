@@ -3,13 +3,12 @@
 #include "RigidBody.hpp"
 #include "Tree\Quadtree.hpp"
 #include <vector>
-#include <math.h> 
+#include <math.h>
 
 struct contactBroad {
 	RigidBody * rb1;
 	RigidBody * rb2;
 };
-
 
 class WorldRigidBody
 {
@@ -17,7 +16,6 @@ private:
 	std::vector<RigidBody*> rigidBodies;
 	QuadTree quadTree;
 
-	
 public:
 
 	WorldRigidBody();

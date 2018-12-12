@@ -2,7 +2,6 @@
 #include "ParticleContact.hpp"
 
 class ParticleContactResolver {
-
 	friend class ParticleContact;
 
 private:
@@ -14,5 +13,4 @@ public:
 	ParticleContactResolver();
 	void setIterations(ParticleContact * contact);
 	void resolveContact(float timeFrame);
-
 };

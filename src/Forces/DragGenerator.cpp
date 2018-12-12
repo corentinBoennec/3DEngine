@@ -13,7 +13,6 @@ DragGenerator::~DragGenerator()
 void DragGenerator::updateForce(Particule* particule, float timeFrame)
 {
 	Vector3D force = ((particule->getVelocity()) / (particule->getVelocity().norme()) *-1) * ((this->K1 * particule->getVelocity().norme()) + (this->K2 * pow(particule->getVelocity().norme(), 2)));
-											/* - p point unitaire */							/* K1 fois norme de p point               +             K2 fois norme de p point au carré */
-	particule->addForce(force * (timeFrame/1000));
+	/* - p point unitaire */							/* K1 fois norme de p point               +             K2 fois norme de p point au carré */
+	particule->addForce(force * (timeFrame / 1000));
 }
-

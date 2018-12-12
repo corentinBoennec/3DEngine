@@ -3,14 +3,11 @@
 // Constructeurs
 Particule::Particule()
 {
-
 }
 
 Particule::~Particule()
 {
-
 }
-
 
 Particule::Particule(float mass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration, Vector3D gravity, float radius)
 {
@@ -90,7 +87,6 @@ Vector3D Particule::getAccuForce()
 	return this->accumForce;
 }
 
-
 void Particule::setInverseMass(float inverseMass)
 {
 	this->inverseMass = inverseMass;
@@ -106,11 +102,10 @@ void Particule::setPosition(Vector3D position)
 	this->position = position;
 }
 
-
 // Fonctions de l'intégrateur
 void Particule::updatePosition(float timeFrame)
 {
-	this->position = this->position + this->velocity * (timeFrame/1000);
+	this->position = this->position + this->velocity * (timeFrame / 1000);
 	if (this->position.getZ() <= this->radius)
 	{
 		this->position.setZ(this->radius);
@@ -119,16 +114,14 @@ void Particule::updatePosition(float timeFrame)
 
 void Particule::updateVelocity(float timeFrame)
 {
-	this->velocity = (this->velocity * (float)pow(this->damping, (timeFrame/1000) ) + (this->acceleration * (timeFrame/1000)));
-	this->velocity = this->velocity + ((this->accumForce / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s 
+	this->velocity = (this->velocity * (float)pow(this->damping, (timeFrame / 1000)) + (this->acceleration * (timeFrame / 1000)));
+	this->velocity = this->velocity + ((this->accumForce / this->mass) * timeFrame / 1000); // pour passer les forces de N en m/s
 }
-
 
 void Particule::PrintPosition(std::ofstream& file)
 {
 	file << "Particule = (" << std::to_string(this->getPosition().getX()) << ", " << std::to_string(this->getPosition().getY()) << ", " << std::to_string(this->getPosition().getZ()) << ")" << std::endl;
 }
-
 
 float Particule::invertingMass(float mass)
 {
