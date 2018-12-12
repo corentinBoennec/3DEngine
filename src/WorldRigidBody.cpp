@@ -24,11 +24,13 @@ std::vector<RigidBody> WorldRigidBody::getRigidBody()
 
 std::vector<contactBroad> WorldRigidBody::getAllContactBroad(int nbDivideSpace)
 {
+	// on divise l'espace le nombre de fois demandé.
 	quadTree.divideSpaceNTime(nbDivideSpace);
 	std::vector<contactBroad> allContactBroad;
 	std::vector<QuadTreeNode> finalLeaves;
 	contactBroad tmpContact;
 	finalLeaves = quadTree.getFinalLeaves();
+	std::cout << finalLeaves.size() << std::endl;
 	// pour chaque feuille finale
 	for (int i = 0; i < finalLeaves.size(); i++)
 	{

@@ -72,18 +72,18 @@ Vector3D gravity(0, 0, -10);
 float linearDamping = 0.95f;
 float angularDamping = 1.0f;
 
-Vector3D position(-8.9, 0.0, 18.9);
+Vector3D position(6, 0.0, 18.9);
 Vector3D position2(-6.1, 0.0, 18.9);
-Vector3D position3(-7.5, 0.0, 15);
+Vector3D position3(1, 0.0, 14);
 
 
 Vector3D velocity(-0.5, 0.0, 0.0);
 Vector3D angularVelocity(4.0, 0.0, 0.0);
 Quaternion orientation(1, 2, 2, 2);
 
-RigidBody sphere(1, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 1.0);
-RigidBody sphere2(2, linearDamping, angularDamping, position2, velocity, angularVelocity, gravity, orientation, 1.0);
-RigidBody sphere3(3, linearDamping, angularDamping, position3, velocity, angularVelocity, gravity, orientation, 1.0);
+RigidBody sphere(1, linearDamping, angularDamping, position, velocity, angularVelocity, gravity, orientation, 0.1);
+RigidBody sphere2(2, linearDamping, angularDamping, position2, velocity, angularVelocity, gravity, orientation, 0.1);
+RigidBody sphere3(3, linearDamping, angularDamping, position3, velocity, angularVelocity, gravity, orientation, 0.1);
 
 // Forces
 RegistreForceRigidBody registre;
@@ -154,6 +154,7 @@ int main(int argc, char **argv)
 	QuadTreeNode firstNode(tabPlan, tableRigidBody);// pas très beau, a changer
 	WorldRigidBody worldR(firstNode, tableRigidBody);// pas très beau, a changer 
 	std::vector<contactBroad> broadContacts = worldR.getAllContactBroad(2);
+
 
 	std::cout << broadContacts.size();
 	
